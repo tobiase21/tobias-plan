@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Tobias — Kompletný plán v2</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0F0F0E;color:#E8E6E0;font-size:14px;line-height:1.6;}
+
+.nav{position:sticky;top:0;z-index:100;background:#0F0F0E;border-bottom:0.5px solid #2A2A28;display:flex;gap:0;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+.nav-btn{padding:12px 14px;font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:#555;background:none;border:none;cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:all .15s;flex-shrink:0;}
+.nav-btn:hover{color:#E8E6E0;}
+.nav-btn.on{color:#1D9E75;border-bottom-color:#1D9E75;}
+
+.section{display:none;padding:1.25rem 1rem;max-width:900px;margin:0 auto;}
+.section.vis{display:block;}
+
+.page-title{font-size:20px;font-weight:600;color:#E8E6E0;margin-bottom:4px;}
+.page-sub{font-size:12px;color:#555;margin-bottom:1.25rem;}
+.sec-title{font-size:10px;font-weight:700;color:#1D9E75;text-transform:uppercase;letter-spacing:.12em;margin:1.5rem 0 8px;}
+.sec-title:first-child{margin-top:0;}
+
+.card{background:#1A1A18;border:0.5px solid #2A2A28;border-radius:12px;padding:14px 16px;margin-bottom:10px;}
+.card-title{font-size:13px;font-weight:600;color:#E8E6E0;margin-bottom:10px;}
+
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:1rem;}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+
+.stat{background:#111110;border:0.5px solid #2A2A28;border-radius:8px;padding:10px;text-align:center;}
+.stat-val{font-size:17px;font-weight:600;color:#1D9E75;}
+.stat-lbl{font-size:10px;color:#555;margin-top:2px;}
+
+.tabs{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:1rem;}
+.tb{padding:6px 11px;border:0.5px solid #2A2A28;border-radius:7px;background:transparent;font-size:11px;font-weight:600;color:#555;cursor:pointer;transition:all .15s;white-space:nowrap;}
+.tb:hover{border-color:#444;color:#E8E6E0;}
+.tb.on{background:#1D9E75;border-color:#1D9E75;color:#fff;}
+.tb.cheat.on{background:#BA7517;border-color:#BA7517;}
+.tb.rest.on{background:#2A2A28;border-color:#3A3A38;color:#E8E6E0;}
+.panel{display:none;}.panel.vis{display:block;}
+
+.meal{background:#111110;border:0.5px solid #2A2A28;border-radius:10px;overflow:hidden;margin-bottom:8px;}
+.meal.soup{border-color:#1D9E75;}
+.meal.cheat-meal{border-color:#BA7517;}
+.meal-head{display:flex;align-items:center;justify-content:space-between;padding:9px 13px;border-bottom:0.5px solid #1E1E1C;flex-wrap:wrap;gap:4px;}
+.meal.soup .meal-head{background:#0A1F17;}
+.meal.cheat-meal .meal-head{background:#1E1000;}
+.meal-name{font-size:12px;font-weight:600;color:#E8E6E0;}
+.meal-time{font-size:11px;color:#555;}
+.meal-kcal{font-size:12px;font-weight:600;color:#1D9E75;}
+.meal.cheat-meal .meal-kcal{color:#BA7517;}
+.meal-body{padding:8px 13px;}
+.meal-row{display:flex;justify-content:space-between;align-items:flex-start;padding:4px 0;border-bottom:0.5px solid #1A1A18;font-size:12px;gap:8px;}
+.meal-row:last-child{border-bottom:none;}
+.meal-item{color:#B8B6B0;flex:1;}
+.meal-hair{font-size:10px;color:#BA7517;margin-left:3px;}
+.meal-detail{font-size:11px;color:#444;text-align:right;min-width:110px;}
+
+.supp-box{background:#111110;border:0.5px solid #2A2A28;border-radius:10px;padding:10px 13px;margin-bottom:10px;}
+.supp-title{font-size:10px;font-weight:700;color:#555;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+.supp-row{display:flex;align-items:flex-start;gap:8px;padding:5px 0;border-bottom:0.5px solid #1A1A18;font-size:12px;}
+.supp-row:last-child{border-bottom:none;}
+.supp-time{min-width:95px;font-weight:600;color:#C8C6C0;flex-shrink:0;}
+.supp-name{color:#777;flex:1;line-height:1.5;}
+.stag{font-size:10px;padding:2px 6px;border-radius:5px;white-space:nowrap;flex-shrink:0;}
+.tg-h{background:#2A0D0D;color:#E07070;}
+.tg-b{background:#0D0D2A;color:#8080D8;}
+.tg-d{background:#0A1F17;color:#50A878;}
+.tg-p{background:#1A1200;color:#B08030;}
+
+.cook{background:#0A1F17;border-radius:8px;padding:10px 13px;margin-bottom:10px;font-size:12px;color:#50A878;line-height:1.6;}
+.cook strong{color:#1D9E75;}
+.cook.warn{background:#1E1000;color:#B08030;}
+.cook.warn strong{color:#BA7517;}
+
+.note{margin-top:8px;background:#111110;border-left:3px solid #1D9E75;border-radius:0 8px 8px 0;padding:9px 13px;font-size:12px;color:#777;line-height:1.6;}
+.note.warn{border-left-color:#BA7517;}
+.note.red{border-left-color:#E07070;}
+.note strong{color:#C8C6C0;font-weight:500;}
+
+.mac-row{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:12px;}
+
+.ex-table{width:100%;border-collapse:collapse;font-size:12px;}
+.ex-table th{text-align:left;padding:7px 10px;font-size:10px;font-weight:700;color:#555;text-transform:uppercase;letter-spacing:.06em;border-bottom:0.5px solid #2A2A28;}
+.ex-table td{padding:7px 10px;border-bottom:0.5px solid #1A1A18;color:#B8B6B0;}
+.ex-table tr:last-child td{border-bottom:none;}
+.ex-table td:first-child{color:#E8E6E0;font-weight:500;}
+.ex-table td a{color:#1D9E75;text-decoration:none;font-size:11px;}
+.ex-table td a:hover{text-decoration:underline;}
+
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-bottom:1rem;}
+.cal-head{text-align:center;font-size:9px;font-weight:700;color:#444;text-transform:uppercase;padding:5px 0;}
+.cal-day{border-radius:7px;padding:5px 3px;text-align:center;min-height:58px;}
+.cal-day.empty{background:transparent;}
+.cal-num{font-size:12px;font-weight:700;margin-bottom:2px;}
+.cal-type{font-size:8px;font-weight:600;padding:1px 3px;border-radius:3px;line-height:1.4;margin-bottom:2px;}
+.cal-gym{font-size:8px;color:#1D9E75;margin-top:1px;line-height:1.3;}
+.cal-gym.no{color:#E07070;}
+.day-V{background:#0A1F17;}.day-V .cal-num{color:#1D9E75;}
+.day-S{background:#0D0D1A;}.day-S .cal-num{color:#7070C8;}
+.day-VOLNO{background:#1A1A18;}.day-VOLNO .cal-num{color:#E8E6E0;}
+.day-DOV{background:#1E1000;}.day-DOV .cal-num{color:#BA7517;}
+.day-LEK{background:#2A0D0D;}.day-LEK .cal-num{color:#E07070;}
+.day-NOCNA{background:#080820;}.day-NOCNA .cal-num{color:#6060D0;}
+
+.routine-row{display:flex;gap:10px;padding:7px 0;border-bottom:0.5px solid #1A1A18;font-size:12px;align-items:flex-start;}
+.routine-row:last-child{border-bottom:none;}
+.routine-time{min-width:75px;font-weight:600;color:#1D9E75;flex-shrink:0;}
+.routine-act{color:#B8B6B0;flex:1;line-height:1.5;}
+
+.legend{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:.75rem;}
+.leg{display:flex;align-items:center;gap:5px;font-size:11px;color:#555;}
+.leg-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+
+.smoothie-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:0.5px solid #1A1A18;font-size:12px;}
+.smoothie-item:last-child{border-bottom:none;}
+.smoothie-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:4px;}
+.smoothie-name{font-weight:600;color:#E8E6E0;min-width:130px;}
+.smoothie-amount{font-size:11px;color:#555;margin-bottom:2px;}
+.smoothie-benefit{font-size:11px;color:#777;line-height:1.4;}
+
+hr.dv{border:none;border-top:0.5px solid #1E1E1C;margin:1rem 0;}
+
+.omega-note{background:#0A1A2A;border:0.5px solid #1A3A5A;border-radius:8px;padding:10px 13px;font-size:12px;color:#6090C0;line-height:1.6;margin-bottom:10px;}
+.omega-note strong{color:#80B0E0;}
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <button class="nav-btn on" onclick="showSection('rutina',this)">Rutina</button>
+  <button class="nav-btn" onclick="showSection('jedalnicek',this)">Jedálniček</button>
+  <button class="nav-btn" onclick="showSection('smoothie',this)">Smoothie</button>
+  <button class="nav-btn" onclick="showSection('trening',this)">Tréning</button>
+  <button class="nav-btn" onclick="showSection('jun',this)">Jún 2026</button>
+  <button class="nav-btn" onclick="showSection('suplementy',this)">Suplementy</button>
+</div>
+
+<!-- ==================== RUTINA ==================== -->
+<div id="rutina" class="section vis">
+  <p class="page-title">Denná rutina</p>
+  <p class="page-sub">Vstávanie 04:30 · Pracovný deň spánok 21:00 (7,5h) · Voľno 21:00 (8h)</p>
+
+  <div class="tabs">
+    <button class="tb on" onclick="showPanel('rut',0,this)">Prac. deň (S)</button>
+    <button class="tb" onclick="showPanel('rut',1,this)">Výjazd (V)</button>
+    <button class="tb" onclick="showPanel('rut',2,this)">Voľno</button>
+    <button class="tb" onclick="showPanel('rut',3,this)">Nočná</button>
+    <button class="tb" onclick="showPanel('rut',4,this)">Po nočnej</button>
+  </div>
+
+  <div id="rut-0" class="panel vis">
+    <div class="card">
+      <p class="card-title">Pracovný deň — kancelária 07:30–15:30</p>
+      <div class="routine-row"><span class="routine-time">04:30</span><span class="routine-act">Vstávanie</span></div>
+      <div class="routine-row"><span class="routine-time">04:30–04:40</span><span class="routine-act">Čaga + C60 tinktúra nalačno — pod jazyk alebo 50 ml vody</span></div>
+      <div class="routine-row"><span class="routine-time">04:40–04:45</span><span class="routine-act">Modlitba (5 min)</span></div>
+      <div class="routine-row"><span class="routine-time">04:45–04:50</span><span class="routine-act">Denník (5 min)</span></div>
+      <div class="routine-row"><span class="routine-time">04:50–05:00</span><span class="routine-act">Čítanie (10 min)</span></div>
+      <div class="routine-row"><span class="routine-time">05:00–05:10</span><span class="routine-act">Meditácia (10 min)</span></div>
+      <div class="routine-row"><span class="routine-time">05:10–05:20</span><span class="routine-act">Oblečenie na tréning</span></div>
+      <div class="routine-row"><span class="routine-time">05:20–05:30</span><span class="routine-act">Cesta do posilňovne (10 min)</span></div>
+      <div class="routine-row"><span class="routine-time">05:30–06:30</span><span class="routine-act">Tréning (60 min)</span></div>
+      <div class="routine-row"><span class="routine-time">06:30–06:40</span><span class="routine-act">Cesta domov</span></div>
+      <div class="routine-row"><span class="routine-time" style="color:#534AB7;">06:40</span><span class="routine-act"><strong style="color:#C8C6C0;">Smoothie</strong> — 2 hodiny po tinktúre ✓ + Möller's Omega 5 ml</span></div>
+      <div class="routine-row"><span class="routine-time">06:40–06:55</span><span class="routine-act">Sprcha + oblečenie</span></div>
+      <div class="routine-row"><span class="routine-time">06:55–07:05</span><span class="routine-act">Príprava krabičiek + odchod</span></div>
+      <div class="routine-row"><span class="routine-time">~08:00</span><span class="routine-act">Raňajky v práci + Cardilan 1 tbl + Proteín 1 odmerka</span></div>
+      <div class="routine-row"><span class="routine-time">12:00–13:00</span><span class="routine-act">Obed v práci (krabička/polievka)</span></div>
+      <div class="routine-row"><span class="routine-time">17:00–17:30</span><span class="routine-act">Večera v práci — posledné jedlo dňa</span></div>
+      <div class="routine-row"><span class="routine-time">20:00</span><span class="routine-act">Lion's Mane 1–2 g v teplej vode</span></div>
+      <div class="routine-row"><span class="routine-time">20:00–20:20</span><span class="routine-act">Čítanie (20 min)</span></div>
+      <div class="routine-row"><span class="routine-time">20:20–21:00</span><span class="routine-act">Hygiena, príprava na spánok</span></div>
+      <div class="routine-row"><span class="routine-time">21:00</span><span class="routine-act">Spánok — 7,5 hodiny</span></div>
+    </div>
+  </div>
+
+  <div id="rut-1" class="panel">
+    <div class="card">
+      <p class="card-title">Výjazdový deň — 07:30–19:30</p>
+      <div class="routine-row"><span class="routine-time">04:30</span><span class="routine-act">Vstávanie</span></div>
+      <div class="routine-row"><span class="routine-time">04:30–04:40</span><span class="routine-act">Čaga + C60 tinktúra nalačno</span></div>
+      <div class="routine-row"><span class="routine-time">04:40–05:10</span><span class="routine-act">Modlitba · Denník · Čítanie · Meditácia</span></div>
+      <div class="routine-row"><span class="routine-time">05:10–05:30</span><span class="routine-act">Oblečenie + cesta do posilňovne</span></div>
+      <div class="routine-row"><span class="routine-time">05:30–06:30</span><span class="routine-act">Tréning (60 min)</span></div>
+      <div class="routine-row"><span class="routine-time">06:30–06:40</span><span class="routine-act">Cesta domov</span></div>
+      <div class="routine-row"><span class="routine-time" style="color:#534AB7;">06:40</span><span class="routine-act"><strong style="color:#C8C6C0;">Smoothie</strong> ✓ + Möller's Omega 5 ml</span></div>
+      <div class="routine-row"><span class="routine-time">06:40–06:55</span><span class="routine-act">Sprcha + oblečenie</span></div>
+      <div class="routine-row"><span class="routine-time">06:55–07:05</span><span class="routine-act">Príprava krabičiek + odchod</span></div>
+      <div class="routine-row"><span class="routine-time">~08:00</span><span class="routine-act">Raňajky v práci + Cardilan + Proteín</span></div>
+      <div class="routine-row"><span class="routine-time">12:00–13:00</span><span class="routine-act">Obed v práci (krabička)</span></div>
+      <div class="routine-row"><span class="routine-time">17:00–17:30</span><span class="routine-act">Večera v práci — posledné jedlo (pred koncom služby)</span></div>
+      <div class="routine-row"><span class="routine-time">20:00</span><span class="routine-act">Lion's Mane + čítanie 20 min</span></div>
+      <div class="routine-row"><span class="routine-time">21:00</span><span class="routine-act">Spánok</span></div>
+    </div>
+    <div class="note warn"><strong>Výjazd končí 19:30</strong> — domov ~20:00. Večera musí byť zjedená v práci o 17:00–17:30 kvôli refluxu.</div>
+  </div>
+
+  <div id="rut-2" class="panel">
+    <div class="card">
+      <p class="card-title">Voľný deň</p>
+      <div class="routine-row"><span class="routine-time">04:30</span><span class="routine-act">Vstávanie — rovnaký čas, stabilný rytmus</span></div>
+      <div class="routine-row"><span class="routine-time">04:30–04:40</span><span class="routine-act">Čaga + C60 tinktúra nalačno</span></div>
+      <div class="routine-row"><span class="routine-time">04:40–05:10</span><span class="routine-act">Modlitba · Denník · Čítanie · Meditácia</span></div>
+      <div class="routine-row"><span class="routine-time">05:10–05:30</span><span class="routine-act">Oblečenie + cesta do posilňovne</span></div>
+      <div class="routine-row"><span class="routine-time">05:30–06:30</span><span class="routine-act">Tréning (60 min — plný)</span></div>
+      <div class="routine-row"><span class="routine-time">06:30–06:40</span><span class="routine-act">Cesta domov</span></div>
+      <div class="routine-row"><span class="routine-time" style="color:#534AB7;">06:40</span><span class="routine-act"><strong style="color:#C8C6C0;">Smoothie</strong> ✓ + Möller's Omega 5 ml</span></div>
+      <div class="routine-row"><span class="routine-time">06:40–07:00</span><span class="routine-act">Sprcha</span></div>
+      <div class="routine-row"><span class="routine-time">07:00–07:30</span><span class="routine-act">Raňajky doma + Cardilan + Proteín</span></div>
+      <div class="routine-row"><span class="routine-time">12:00–13:00</span><span class="routine-act">Obed doma</span></div>
+      <div class="routine-row"><span class="routine-time">17:00–17:30</span><span class="routine-act">Večera + Lion's Mane</span></div>
+      <div class="routine-row"><span class="routine-time">20:00–20:20</span><span class="routine-act">Čítanie 20 min</span></div>
+      <div class="routine-row"><span class="routine-time">21:00</span><span class="routine-act">Spánok — 8 hodín ✓</span></div>
+    </div>
+  </div>
+
+  <div id="rut-3" class="panel">
+    <div class="card">
+      <p class="card-title">Nočná služba — 19:30–07:30</p>
+      <div class="routine-row"><span class="routine-time">04:30</span><span class="routine-act">Vstávanie</span></div>
+      <div class="routine-row"><span class="routine-time">04:30–04:40</span><span class="routine-act">Čaga + C60 tinktúra nalačno</span></div>
+      <div class="routine-row"><span class="routine-time">04:40–05:10</span><span class="routine-act">Modlitba · Denník · Čítanie · Meditácia</span></div>
+      <div class="routine-row"><span class="routine-time">05:10–05:30</span><span class="routine-act">Oblečenie + cesta do posilňovne</span></div>
+      <div class="routine-row"><span class="routine-time">05:30–06:30</span><span class="routine-act">Tréning (60 min)</span></div>
+      <div class="routine-row"><span class="routine-time">06:30–06:40</span><span class="routine-act">Cesta domov</span></div>
+      <div class="routine-row"><span class="routine-time" style="color:#534AB7;">06:40</span><span class="routine-act"><strong style="color:#C8C6C0;">Smoothie</strong> ✓ + Möller's Omega 5 ml</span></div>
+      <div class="routine-row"><span class="routine-time">06:40–07:15</span><span class="routine-act">Sprcha + raňajky + Cardilan + Proteín</span></div>
+      <div class="routine-row"><span class="routine-time">12:00–13:00</span><span class="routine-act">Obed (krabička)</span></div>
+      <div class="routine-row"><span class="routine-time">17:00–17:30</span><span class="routine-act">Večera pred nastúpením — posledné jedlo</span></div>
+      <div class="routine-row"><span class="routine-time">19:30</span><span class="routine-act">Nástup na nočnú</span></div>
+      <div class="routine-row"><span class="routine-time">Počas nočnej</span><span class="routine-act">Neješ — ak nespiš a máš hlad: 1 odmerka proteínu + hrsť vlašských orechov</span></div>
+    </div>
+  </div>
+
+  <div id="rut-4" class="panel">
+    <div class="card">
+      <p class="card-title">Po nočnej — príchod domov ~07:30–08:00</p>
+      <div class="routine-row"><span class="routine-time">08:00</span><span class="routine-act" style="color:#E07070;font-weight:600;">ŽIADNY TRÉNING — spánok je priorita č.1</span></div>
+      <div class="routine-row"><span class="routine-time">08:00–08:15</span><span class="routine-act">1 odmerka proteínu + hrsť vlašských orechov pred spánkom</span></div>
+      <div class="routine-row"><span class="routine-time">08:30–15:30</span><span class="routine-act">Spánok — min. 7 hodín</span></div>
+      <div class="routine-row"><span class="routine-time">15:30–16:00</span><span class="routine-act">Vstávanie · Čaga + C60 tinktúra</span></div>
+      <div class="routine-row"><span class="routine-time">16:00–16:30</span><span class="routine-act">Smoothie + Möller's Omega · ľahké jedlo</span></div>
+      <div class="routine-row"><span class="routine-time">17:00–17:30</span><span class="routine-act">Večera + Lion's Mane</span></div>
+      <div class="routine-row"><span class="routine-time">20:00–20:20</span><span class="routine-act">Čítanie 20 min</span></div>
+      <div class="routine-row"><span class="routine-time">21:00</span><span class="routine-act">Spánok</span></div>
+    </div>
+    <div class="note red"><strong>Po nočnej absolútne žiadny tréning.</strong> 75% váhy stratenej pri nedostatku spánku ide zo svalov, nie z tuku. Kortizol na maxime = rozklad svalov pri tréningu.</div>
+  </div>
+</div>
+
+<!-- ==================== JEDALNICEK ==================== -->
+<div id="jedalnicek" class="section">
+  <p class="page-title">7-dňový jedálniček</p>
+  <p class="page-sub">2 080 kcal · 185g proteín · 750 kcal deficit · varenie 2× týždenne (Po+Št) + nedeľný vývar</p>
+
+  <div class="grid-4" style="margin-bottom:1rem;">
+    <div class="stat"><div class="stat-val">2 080</div><div class="stat-lbl">kcal/deň</div></div>
+    <div class="stat"><div class="stat-val">185 g</div><div class="stat-lbl">proteín</div></div>
+    <div class="stat"><div class="stat-val">750</div><div class="stat-lbl">kcal deficit</div></div>
+    <div class="stat"><div class="stat-val">~0,5 kg</div><div class="stat-lbl">týždeň</div></div>
+  </div>
+
+  <div class="omega-note"><strong>Möller's Omega 3 — 5 ml denne:</strong> Ber so smoothie ráno (06:40) — omega-3 sa vstrebávajú s tukmi z kokosového mlieka. Vitamín A: 250 µg (31% RHP) — bezpečné aj dlhodobo. Pečeňový deň (Št) celkom ~3 910 µg vitamínu A — nad limitom ale len 1× týždenne.</div>
+
+  <div class="legend">
+    <div class="leg"><div class="leg-dot" style="background:#1D9E75;"></div><span>Polievka z nedele (Po–St)</span></div>
+    <div class="leg"><div class="leg-dot" style="background:#BA7517;"></div><span>★ DHT blok / vlasy</span></div>
+    <div class="leg"><div class="leg-dot" style="background:#534AB7;"></div><span>❄ Čučoriedky + goji</span></div>
+  </div>
+
+  <div class="tabs">
+    <button class="tb on" onclick="showPanel('jed',0,this)">Po</button>
+    <button class="tb" onclick="showPanel('jed',1,this)">Ut</button>
+    <button class="tb" onclick="showPanel('jed',2,this)">St</button>
+    <button class="tb" onclick="showPanel('jed',3,this)">Št</button>
+    <button class="tb" onclick="showPanel('jed',4,this)">Pi</button>
+    <button class="tb" onclick="showPanel('jed',5,this)">So</button>
+    <button class="tb cheat" onclick="showPanel('jed',6,this)">Ne ✦</button>
+  </div>
+
+  <!-- PONDELOK -->
+  <div id="jed-0" class="panel vis">
+    <div class="cook"><strong>Varenie deň 1 (Po):</strong> Hovädzie mleté na 3 dni (Po+Ut+St raňajky) + ryža na Po+St. Obed = polievka z nedele.</div>
+    <div class="supp-box">
+      <p class="supp-title">Suplementy</p>
+      <div class="supp-row"><span class="supp-time">04:30 nalačno</span><span class="supp-name">Čaga + C60 tinktúra</span><span class="stag tg-d">detox</span></div>
+      <div class="supp-row"><span class="supp-time">06:40 smoothie</span><span class="supp-name">Smoothie + Möller's Omega 5 ml</span><span class="stag tg-d">omega</span></div>
+      <div class="supp-row"><span class="supp-time">~08:00 s jedlom</span><span class="supp-name">Cardilan 1 tbl + Proteín 1 odmerka (30g)</span><span class="stag tg-h">srdce</span></div>
+      <div class="supp-row"><span class="supp-time">20:00</span><span class="supp-name">Lion's Mane prášok 1–2 g v teplej vode</span><span class="stag tg-b">mozog</span></div>
+    </div>
+    <div class="meal">
+      <div class="meal-head"><span class="meal-name">Raňajky</span><span class="meal-time">~08:00 v práci</span><span class="meal-kcal">~620 kcal</span></div>
+      <div class="meal-body">
+        <div class="meal-row"><span class="meal-item">Vajcia celé<span class="meal-hair">★ biotín, cysteín</span></span><span class="meal-detail">4 ks · 280 kcal · 24g</span></div>
+        <div class="meal-row"><span class="meal-item">Hovädzie mleté (20% tuk)</span><span class="meal-detail">120 g · 240 kcal · 22g</span></div>
+        <div class="meal-row"><span class="meal-item">Avokádo<span class="meal-hair">★ beta-sitosterol</span></span><span class="meal-detail">½ ks · 120 kcal</span></div>
+        <div class="meal-row"><span class="meal-item">Tekvicové semienka<span class="meal-hair">★ zinok, DHT blok</span></span><span class="meal-detail">15 g · 83 kcal</span></div>
+        <div class="meal-row"><span class="meal-item">Vlašské orechy<span class="meal-hair">★ omega-3, longevita</span></span><span class="meal-detail">28 g · 185 kcal</span></div>
+      </div>
+    </div>
+    <div class="meal soup">
+      <div class="meal-head"><span class="meal-name">🍲 Obed — kuracia polievka z nedele</span><span class="meal-time">12:00–13:00</span><span class="meal-kcal">~670 kcal</span></div>
+      <div class="meal-body">
+        <div class="meal-row"><span class="meal-item">Kurací vývar<span class="meal-hair">★ kolagén, glycín</span></span><span class="meal-detail">400 ml · ~80 kcal</span></div>
+        <div class="meal-row"><span class="meal-item">Kuracie mäso z vývaru</span><span class="meal-detail">180 g · 198 kcal · 38g</span></div>
+        <div class="meal-row"><span class="meal-item">Mrkva + petržlen (z vývaru)</span><span class="meal-detail">150 g · 60 kcal</span></div>
+        <div class="meal-row"><span class="meal-item">Ryža varená (zvlášť) — po silovom</span><span class="meal-detail">120 g · 156 kcal</span></div>
+        <div class="meal-row"><span class="meal-item">Olivový olej + citrón<span class="meal-hair">★ vit. C, kolagén</span></span><span class="meal-detail">1 PL · 120 kcal</span></div>
+        <div class="meal-row"><span class="meal-item">Čerstvý špenát<span class="meal-hair">★ zinok, folát</span></span><span class="meal-detail">50 g · 12 kcal</span></div>
+      </div>
+    </div>
+    <div class="meal">
+      <div class="meal-head"><span class="meal-name">Večera</span><span class="meal-time">17:00–17:30 v práci</span><span class="meal-kcal">~530 kcal</span></div>
+      <div class="meal-body">
+        <div class="meal-row"><span class="meal-item">Kuracie prsia</span><span class="meal-detail">230 g · 253 kcal · 48g</span></div>
+        <div class="meal-row"><span class="meal-item">Špenát + paradajky<span class="meal-hair">★ zinok, lykopén</span></span><span class="meal-detail">150 g · 35 kcal</span></div>
+        <div class="meal-row"><span class="meal-item">Grécky jogurt (0%)</span><span class="meal-detail">120 g · 72 kcal · 12g</span></div>
+        <div class="meal-row"><span class="meal-item" style="color:#534AB7;">❄ Mraz. čučoriedky + goji<span class="meal-hair">★ antioxidanty</span></span><span class="meal-detail">40g+20g · 55 kcal</span></div>
+        <div class="meal-row"><span class="meal-item">Olivový olej</span><span class="meal-detail">1 PL · 120 kcal</span></div>
+      </div>
+    </div>
+    <div class="note"><strong>Vlašské orechy do raňajkového boxu každý deň</strong> — 28g, nedávaj viac. Skladuj v chlade aby neoxidovali.</div>
+  </div>
+
+  <!-- UTOROK -->
+  <div id="jed-1" class="panel">
+    <div class="cook"><strong>Žiadne varenie.</strong> Raňajky z krabičky (Po), polievka z nedele, večera = tuniak z konzervy.</div>
+    <div class="supp-box">
+      <p class="supp-title">Suplementy</p>
+      <div class="supp-row"><span class="supp-time">04:30 nalačno</span><span class="supp-name">Čaga + C60 tinktúra</span><span class="stag tg-d">detox</span></div>
+      <div class="supp-row"><span class="supp-time">06:40 smoothie</span><span class="supp-name">Smoothie + Möller's Omega 5 ml</span><span class="stag tg-d">omega</span></div>
+      <div class="supp-row"><span class="supp-time">~08:00 s jedlom</span><span class="supp-name">Cardilan 1 tbl + Proteín 1 odmerka</span><span class="stag tg-h">srdce</span></div>
+      <div class="supp-row"><span class="supp-time">20:00</span><span class="supp-name">Lion's Mane 1–2 g</span><span class="stag tg-b">mozog</span></div>
+    </div>
+    <div class="meal">
+      <div class="meal-head"><span class="meal-name">Raňajky (z krabičky)</span><span class="meal-time">~08:00</span><span class="meal-kcal">~628 kcal</span></div>
+      <div class="meal-body">
+        <div class="meal-row"><span class="meal-item">Vajcia celé<span class="meal-hair">★ biotín</span></span><span class="meal-detail">4 ks · 280 kcal</span></div>
+        <div class="meal-row"><span class="meal-item">Hovädzie mleté (z Po)</span><span class="meal-detail">120 g · 240 kcal</span></div>
+        <div class="meal-row"><span class="meal-item">Avokádo<span class="meal-hair">★ beta-sitosterol</span></span><span class="meal-detail">½ ks · 120 kcal</span></div>
+        <div class="meal-row"><span class="meal-item">Vlašské orechy<span class="meal-hair">★ omega-3</span></span><span class="meal-detail">28 g · 185 kcal</span></div>
+      </div>
+    </div>
+    <div class="meal soup">
+      <div class="meal-head"><span class="meal-name">🍲 Obed — kuracia polievka z nedele</span><span class="meal-time">12:00–13:00</span><span class="meal-kcal">~530 kcal</span></div>
+      <div class="meal-body">
+        <div class="meal-row"><span class="meal-item">Kurací vývar<span class="meal-hair">★ kolagén</span></span><span class="meal-detail">400 ml · ~80 kcal</span></div>
+        <div class="meal-row"><span class="meal-item">Kuracie mäso z vývaru</span><span class="meal-detail">180 g · 198 kcal · 38g</span></div>
+        <div class="meal-row"><span class="meal-item">Mrkva + petržlen</span><span class="meal-detail">150 g · 60 kcal</span></div>
+        <div class="meal-row"><span class="meal-item">Bez ryže — plávanie deň</span><span class="meal-detail">—</span></div>
+        <div class="meal-row"><span class="meal-item">Olivový olej + tekvicové semienka<span class="meal-hair">★ zinok</span></span><span class="meal-detail">1PL+15g · 203 kcal</span></div>
+      </div>
+    </div>
+    <div class="meal">
+      <div class="meal-head"><span class="meal-name">Večera (bez varenia)</span><span class="meal-time">17:00–17:30</span><span class="meal-kcal">~530 kcal</span></div>
+      <div class="meal-body">
+        <div class="meal-row"><span class="meal-item">Tuniak v olivovom oleji (konzerva)</span><span class="meal-detail">185 g · 296 kcal · 42g</span></div>
+        <div class="meal-row"><span class="meal-item">Vajcia uvarené natvrdo<span class="meal-hair">★ biotín</span></span><span class="meal-detail">2 ks · 140 kcal</span></div>
+        <div class="meal-row"><span class="meal-item">Špenát + paradajky<span class="meal-hair">★ zinok, lykopén</span></span><span class="meal-detail">150 g · 40 kcal</span></div>
+        <div class="meal-row"><span class="meal-item" style="color:#534AB7;">❄ Mraz. čučoriedky + goji</span><span class="meal-detail">40g+20g · 55 kcal</span></div>
+      </div>
+    </div>
+    <div class="note"><strong>Plávanie deň = bez ryže na obed.</strong> Nižší príjem ~2 000 kcal je zámer — kardio nepotrebuje doplnenie glykogénu tak ako silový tréning.</div>
+  </div>
+
+  <!-- STREDA -->
+  <div id="jed-2" class="panel">
+    <div class="cook"><strong>Posledný deň polievky z nedele.</strong> Dnes večer alebo zajtra — druhé varenie na Št+Pi+So.</div>
+    <div class="supp-box">
+      <p class="supp-title">Suplementy</p>
+      <div class="supp-row"><span class="supp-time">04:30 nalačno</span><span class="supp-name">Čaga + C60 tinktúra</span><span class="stag tg-d">detox</span></div>
+      <div class="supp-row"><span class="supp-time">06:40 smoothie</span><span class="supp-name">Smoothie + Möller's Omega 5 ml</span><span class="stag tg-d">omega</span></div>
+      <div class="supp-row"><span class="supp-time">~08:00 s jedlom</span><span class="supp-name">Cardilan 1 tbl + Proteín 1 odmerka</span><span class="stag tg-h">srdce</span></div>
+      <div class="supp-row"><span class="supp-time">20:00</span><span class="supp-name">Lion's Mane 1–2 g</span><span class="stag tg-b">mozog</span></div>
+    </div>
+    <div class="meal">
+      <div class="meal-head"><span class="meal-name">Raňajky (z krabičky)</span><span class="meal-time">~08:00</span><span class="meal-kcal">~628 kcal</span></div>
+      <div class="meal-body">
+        <div class="meal-row"><span class="meal-item">Vajcia celé<span class="meal-hair">★ biotín</span></span><span class="meal-detail">4 ks · 280 kcal</span></div>
+        <div class="meal-row"><span class="meal-item">Hovädzie mleté (z Po)</span><span class="meal-detail">120 g · 240 kcal</span></div>
+        <div class="meal-row"><span class="meal-item">Avokádo<span class="meal-hair">★ beta-sitosterol</span></span><span class="meal-detail">½ ks · 120 kcal</span></div>
+        <div class="meal-row"><span class="meal-item">Vlašské orechy<span class="meal-hair">★ omega-3</span></span><span class="meal-detail">28 g · 185 kcal</span></div>
+      </div>
+    </div>
+    <div class="meal soup">
+      <div class="meal-head"><span class="meal-name">🍲 Obed — kuracia polievka z nedele</span><span class="meal-time">12:00–13:00</span><span class="meal-kcal">~660 kcal</span></div>
+      <div class="meal-body">
+        <div class="meal-row"><span class="meal-item">Kurací vývar<span class="meal-hair">★ kolagén</span></span><span class="meal-detail">400 ml · ~80 kcal</span></div>
+        <div class="meal-row"><span class="meal-item">Kuracie mäso z vývaru</span><span class="meal-detail">180 g · 198 kcal · 38g</span></div>
+        <div class="meal-row"><span class="meal-item">Mrkva + petržlen</span><span class="meal-detail">150 g · 60 kcal</span></div>
+        <div class="meal-row"><span class="meal-item">Sladký zemiak (zvlášť)<span class="meal-hair">★ beta-karotén, draslík</span></span><span class="meal-detail">120 g · 103 kcal</span></div>
+        <div class="meal-row"><span class="meal-item">Olivový olej + cesnak<span class="meal-hair">★ kvercetín, DHT blok</span></span><span class="meal-detail">1PL · 128 kcal</span></div>
+      </div>
+    </div>
+    <div class="meal">
+      <div class="meal-head"><span class="meal-name">Večera</span><span class="meal-time">17:00–17:30</span><span class="meal-kcal">~520 kcal</span></div>
+      <div class="meal-body">
+        <div class="meal-row"><span class="meal-item">Hovädzie mleté (10%)</span><span class="meal-detail">200 g · 292 kcal · 42g</span></div>
+        <div class="meal-row"><span class="meal-item">Špenát + cuketa<span class="meal-hair">★ zinok, folát</span></span><span class="meal-detail">200 g · 50 kcal</span></div>
+        <div class="meal-row"><span class="meal-item">Tvaroh</span><span class="meal-detail">120 g · 96 kcal · 14g</span></div>
+        <div class="meal-row"><span class="meal-item" style="color:#534AB7;">❄ Mraz. čučoriedky + goji</span><span class="meal-detail">40g+20g · 55 kcal</span></div>
+        <div class="meal-row"><span class="meal-item">Olivový olej</span><span class="meal-detail">½ PL · 60 kcal</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ŠTVRTOK -->
+  <div id="jed-3" class="panel">
+    <div class="cook"><strong>Varenie deň 2 (Št):</strong> Kuracie pečeň (dnes ráno) + kuracie stehná + zelenina na Pi+So obedy. Krabičky na 3 dni.</div>
+    <div class="supp-box">
+      <p class="supp-title">Suplementy</p>
+      <div class="supp-row"><span class="supp-time">04:30 nalačno</span><span class="supp-name">Čaga + C60 tinktúra</span><span class="stag tg-d">detox</span></div>
+      <div class="supp-row"><span class="supp-time">06:40 smoothie</span><span class="supp-name">Smoothie + Möller's Omega 5 ml</span><span class="stag tg-d">omega</span></div>
+      <div class="supp-row"><span class="supp-time">~08:00 s jedlom</span><span class="supp-name">Cardilan 1 tbl + Proteín 1 odmerka</span><span class="stag tg-h">srdce</span></div>
+      <div class="supp-row"><span class="supp-time">20:00</span><span class="supp-name">Lion's Mane 1–2 g</span><span class="stag tg-b">mozog</span></div>
+    </div>
+    <div class="meal">
+      <div class="meal-head"><span class="meal-name">Raňajky — pečeň deň</span><span class="meal-time">~08:00</span><span class="meal-kcal">~538 kcal</span></div>
+      <div class="meal-body">
+        <div class="meal-row"><span class="meal-item">Vajcia celé<span class="meal-hair">★ biotín, cysteín</span></span><span class="meal-detail">4 ks · 280 kcal</span></div>
+        <div class="meal-row"><span class="meal-item">Kuracie pečeň restovaná<span class="meal-hair">★ B12, železo, vit. A — top pre vlasy</span></span><span class="meal-detail">120 g · 166 kcal · 22g</span></div>
+        <div class="meal-row"><span class="meal-item">Cibuľa + cesnak<span class="meal-hair">★ kvercetín, DHT blok</span></span><span class="meal-detail">60 g · 25 kcal</span></div>
+        <div class="meal-row"><span class="meal-item">Ghí</span><span class="meal-detail">½ PL · 54 kcal</span></div>
+        <div class="meal-row"><span class="meal-item">Vlašské orechy<span class="meal-hair">★ omega-3</span></span><span class="meal-detail">28 g · 185 kcal</span></div>
+      </div>
+    </div>
+    <div class="meal">
+      <div class="meal-head"><span class="meal-name">Obed</span><span class="meal-time">12:00–13:00</span><span class="meal-kcal">~700 kcal</span></div>
+      <div class="meal-body">
+        <div class="meal-row"><span class="meal-item">Losos pečený<span class="meal-hair">★ omega-3, pleť + vlasy</span></span><span class="meal-detail">200 g · 416 kcal · 40g</span></div>
+        <div class="meal-row"><span class="meal-item">Brokolica + karfiol<span class="meal-hair">★ sulforafan, vit. C</span></span><span class="meal-detail">200 g · 65 kcal</span></div>
+        <div class="meal-row"><span class="meal-item">Mandle<span class="meal-hair">★ vit. E, zinok</span></span><span class="meal-detail">20 g · 116 kcal</span></div>
+        <div class="meal-row"><span class="meal-item">Olivový olej</span><span class="meal-detail">1 PL · 120 kcal</span></div>
+      </div>
+    </div>
+    <div class="meal">
+      <div class="meal-head"><span class="meal-name">Večera</span><span class="meal-time">17:00–17:30</span><span class="meal-kcal">~490 kcal</span></div>
+      <div class="meal-body">
+        <div class="meal-row"><span class="meal-item">Kuracie prsia</span><span class="meal-detail">220 g · 242 kcal · 46g</span></div>
+        <div class="meal-row"><span class="meal-item">Špenát + paradajky<span class="meal-hair">★ zinok, lykopén</span></span><span class="meal-detail">180 g · 45 kcal</span></div>
+        <div class="meal-row"><span class="meal-item">Tvaroh</span><span class="meal-detail">100 g · 80 kcal · 12g</span></div>
+        <div class="meal-row"><span class="meal-item" style="color:#534AB7;">❄ Mraz. čučoriedky + goji</span><span class="meal-detail">40g+20g · 55 kcal</span></div>
+        <div class="meal-row"><span class="meal-item">Olivový olej</span><span class="meal-detail">½ PL · 60 kcal</span></div>
+      </div>
+    </div>
+    <div class="note warn"><strong>Pečeň max. 1× týždenne.</strong> Vitamín A celkovo dnes: ~3 910 µg — nad limitom 3 000 µg ale jednorazovo, nie každý deň. Bezpečné.</div>
+  </div>
+
+  <!-- PIATOK -->
+  <div id="jed-4" class="panel">
+    <div class="cook"><strong>Krabičky zo štvrtka.</strong> Losos údený = nulová príprava. Večera bez varenia.</div>
+    <div class="supp-box">
+      <p class="supp-title">Suplementy</p>
+      <div class="supp-row"><span class="supp-time">04:30 nalačno</span><span class="supp-name">Čaga + C60 tinktúra</span><span class="stag tg-d">detox</span></div>
+      <div class="supp-row"><span class="supp-time">06:40 smoothie</span><span class="supp-name">Smoothie + Möller's Omega 5 ml</span><span class="stag tg-d">omega</span></div>
+      <div class="supp-row"><span class="supp-time">~08:00 s jedlom</span><span class="supp-name">Cardilan 1 tbl + Proteín 1 odmerka</span><span class="stag tg-h">srdce</span></div>
+      <div class="supp-row"><span class="supp-time">20:00</span><span class="supp-name">Lion's Mane 1–2 g</span><span class="stag tg-b">mozog</span></div>
+    </div>
+    <div class="meal">
+      <div class="meal-head"><span class="meal-name">Raňajky (z krabičky)</span><span class="meal-time">~08:00</span><span class="meal-kcal">~648 kcal</span></div>
+      <div class="meal-body">
+        <div class="meal-row"><span class="meal-item">Vajcia celé<span class="meal-hair">★ biotín</span></span><span class="meal-detail">4 ks · 280 kcal</span></div>
+        <div class="meal-row"><span class="meal-item">Losos údený prírodný<span class="meal-hair">★ omega-3, pleť + vlasy</span></span><span class="meal-detail">100 g · 180 kcal · 20g</span></div>
+        <div class="meal-row"><span class="meal-item">Avokádo<span class="meal-hair">★ beta-sitosterol</span></span><span class="meal-detail">½ ks · 120 kcal</span></div>
+        <div class="meal-row"><span class="meal-item">Citrón + vlašské orechy<span class="meal-hair">★ vit. C, omega-3</span></span><span class="meal-detail">½+28g · 195 kcal</span></div>
+      </div>
+    </div>
+    <div class="meal">
+      <div class="meal-head"><span class="meal-name">Obed (z krabičky)</span><span class="meal-time">12:00–13:00</span><span class="meal-kcal">~735 kcal</span></div>
+      <div class="meal-body">
+        <div class="meal-row"><span class="meal-item">Kuracie stehná pečené (zo Št)</span><span class="meal-detail">300 g · 531 kcal · 48g</span></div>
+        <div class="meal-row"><span class="meal-item">Ryža varená</span><span class="meal-detail">100 g · 130 kcal</span></div>
+        <div class="meal-row"><span class="meal-item">Špenát + cesnak<span class="meal-hair">★ zinok, kvercetín</span></span><span class="meal-detail">150 g · 40 kcal</span></div>
+        <div class="meal-row"><span class="meal-item">Maslo</span><span class="meal-detail">10 g · 74 kcal</span></div>
+      </div>
+    </div>
+    <div class="meal">
+      <div class="meal-head"><span class="meal-name">Večera (bez varenia)</span><span class="meal-time">17:00–17:30</span><span class="meal-kcal">~490 kcal</span></div>
+      <div class="meal-body">
+        <div class="meal-row"><span class="meal-item">Morčacie prsia</span><span class="meal-detail">220 g · 242 kcal · 49g</span></div>
+        <div class="meal-row"><span class="meal-item">Grécky jogurt plnotučný</span><span class="meal-detail">120 g · 108 kcal · 8g</span></div>
+        <div class="meal-row"><span class="meal-item">Paradajky + uhorka<span class="meal-hair">★ lykopén</span></span><span class="meal-detail">180 g · 36 kcal</span></div>
+        <div class="meal-row"><span class="meal-item">Tekvicové semienka<span class="meal-hair">★ zinok, DHT blok</span></span><span class="meal-detail">15 g · 83 kcal</span></div>
+        <div class="meal-row"><span class="meal-item" style="color:#534AB7;">❄ Mraz. čučoriedky + goji</span><span class="meal-detail">40g+20g · 55 kcal</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SOBOTA -->
+  <div id="jed-5" class="panel">
+    <div class="cook"><strong>Posledný deň krabičiek zo štvrtka.</strong> Nedeľa = vývar + voľno + cheat meal.</div>
+    <div class="supp-box">
+      <p class="supp-title">Suplementy</p>
+      <div class="supp-row"><span class="supp-time">04:30 nalačno</span><span class="supp-name">Čaga + C60 tinktúra</span><span class="stag tg-d">detox</span></div>
+      <div class="supp-row"><span class="supp-time">06:40 smoothie</span><span class="supp-name">Smoothie + Möller's Omega 5 ml</span><span class="stag tg-d">omega</span></div>
+      <div class="supp-row"><span class="supp-time">~08:00 s jedlom</span><span class="supp-name">Cardilan 1 tbl + Proteín 1 odmerka</span><span class="stag tg-h">srdce</span></div>
+      <div class="supp-row"><span class="supp-time">20:00</span><span class="supp-name">Lion's Mane 1–2 g</span><span class="stag tg-b">mozog</span></div>
+    </div>
+    <div class="meal">
+      <div class="meal-head"><span class="meal-name">Raňajky (pred aktivitou)</span><span class="meal-time">~08:00</span><span class="meal-kcal">~640 kcal</span></div>
+      <div class="meal-body">
+        <div class="meal-row"><span class="meal-item">Vajcia celé<span class="meal-hair">★ biotín</span></span><span class="meal-detail">4 ks · 280 kcal</span></div>
+        <div class="meal-row"><span class="meal-item">Hovädzie mleté (20%)</span><span class="meal-detail">150 g · 300 kcal</span></div>
+        <div class="meal-row"><span class="meal-item">Banán<span class="meal-hair">★ draslík, energia</span></span><span class="meal-detail">1 ks · 105 kcal</span></div>
+        <div class="meal-row"><span class="meal-item">Vlašské orechy<span class="meal-hair">★ omega-3</span></span><span class="meal-detail">28 g · 185 kcal</span></div>
+      </div>
+    </div>
+    <div class="meal">
+      <div class="meal-head"><span class="meal-name">Obed (z krabičky)</span><span class="meal-time">12:00–13:00</span><span class="meal-kcal">~755 kcal</span></div>
+      <div class="meal-body">
+        <div class="meal-row"><span class="meal-item">Kuracie stehná (zo Št)</span><span class="meal-detail">320 g · 566 kcal · 51g</span></div>
+        <div class="meal-row"><span class="meal-item">Sladký zemiak<span class="meal-hair">★ beta-karotén, draslík</span></span><span class="meal-detail">150 g · 129 kcal</span></div>
+        <div class="meal-row"><span class="meal-item">Brokolica<span class="meal-hair">★ sulforafan</span></span><span class="meal-detail">120 g · 42 kcal</span></div>
+        <div class="meal-row"><span class="meal-item">Maslo</span><span class="meal-detail">10 g · 74 kcal</span></div>
+      </div>
+    </div>
+    <div class="meal">
+      <div class="meal-head"><span class="meal-name">Večera (bez varenia)</span><span class="meal-time">17:00–17:30</span><span class="meal-kcal">~480 kcal</span></div>
+      <div class="meal-body">
+        <div class="meal-row"><span class="meal-item">Tuniak v olivovom oleji (konzerva)</span><span class="meal-detail">185 g · 296 kcal · 42g</span></div>
+        <div class="meal-row"><span class="meal-item">Vajcia uvarené<span class="meal-hair">★ biotín</span></span><span class="meal-detail">2 ks · 140 kcal</span></div>
+        <div class="meal-row"><span class="meal-item">Špenát + paradajky<span class="meal-hair">★ zinok</span></span><span class="meal-detail">150 g · 40 kcal</span></div>
+        <div class="meal-row"><span class="meal-item" style="color:#534AB7;">❄ Mraz. čučoriedky + goji</span><span class="meal-detail">40g+20g · 55 kcal</span></div>
+      </div>
+    </div>
+    <div class="note"><strong>Sobota = plávanie + nohy.</strong> Najnáročnejší deň — banán ráno povinný pre energiu.</div>
+  </div>
+
+  <!-- NEDELA -->
+  <div id="jed-6" class="panel">
+    <div class="cook warn"><strong>Varíš vývar na nový týždeň.</strong> Pred kostolom hodíš do hrnca: kuracie stehná s kosťou + mrkva + petržlen + celer + cesnak + cibuľa + 1 PL jablčného octu. Zalieš vodou, varíš 3–4 hod. samo. Prídeš domov — precedíš, rozdeliš do nádob.</div>
+    <div class="supp-box">
+      <p class="supp-title">Suplementy</p>
+      <div class="supp-row"><span class="supp-time">04:30 nalačno</span><span class="supp-name">Čaga + C60 tinktúra</span><span class="stag tg-d">detox</span></div>
+      <div class="supp-row"><span class="supp-time">06:40 smoothie</span><span class="supp-name">Smoothie + Möller's Omega 5 ml</span><span class="stag tg-d">omega</span></div>
+      <div class="supp-row"><span class="supp-time">~08:00 s jedlom</span><span class="supp-name">Cardilan 1 tbl + Proteín 1 odmerka</span><span class="stag tg-h">srdce</span></div>
+      <div class="supp-row"><span class="supp-time">pred spaním</span><span class="supp-name">Lion's Mane — dnes výnimočne pred spaním</span><span class="stag tg-b">mozog</span></div>
+    </div>
+    <div class="meal">
+      <div class="meal-head"><span class="meal-name">Raňajky</span><span class="meal-time">08:00–09:00</span><span class="meal-kcal">~592 kcal</span></div>
+      <div class="meal-body">
+        <div class="meal-row"><span class="meal-item">Vajcia celé<span class="meal-hair">★ biotín</span></span><span class="meal-detail">3 ks · 210 kcal</span></div>
+        <div class="meal-row"><span class="meal-item">Losos pečený<span class="meal-hair">★ omega-3</span></span><span class="meal-detail">150 g · 312 kcal</span></div>
+        <div class="meal-row"><span class="meal-item">Avokádo<span class="meal-hair">★ beta-sitosterol</span></span><span class="meal-detail">½ ks · 120 kcal</span></div>
+        <div class="meal-row"><span class="meal-item" style="color:#534AB7;">❄ Mraz. čučoriedky + goji</span><span class="meal-detail">40g+20g · 55 kcal</span></div>
+      </div>
+    </div>
+    <div class="meal">
+      <div class="meal-head"><span class="meal-name">Obed</span><span class="meal-time">12:00–13:00</span><span class="meal-kcal">~670 kcal</span></div>
+      <div class="meal-body">
+        <div class="meal-row"><span class="meal-item">Kuracie alebo hovädzie mäso</span><span class="meal-detail">270 g · 486 kcal</span></div>
+        <div class="meal-row"><span class="meal-item">Špenát + paradajky<span class="meal-hair">★ zinok, lykopén</span></span><span class="meal-detail">180 g · 45 kcal</span></div>
+        <div class="meal-row"><span class="meal-item">Tekvicové semienka<span class="meal-hair">★ zinok</span></span><span class="meal-detail">15 g · 83 kcal</span></div>
+        <div class="meal-row"><span class="meal-item">Olivový olej</span><span class="meal-detail">½ PL · 60 kcal</span></div>
+      </div>
+    </div>
+    <div class="meal cheat-meal">
+      <div class="meal-head"><span class="meal-name">✦ Cheat meal — krupicová kaša</span><span class="meal-time">max. 17:30</span><span class="meal-kcal" style="color:#BA7517;">~660 kcal</span></div>
+      <div class="meal-body">
+        <div class="meal-row"><span class="meal-item">Krupicová kaša (varená v mlieku)</span><span class="meal-detail">80 g · ~280 kcal</span></div>
+        <div class="meal-row"><span class="meal-item">Maslo</span><span class="meal-detail">20 g · 148 kcal</span></div>
+        <div class="meal-row"><span class="meal-item">Granko (2 PL)</span><span class="meal-detail">20 g · ~80 kcal</span></div>
+        <div class="meal-row"><span class="meal-item">Mlieko plnotučné</span><span class="meal-detail">200 ml · 124 kcal</span></div>
+      </div>
+    </div>
+    <div class="note warn"><strong>Cheat meal max. 17:30</strong> — reflux. Po jedle 20 min chôdza. Nedeľa = kostol + Natália + vývar. Žiadne krabičky dnes.</div>
+  </div>
+</div>
+
+<!-- ==================== SMOOTHIE ==================== -->
+<div id="smoothie" class="section">
+  <p class="page-title">Ranné detox smoothie</p>
+  <p class="page-sub">06:40 · 2 hodiny po Čaga+C60 · ~350 kcal</p>
+
+  <div class="sec-title">Presné poradie ráno</div>
+  <div class="card">
+    <div class="routine-row"><span class="routine-time" style="color:#1D9E75;">04:30</span><span class="routine-act"><strong style="color:#E8E6E0;">Čaga + C60 tinktúra</strong> — nalačno, samotná. Pod jazyk alebo 50 ml vody.</span></div>
+    <div class="routine-row"><span class="routine-time" style="color:#534AB7;">06:40</span><span class="routine-act"><strong style="color:#E8E6E0;">Smoothie + Möller's Omega 5 ml</strong> — 2 hodiny po tinktúre. Všetko do mixéra, 30 sekúnd.</span></div>
+    <div class="routine-row"><span class="routine-time" style="color:#E07070;">~08:00</span><span class="routine-act"><strong style="color:#E8E6E0;">Cardilan + Proteín</strong> — s jedlom. NIE so smoothie.</span></div>
+    <div class="routine-row"><span class="routine-time" style="color:#8080D8;">20:00</span><span class="routine-act"><strong style="color:#E8E6E0;">Lion's Mane</strong> — v teplej vode pred spaním. Nikdy do smoothie.</span></div>
+  </div>
+
+  <div class="sec-title">Zloženie smoothie</div>
+  <div class="card">
+    <div class="smoothie-item">
+      <div class="smoothie-dot" style="background:#534AB7;"></div>
+      <div>
+        <div class="smoothie-name">Mrazené čučoriedky</div>
+        <div class="smoothie-amount">80 g — vyber večer z mrazničky</div>
+        <div class="smoothie-benefit">Antokyaníny — ochrana kolagénu, mikrocirkulácia, anti-aging mozgu.</div>
+      </div>
+    </div>
+    <div class="smoothie-item">
+      <div class="smoothie-dot" style="background:#D85A30;"></div>
+      <div>
+        <div class="smoothie-name">Goji bobule</div>
+        <div class="smoothie-amount">20 g suché — priamo do mixéra</div>
+        <div class="smoothie-benefit">Zeaxantín, vitamín C, zinok, betakarotén. DHT blok. Max. 20 g/deň pri Cardilane.</div>
+      </div>
+    </div>
+    <div class="smoothie-item">
+      <div class="smoothie-dot" style="background:#3B6D11;"></div>
+      <div>
+        <div class="smoothie-name">Špenát čerstvý</div>
+        <div class="smoothie-amount">50 g (1 veľká hrsť)</div>
+        <div class="smoothie-benefit">Zinok, folát, železo, vitamín C — DHT blok. Farba zozelenej, chuť necítiš.</div>
+      </div>
+    </div>
+    <div class="smoothie-item">
+      <div class="smoothie-dot" style="background:#BA7517;"></div>
+      <div>
+        <div class="smoothie-name">Banán</div>
+        <div class="smoothie-amount">½ ks (~60 g)</div>
+        <div class="smoothie-benefit">Draslík (anti-bloating), vitamín B6, krémová textúra. Polovica = dosť.</div>
+      </div>
+    </div>
+    <div class="smoothie-item">
+      <div class="smoothie-dot" style="background:#555;"></div>
+      <div>
+        <div class="smoothie-name">Kokosové mlieko</div>
+        <div class="smoothie-amount">150 ml neochutené</div>
+        <div class="smoothie-benefit">MCT tuky — vstrebávanie fat-soluble vitamínov (A, D, E, K). Energia bez inzulínu.</div>
+      </div>
+    </div>
+    <div class="smoothie-item">
+      <div class="smoothie-dot" style="background:#EF9F27;"></div>
+      <div>
+        <div class="smoothie-name">Čerstvý zázvor</div>
+        <div class="smoothie-amount">1 cm kúsok</div>
+        <div class="smoothie-benefit">Protizápalový, mikrocirkulácia v skalpe, upokojuje reflux. Skladuj zmrazený.</div>
+      </div>
+    </div>
+    <div class="smoothie-item">
+      <div class="smoothie-dot" style="background:#854F0B;"></div>
+      <div>
+        <div class="smoothie-name">Kurkuma + čierne korenie</div>
+        <div class="smoothie-amount">½ ČL + štipka</div>
+        <div class="smoothie-benefit">Anti-aging, DHT blok, anti-zápal. Bez korenia = kurkuma takmer zbytočná.</div>
+      </div>
+    </div>
+    <div class="smoothie-item">
+      <div class="smoothie-dot" style="background:#777;"></div>
+      <div>
+        <div class="smoothie-name">Hubový prášok</div>
+        <div class="smoothie-amount">1–2 ČL (organic, nie z Číny)</div>
+        <div class="smoothie-benefit">Ergotionín + spermidín — autofágia, bunkové čistenie, longevita.</div>
+      </div>
+    </div>
+    <div class="smoothie-item">
+      <div class="smoothie-dot" style="background:#1D9E75;"></div>
+      <div>
+        <div class="smoothie-name">Vilgain kolagén (Naticol®)</div>
+        <div class="smoothie-amount">5 g (1 odmerka)</div>
+        <div class="smoothie-benefit">Pleť, vlasy, kĺby. S vitamínom C zo smoothie = optimálna absorpcia.</div>
+      </div>
+    </div>
+    <div class="smoothie-item" style="border-bottom:none;">
+      <div class="smoothie-dot" style="background:#4A90D9;"></div>
+      <div>
+        <div class="smoothie-name">Möller's Omega 5 ml</div>
+        <div class="smoothie-amount">5 ml — nie do mixéra, pridaj po zmiešaní alebo vypi zvlášť</div>
+        <div class="smoothie-benefit">EPA 400mg + DHA 600mg + vit. D + vit. A + vit. E. S tukmi zo smoothie = optimálna absorpcia.</div>
+      </div>
+    </div>
+  </div>
+  <div class="note warn"><strong>C60 + DMSO tinktúra ide vždy zvlášť</strong> — min. 2 hodiny pred smoothie. Möller's Omega môžeš vypiť priamo zo lyžice alebo zamiešať do smoothie po mixovaní.</div>
+</div>
+
+<!-- ==================== TRENING ==================== -->
+<div id="trening" class="section">
+  <p class="page-title">Tréningový plán</p>
+  <p class="page-sub">4 silové dni · 2 plávanie · 60 min/tréning · začiatočník · MuscleWiki videá</p>
+
+  <div class="grid-4" style="margin-bottom:1rem;">
+    <div class="stat"><div class="stat-val">4×</div><div class="stat-lbl">silový/týždeň</div></div>
+    <div class="stat"><div class="stat-val">2×</div><div class="stat-lbl">plávanie/týždeň</div></div>
+    <div class="stat"><div class="stat-val">60 min</div><div class="stat-lbl">tréning</div></div>
+    <div class="stat"><div class="stat-val">7–10 mes</div><div class="stat-lbl">six-pack</div></div>
+  </div>
+
+  <div class="note" style="margin-bottom:1rem;">Každý cvik má link na <strong>MuscleWiki video</strong> — klikni pre zobrazenie techniky. Prvé 2 týždne = nižšie váhy, priorita technika.</div>
+
+  <div class="tabs">
+    <button class="tb on" onclick="showPanel('tr',0,this)">Po — Hrudník</button>
+    <button class="tb" onclick="showPanel('tr',1,this)">Ut — Plávanie</button>
+    <button class="tb" onclick="showPanel('tr',2,this)">St — Chrbát</button>
+    <button class="tb rest" onclick="showPanel('tr',3,this)">Št — Odpočinok</button>
+    <button class="tb" onclick="showPanel('tr',4,this)">Pi — Ramená</button>
+    <button class="tb" onclick="showPanel('tr',5,this)">So — Nohy</button>
+    <button class="tb rest" onclick="showPanel('tr',6,this)">Ne — Voľno</button>
+  </div>
+
+  <div id="tr-0" class="panel vis">
+    <div class="card">
+      <p class="card-title">Pondelok — Hrudník + Triceps + Brucho</p>
+      <table class="ex-table">
+        <thead><tr><th>Cvik</th><th>Série</th><th>Opa.</th><th>Video</th></tr></thead>
+        <tbody>
+          <tr><td>Bench press (tyč)</td><td>4</td><td>8–10</td><td><a href="https://musclewiki.com/barbell/male/chest/barbell-bench-press/" target="_blank">▶ pozri</a></td></tr>
+          <tr><td>Incline dumbbell press</td><td>3</td><td>10–12</td><td><a href="https://musclewiki.com/dumbbell/male/chest/dumbbell-incline-bench-press/" target="_blank">▶ pozri</a></td></tr>
+          <tr><td>Cable fly</td><td>3</td><td>12–15</td><td><a href="https://musclewiki.com/cable/male/chest/cable-chest-fly/" target="_blank">▶ pozri</a></td></tr>
+          <tr><td>Tricep pushdown (káble)</td><td>3</td><td>12–15</td><td><a href="https://musclewiki.com/cable/male/triceps/cable-tricep-pushdown-rope/" target="_blank">▶ pozri</a></td></tr>
+          <tr><td>Overhead tricep extension</td><td>3</td><td>12–15</td><td><a href="https://musclewiki.com/cable/male/triceps/cable-overhead-tricep-extension/" target="_blank">▶ pozri</a></td></tr>
+          <tr><td colspan="4" style="color:#1D9E75;font-size:10px;font-weight:700;padding-top:10px;letter-spacing:.06em;">BRUCHO — 10 MIN</td></tr>
+          <tr><td>Weighted cable crunch</td><td>3</td><td>15</td><td><a href="https://musclewiki.com/cable/male/abdominals/cable-crunch/" target="_blank">▶ pozri</a></td></tr>
+          <tr><td>Reverse crunch</td><td>3</td><td>15</td><td><a href="https://musclewiki.com/bodyweight/male/abdominals/reverse-crunch/" target="_blank">▶ pozri</a></td></tr>
+          <tr><td>Plank</td><td>3</td><td>30–45 sek</td><td><a href="https://musclewiki.com/bodyweight/male/abdominals/plank/" target="_blank">▶ pozri</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="tr-1" class="panel">
+    <div class="card">
+      <p class="card-title">Utorok — Plávanie (45 min)</p>
+      <table class="ex-table">
+        <thead><tr><th>Fáza</th><th>Čas</th><th>Intenzita</th><th>Popis</th></tr></thead>
+        <tbody>
+          <tr><td>Rozcvička</td><td>5 min</td><td>Nízka</td><td>Voľný kraul, zahriatie</td></tr>
+          <tr><td>Hlavná časť</td><td>30 min</td><td>Stredná</td><td>Striedaj kraul + prsia každé 2 bazény</td></tr>
+          <tr><td>Záver</td><td>10 min</td><td>Nízka</td><td>Pomalý kraul, strečing vo vode</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note"><strong>Aktívna regenerácia</strong> po pondelkovom silovom. Stredná intenzita — nie sprint.</div>
+  </div>
+
+  <div id="tr-2" class="panel">
+    <div class="card">
+      <p class="card-title">Streda — Chrbát + Biceps + Brucho</p>
+      <table class="ex-table">
+        <thead><tr><th>Cvik</th><th>Série</th><th>Opa.</th><th>Video</th></tr></thead>
+        <tbody>
+          <tr><td>Lat pulldown</td><td>4</td><td>8–10</td><td><a href="https://musclewiki.com/machine/male/lats/lat-pulldown/" target="_blank">▶ pozri</a></td></tr>
+          <tr><td>Seated cable row</td><td>3</td><td>10–12</td><td><a href="https://musclewiki.com/cable/male/lats/seated-cable-row/" target="_blank">▶ pozri</a></td></tr>
+          <tr><td>Dumbbell row</td><td>3</td><td>10–12</td><td><a href="https://musclewiki.com/dumbbell/male/lats/dumbbell-single-arm-row/" target="_blank">▶ pozri</a></td></tr>
+          <tr><td>Face pull (káble)</td><td>3</td><td>15</td><td><a href="https://musclewiki.com/cable/male/shoulders/face-pull/" target="_blank">▶ pozri</a></td></tr>
+          <tr><td>Barbell curl</td><td>3</td><td>10–12</td><td><a href="https://musclewiki.com/barbell/male/biceps/barbell-curl/" target="_blank">▶ pozri</a></td></tr>
+          <tr><td>Hammer curl</td><td>3</td><td>12–15</td><td><a href="https://musclewiki.com/dumbbell/male/biceps/dumbbell-hammer-curl/" target="_blank">▶ pozri</a></td></tr>
+          <tr><td colspan="4" style="color:#1D9E75;font-size:10px;font-weight:700;padding-top:10px;letter-spacing:.06em;">BRUCHO — 10 MIN</td></tr>
+          <tr><td>Weighted cable crunch</td><td>3</td><td>15</td><td><a href="https://musclewiki.com/cable/male/abdominals/cable-crunch/" target="_blank">▶ pozri</a></td></tr>
+          <tr><td>Reverse crunch</td><td>3</td><td>15</td><td><a href="https://musclewiki.com/bodyweight/male/abdominals/reverse-crunch/" target="_blank">▶ pozri</a></td></tr>
+          <tr><td>Bicycle crunch</td><td>3</td><td>20</td><td><a href="https://musclewiki.com/bodyweight/male/abdominals/bicycle-crunch/" target="_blank">▶ pozri</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="tr-3" class="panel">
+    <div class="card">
+      <p class="card-title">Štvrtok — Odpočinok</p>
+      <p style="font-size:13px;color:#777;line-height:1.7;margin-bottom:1rem;">Svaly rastú počas regenerácie, nie počas tréningu. Dnes varíš druhú várku krabičiek.</p>
+      <p style="font-size:12px;color:#1D9E75;font-weight:600;margin-bottom:6px;">Čo môžeš:</p>
+      <p style="font-size:12px;color:#777;">Chôdza 30–45 min · Strečing 15 min · Nič viac.</p>
+      <hr class="dv">
+      <p style="font-size:12px;color:#555;">NEAT cieľ: 10 000 krokov denne. V polícii to splníš prirodzene na výjazdoch. Kancelárske dni — krátka prechádzka po obede.</p>
+    </div>
+  </div>
+
+  <div id="tr-4" class="panel">
+    <div class="card">
+      <p class="card-title">Piatok — Ramená + Core + Brucho</p>
+      <table class="ex-table">
+        <thead><tr><th>Cvik</th><th>Série</th><th>Opa.</th><th>Video</th></tr></thead>
+        <tbody>
+          <tr><td>Dumbbell shoulder press</td><td>4</td><td>8–10</td><td><a href="https://musclewiki.com/dumbbell/male/shoulders/dumbbell-shoulder-press/" target="_blank">▶ pozri</a></td></tr>
+          <tr><td>Lateral raise</td><td>3</td><td>15</td><td><a href="https://musclewiki.com/dumbbell/male/shoulders/dumbbell-lateral-raise/" target="_blank">▶ pozri</a></td></tr>
+          <tr><td>Front raise</td><td>3</td><td>12–15</td><td><a href="https://musclewiki.com/dumbbell/male/shoulders/dumbbell-front-raise/" target="_blank">▶ pozri</a></td></tr>
+          <tr><td>Rear delt fly (stroj)</td><td>3</td><td>15</td><td><a href="https://musclewiki.com/machine/male/shoulders/machine-reverse-fly/" target="_blank">▶ pozri</a></td></tr>
+          <tr><td>Shrugs (činky)</td><td>3</td><td>15</td><td><a href="https://musclewiki.com/dumbbell/male/traps/dumbbell-shrug/" target="_blank">▶ pozri</a></td></tr>
+          <tr><td colspan="4" style="color:#1D9E75;font-size:10px;font-weight:700;padding-top:10px;letter-spacing:.06em;">BRUCHO — 10 MIN</td></tr>
+          <tr><td>Weighted cable crunch</td><td>3</td><td>15</td><td><a href="https://musclewiki.com/cable/male/abdominals/cable-crunch/" target="_blank">▶ pozri</a></td></tr>
+          <tr><td>Reverse crunch</td><td>3</td><td>15</td><td><a href="https://musclewiki.com/bodyweight/male/abdominals/reverse-crunch/" target="_blank">▶ pozri</a></td></tr>
+          <tr><td>Hollow hold</td><td>3</td><td>25–30 sek</td><td><a href="https://musclewiki.com/bodyweight/male/abdominals/hollow-body-hold/" target="_blank">▶ pozri</a></td></tr>
+          <tr><td>Plank</td><td>3</td><td>45–60 sek</td><td><a href="https://musclewiki.com/bodyweight/male/abdominals/plank/" target="_blank">▶ pozri</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="tr-5" class="panel">
+    <div class="card" style="margin-bottom:10px;">
+      <p class="card-title">Sobota ráno — Plávanie (45 min)</p>
+      <table class="ex-table">
+        <thead><tr><th>Fáza</th><th>Čas</th><th>Intenzita</th><th>Popis</th></tr></thead>
+        <tbody>
+          <tr><td>Rozcvička</td><td>5 min</td><td>Nízka</td><td>Zahriatie</td></tr>
+          <tr><td>Hlavná časť</td><td>30 min</td><td>Vyššia</td><td>Intervaly — 4 bazény rýchlo, 2 pomalé</td></tr>
+          <tr><td>Záver</td><td>10 min</td><td>Nízka</td><td>Pomalý kraul, strečing</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card">
+      <p class="card-title">Sobota poobede — Nohy + Zadok + Brucho</p>
+      <table class="ex-table">
+        <thead><tr><th>Cvik</th><th>Série</th><th>Opa.</th><th>Video</th></tr></thead>
+        <tbody>
+          <tr><td>Squat — drep (tyč)</td><td>4</td><td>8–10</td><td><a href="https://musclewiki.com/barbell/male/quadriceps/barbell-squat/" target="_blank">▶ pozri</a></td></tr>
+          <tr><td>Romanian deadlift</td><td>3</td><td>10–12</td><td><a href="https://musclewiki.com/barbell/male/hamstrings/barbell-romanian-deadlift/" target="_blank">▶ pozri</a></td></tr>
+          <tr><td>Leg press</td><td>3</td><td>12–15</td><td><a href="https://musclewiki.com/machine/male/quadriceps/leg-press/" target="_blank">▶ pozri</a></td></tr>
+          <tr><td>Leg curl (stroj)</td><td>3</td><td>12–15</td><td><a href="https://musclewiki.com/machine/male/hamstrings/machine-leg-curl/" target="_blank">▶ pozri</a></td></tr>
+          <tr><td>Hip thrust</td><td>3</td><td>12–15</td><td><a href="https://musclewiki.com/barbell/male/glutes/barbell-hip-thrust/" target="_blank">▶ pozri</a></td></tr>
+          <tr><td>Calf raises</td><td>4</td><td>15–20</td><td><a href="https://musclewiki.com/machine/male/calves/machine-calf-raise/" target="_blank">▶ pozri</a></td></tr>
+          <tr><td colspan="4" style="color:#1D9E75;font-size:10px;font-weight:700;padding-top:10px;letter-spacing:.06em;">BRUCHO — 10 MIN</td></tr>
+          <tr><td>Weighted cable crunch</td><td>3</td><td>15</td><td><a href="https://musclewiki.com/cable/male/abdominals/cable-crunch/" target="_blank">▶ pozri</a></td></tr>
+          <tr><td>Reverse crunch</td><td>3</td><td>15</td><td><a href="https://musclewiki.com/bodyweight/male/abdominals/reverse-crunch/" target="_blank">▶ pozri</a></td></tr>
+          <tr><td>Plank</td><td>3</td><td>45–60 sek</td><td><a href="https://musclewiki.com/bodyweight/male/abdominals/plank/" target="_blank">▶ pozri</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note warn"><strong>Sobota = dvojitá aktivita.</strong> Plávanie ráno, nohy poobede. Min. 3–4h oddych medzi nimi. Banán ráno povinný.</div>
+  </div>
+
+  <div id="tr-6" class="panel">
+    <div class="card">
+      <p class="card-title">Nedeľa — Voľno</p>
+      <p style="font-size:13px;color:#777;line-height:1.7;">Kostol + Natália + varenie vývaru. Žiadny tréning — fixný deň pre to čo je dôležité.</p>
+      <hr class="dv">
+      <p style="font-size:12px;color:#777;">Chôdza počas dňa = NEAT. Vývar varíš ráno pred kostolom.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== JÚN ==================== -->
+<div id="jun" class="section">
+  <p class="page-title">Jún 2026 — Tréningový kalendár</p>
+  <p class="page-sub">Na dovolenke od 26.6. cvič podľa toho čo je dostupné — bazén, beh, bodyweight</p>
+
+  <div class="legend" style="margin-bottom:1rem;">
+    <div class="leg"><div class="leg-dot" style="background:#1D9E75;"></div><span style="color:#1D9E75;">Výjazd (V)</span></div>
+    <div class="leg"><div class="leg-dot" style="background:#7070C8;"></div><span style="color:#7070C8;">Kancelária (S)</span></div>
+    <div class="leg"><div class="leg-dot" style="background:#888;"></div><span>Voľno</span></div>
+    <div class="leg"><div class="leg-dot" style="background:#6060D0;"></div><span style="color:#6060D0;">Nočná</span></div>
+    <div class="leg"><div class="leg-dot" style="background:#BA7517;"></div><span style="color:#BA7517;">Dovolenka</span></div>
+    <div class="leg"><div class="leg-dot" style="background:#E07070;"></div><span style="color:#E07070;">Lekár</span></div>
+  </div>
+
+  <div class="cal-grid">
+    <div class="cal-head">Po</div><div class="cal-head">Ut</div><div class="cal-head">St</div><div class="cal-head">Št</div><div class="cal-head">Pi</div><div class="cal-head">So</div><div class="cal-head">Ne</div>
+
+    <div class="cal-day day-V"><div class="cal-num">1</div><div class="cal-type" style="background:#0A1F17;color:#1D9E75;font-size:8px;">V 7:30–19:30</div><div class="cal-gym no">❌ po práci</div></div>
+    <div class="cal-day day-DOV"><div class="cal-num">2</div><div class="cal-type" style="background:#1E1000;color:#BA7517;font-size:8px;">Dovolenka</div></div>
+    <div class="cal-day day-DOV"><div class="cal-num">3</div><div class="cal-type" style="background:#1E1000;color:#BA7517;font-size:8px;">Dovolenka</div></div>
+    <div class="cal-day day-LEK"><div class="cal-num">4</div><div class="cal-type" style="background:#2A0D0D;color:#E07070;font-size:8px;">Lekár</div></div>
+    <div class="cal-day day-LEK"><div class="cal-num">5</div><div class="cal-type" style="background:#2A0D0D;color:#E07070;font-size:8px;">Lekár</div></div>
+    <div class="cal-day day-DOV"><div class="cal-num">6</div><div class="cal-type" style="background:#1E1000;color:#BA7517;font-size:8px;">Dovolenka</div></div>
+    <div class="cal-day day-VOLNO"><div class="cal-num">7</div><div class="cal-type" style="background:#1A1A18;color:#888;font-size:8px;">Voľno</div><div class="cal-gym">✅ Hrudník</div></div>
+
+    <div class="cal-day day-V"><div class="cal-num">8</div><div class="cal-type" style="background:#0A1F17;color:#1D9E75;font-size:8px;">V 7:30–19:30</div><div class="cal-gym no">❌ po práci</div></div>
+    <div class="cal-day day-S"><div class="cal-num">9</div><div class="cal-type" style="background:#0D0D1A;color:#7070C8;font-size:8px;">S 11–19</div><div class="cal-gym">✅ Plávanie</div></div>
+    <div class="cal-day day-S"><div class="cal-num">10</div><div class="cal-type" style="background:#0D0D1A;color:#7070C8;font-size:8px;">S 7:30–15:30</div><div class="cal-gym">✅ Chrbát</div></div>
+    <div class="cal-day day-S"><div class="cal-num">11</div><div class="cal-type" style="background:#0D0D1A;color:#7070C8;font-size:8px;">S 7:30–15:30</div><div class="cal-gym">✅ Odpočinok</div></div>
+    <div class="cal-day day-S"><div class="cal-num">12</div><div class="cal-type" style="background:#0D0D1A;color:#7070C8;font-size:8px;">S 7:30–15:30</div><div class="cal-gym" style="color:#888;">Dnes — štart</div></div>
+    <div class="cal-day day-VOLNO"><div class="cal-num">13</div><div class="cal-type" style="background:#1A1A18;color:#888;font-size:8px;">Voľno</div><div class="cal-gym">✅ Ramená</div></div>
+    <div class="cal-day day-NOCNA"><div class="cal-num">14</div><div class="cal-type" style="background:#080820;color:#6060D0;font-size:8px;">Nočná 18–06</div><div class="cal-gym">✅ Nohy 05:30</div></div>
+
+    <div class="cal-day day-VOLNO"><div class="cal-num">15</div><div class="cal-type" style="background:#1A1A18;color:#888;font-size:8px;">Voľno po nočnej</div><div class="cal-gym no">❌ Spánok!</div></div>
+    <div class="cal-day day-NOCNA"><div class="cal-num">16</div><div class="cal-type" style="background:#080820;color:#6060D0;font-size:8px;">Nočná 19:30–7:30</div><div class="cal-gym">✅ Hrudník 05:30</div></div>
+    <div class="cal-day day-VOLNO"><div class="cal-num">17</div><div class="cal-type" style="background:#1A1A18;color:#888;font-size:8px;">Voľno po nočnej</div><div class="cal-gym no">❌ Spánok!</div></div>
+    <div class="cal-day day-NOCNA"><div class="cal-num">18</div><div class="cal-type" style="background:#080820;color:#6060D0;font-size:8px;">Nočná 19:30–7:30</div><div class="cal-gym">✅ Plávanie 05:30</div></div>
+    <div class="cal-day day-VOLNO"><div class="cal-num">19</div><div class="cal-type" style="background:#1A1A18;color:#888;font-size:8px;">Voľno po nočnej</div><div class="cal-gym no">❌ Spánok!</div></div>
+    <div class="cal-day day-NOCNA"><div class="cal-num">20</div><div class="cal-type" style="background:#080820;color:#6060D0;font-size:8px;">Nočná 19:30–7:30</div><div class="cal-gym">✅ Chrbát 05:30</div></div>
+    <div class="cal-day day-NOCNA"><div class="cal-num">21</div><div class="cal-type" style="background:#080820;color:#6060D0;font-size:8px;">Nočná 19:30–7:30</div><div class="cal-gym no">❌ 2. nočná</div></div>
+
+    <div class="cal-day day-VOLNO"><div class="cal-num">22</div><div class="cal-type" style="background:#1A1A18;color:#888;font-size:8px;">Voľno po nočnej</div><div class="cal-gym no">❌ Spánok!</div></div>
+    <div class="cal-day day-V"><div class="cal-num">23</div><div class="cal-type" style="background:#0A1F17;color:#1D9E75;font-size:8px;">V 7:30–19:30</div><div class="cal-gym">✅ Ramená 05:30</div></div>
+    <div class="cal-day day-VOLNO"><div class="cal-num">24</div><div class="cal-type" style="background:#1A1A18;color:#888;font-size:8px;">Voľno</div><div class="cal-gym">✅ Nohy+Plávanie</div></div>
+    <div class="cal-day day-S"><div class="cal-num">25</div><div class="cal-type" style="background:#0D0D1A;color:#7070C8;font-size:8px;">S 7:30–15:30</div><div class="cal-gym">✅ Hrudník 05:30</div></div>
+    <div class="cal-day day-DOV"><div class="cal-num">26</div><div class="cal-type" style="background:#1E1000;color:#BA7517;font-size:8px;">Dovolenka</div><div class="cal-gym" style="color:#BA7517;">🏊 bazén/beh</div></div>
+    <div class="cal-day day-DOV"><div class="cal-num">27</div><div class="cal-type" style="background:#1E1000;color:#BA7517;font-size:8px;">Dovolenka</div><div class="cal-gym" style="color:#BA7517;">💪 bodyweight</div></div>
+    <div class="cal-day day-DOV"><div class="cal-num">28</div><div class="cal-type" style="background:#1E1000;color:#BA7517;font-size:8px;">Dovolenka</div><div class="cal-gym" style="color:#BA7517;">🏊 bazén/beh</div></div>
+
+    <div class="cal-day day-DOV"><div class="cal-num">29</div><div class="cal-type" style="background:#1E1000;color:#BA7517;font-size:8px;">Dovolenka</div><div class="cal-gym" style="color:#BA7517;">💪 bodyweight</div></div>
+    <div class="cal-day day-DOV"><div class="cal-num">30</div><div class="cal-type" style="background:#1E1000;color:#BA7517;font-size:8px;">Dovolenka</div><div class="cal-gym" style="color:#BA7517;">🏊 bazén/beh</div></div>
+    <div class="cal-day empty"></div><div class="cal-day empty"></div><div class="cal-day empty"></div><div class="cal-day empty"></div><div class="cal-day empty"></div>
+  </div>
+
+  <div class="note warn" style="margin-bottom:8px;"><strong>4 nočné za sebou (16–21.6.)</strong> — dni po nočnej sú VŽDY bez tréningu. Tréning pred nočnou (ráno o 05:30) je ok.</div>
+  <div class="note"><strong>Dovolenka od 26.6.:</strong> Posilňovňa možno nebude dostupná — nahraď bazénom (🏊) alebo bodyweight tréningom (💪): kliky, drepy, výskoky, plank, reverse crunch. Udržuj aktivitu, neprestávaj úplne.</div>
+</div>
+
+<!-- ==================== SUPLEMENTY ==================== -->
+<div id="suplementy" class="section">
+  <p class="page-title">Suplementový protokol</p>
+  <p class="page-sub">Presné poradie · Dávkovanie · Kritické interakcie</p>
+
+  <div class="sec-title">Denný protokol — presné poradie</div>
+  <div class="card">
+    <div class="routine-row"><span class="routine-time" style="color:#1D9E75;">04:30</span><span class="routine-act"><strong style="color:#E8E6E0;">Čaga + C60 tinktúra (Petrove)</strong><br><span style="color:#555;">Nalačno, samotná. Pod jazyk alebo 50 ml vody. Čakáš 2 hodiny.</span></span></div>
+    <div class="routine-row"><span class="routine-time" style="color:#534AB7;">06:40</span><span class="routine-act"><strong style="color:#E8E6E0;">Smoothie + Möller's Omega 5 ml</strong><br><span style="color:#555;">2 hodiny po tinktúre. Omega vypi zo lyžice alebo zamiešaj po mixovaní.</span></span></div>
+    <div class="routine-row"><span class="routine-time" style="color:#E07070;">~08:00</span><span class="routine-act"><strong style="color:#E8E6E0;">Cardilan 1 tbl + Amix Proteín 1 odmerka</strong><br><span style="color:#555;">S jedlom — NIKDY nalačno. Cardilan = draslík + horčík pre srdce.</span></span></div>
+    <div class="routine-row"><span class="routine-time" style="color:#8080D8;">20:00</span><span class="routine-act"><strong style="color:#E8E6E0;">Lion's Mane prášok 1–2 g</strong><br><span style="color:#555;">V teplej vode, hodinu pred spaním. Neurogenéza počas spánku.</span></span></div>
+  </div>
+
+  <div class="sec-title">Prehľad všetkých suplementov</div>
+  <div class="card">
+    <table class="ex-table">
+      <thead><tr><th>Suplement</th><th>Dávka</th><th>Kedy</th><th>Na čo</th></tr></thead>
+      <tbody>
+        <tr><td>Čaga + C60 (Petrove)</td><td>Podľa fľaše</td><td>04:30 nalačno</td><td>Antioxidant, imunita, detox</td></tr>
+        <tr><td>Möller's Omega 3</td><td>5 ml (1 dávka)</td><td>06:40 so smoothie</td><td>EPA+DHA, vit. D, srdce, pleť</td></tr>
+        <tr><td>Vilgain kolagén (Naticol®)</td><td>5 g prášok</td><td>06:40 v smoothie</td><td>Pleť, vlasy, kĺby</td></tr>
+        <tr><td>Cardilan</td><td>1 tbl</td><td>~08:00 s jedlom</td><td>Draslík + horčík, srdcový rytmus</td></tr>
+        <tr><td>Amix Black CFM Isolate</td><td>1 odmerka (35g)</td><td>~08:00 s raňajkami</td><td>Doplnenie proteínu, svaly</td></tr>
+        <tr><td>Lion's Mane prášok</td><td>1–2 g</td><td>20:00 pred spaním</td><td>Neurogenéza, mozog, NGF</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sec-title">Kritické upozornenia</div>
+  <div class="note warn" style="margin-bottom:8px;"><strong>Cardilan + Magnézium:</strong> Cardilan obsahuje horčík — neberi magnézium suplementy bez konzultácie s lekárom.</div>
+  <div class="note warn" style="margin-bottom:8px;"><strong>C60 + DMSO tinktúra:</strong> Nikdy nemiešaj s inými suplementami. Min. 2 hodiny pred smoothie.</div>
+  <div class="note warn" style="margin-bottom:8px;"><strong>Goji + Cardilan:</strong> Max. 20 g goji denne — vyššie dávky môžu interferovať so srdcovými liekmi.</div>
+  <div class="note warn" style="margin-bottom:8px;"><strong>Vitamín A:</strong> Möller's 5ml (250µg) + vajcia (~160µg) + losos (~50µg) = ~460µg/deň bežný deň — bezpečné. Pečeňový deň (Št): ~3 910µg celkovo — nad limitom ale 1× týždenne.</div>
+  <div class="note"><strong>Hubový prášok do smoothie:</strong> Kúp organic, nie z Číny. Šampiňónový alebo mix húb. Chuť sa v smoothie stratí.</div>
+</div>
+
+<script>
+function showSection(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('vis'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('on'));
+  document.getElementById(id).classList.add('vis');
+  btn.classList.add('on');
+}
+
+function showPanel(prefix, idx, btn) {
+  const panels = document.querySelectorAll('[id^="'+prefix+'-"]');
+  panels.forEach(p => p.classList.remove('vis'));
+  const tabs = btn.parentElement.querySelectorAll('.tb');
+  tabs.forEach(t => t.classList.remove('on'));
+  document.getElementById(prefix+'-'+idx).classList.add('vis');
+  btn.classList.add('on');
+}
+</script>
+</body>
+</html>
