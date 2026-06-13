@@ -135,6 +135,7 @@ hr.dv{border:none;border-top:0.5px solid #1E1E1C;margin:1rem 0;}
   <button class="nav-btn" onclick="showSection('jun',this)">📅 Kalendár</button>
   <button class="nav-btn" onclick="showSection('rutina',this)">⏰ Rutina</button>
   <button class="nav-btn" onclick="showSection('suplementy',this)">💊 Suplementy</button>
+  <button class="nav-btn" onclick="showSection('makra',this)">📊 Makrá</button>
 </div>
 
 <!-- ==================== RUTINA ==================== -->
@@ -940,5 +941,154 @@ function showPanel(prefix, idx, btn) {
   btn.classList.add('on');
 }
 </script>
+
+<!-- ==================== MAKRÁ ==================== -->
+<div id="makra" class="section">
+  <p class="page-title">Denné makroživiny</p>
+  <p class="page-sub">Od smoothie po posledné jedlo · 2 080 kcal · 750 kcal deficit</p>
+
+  <div class="tabs">
+    <button class="tb on" onclick="showPanel('mak',0,this)">Po</button>
+    <button class="tb" onclick="showPanel('mak',1,this)">Ut</button>
+    <button class="tb" onclick="showPanel('mak',2,this)">St</button>
+    <button class="tb" onclick="showPanel('mak',3,this)">Št</button>
+    <button class="tb" onclick="showPanel('mak',4,this)">Pi</button>
+    <button class="tb" onclick="showPanel('mak',5,this)">So</button>
+    <button class="tb cheat" onclick="showPanel('mak',6,this)">Ne ✦</button>
+  </div>
+
+  <!-- PONDELOK -->
+  <div id="mak-0" class="panel vis">
+    <div class="card">
+      <p class="card-title">Pondelok — Hrudník + Silový tréning</p>
+      <table class="ex-table">
+        <thead><tr><th>Jedlo / Čas</th><th>Kcal</th><th>Bielk.</th><th>Tuky</th><th>Sachar.</th></tr></thead>
+        <tbody>
+          <tr><td>🥤 Smoothie (06:40)</td><td>320</td><td>8g</td><td>14g</td><td>42g</td></tr>
+          <tr><td>🐟 Möller's Omega 5ml</td><td>45</td><td>0g</td><td>5g</td><td>0g</td></tr>
+          <tr><td>🍳 Raňajky + Proteín (~08:00)</td><td>748</td><td>54g</td><td>38g</td><td>4g</td></tr>
+          <tr><td>🍲 Obed — polievka + ryža (12:00)</td><td>670</td><td>82g</td><td>14g</td><td>47g</td></tr>
+          <tr><td>🥗 Večera (17:00)</td><td>530</td><td>48g</td><td>28g</td><td>12g</td></tr>
+          <tr style="border-top:1px solid #1D9E75;"><td><strong>SPOLU</strong></td><td><strong>2 313</strong></td><td><strong>192g</strong></td><td><strong>99g</strong></td><td><strong>105g</strong></td></tr>
+        </tbody>
+      </table>
+      <div class="note" style="margin-top:10px;"><strong>Silový tréning deň</strong> — ryža na obed doplní glykogén po tréningu. Vysoký proteín pre rast svalov.</div>
+    </div>
+  </div>
+
+  <!-- UTOROK -->
+  <div id="mak-1" class="panel">
+    <div class="card">
+      <p class="card-title">Utorok — Plávanie (kardio)</p>
+      <table class="ex-table">
+        <thead><tr><th>Jedlo / Čas</th><th>Kcal</th><th>Bielk.</th><th>Tuky</th><th>Sachar.</th></tr></thead>
+        <tbody>
+          <tr><td>🥤 Smoothie (06:40)</td><td>320</td><td>8g</td><td>14g</td><td>42g</td></tr>
+          <tr><td>🐟 Möller's Omega 5ml</td><td>45</td><td>0g</td><td>5g</td><td>0g</td></tr>
+          <tr><td>🍳 Raňajky + Proteín (~08:00)</td><td>756</td><td>54g</td><td>40g</td><td>4g</td></tr>
+          <tr><td>🍲 Obed — polievka bez ryže (12:00)</td><td>530</td><td>82g</td><td>14g</td><td>8g</td></tr>
+          <tr><td>🥗 Večera — tuniak (17:00)</td><td>530</td><td>42g</td><td>22g</td><td>8g</td></tr>
+          <tr style="border-top:1px solid #1D9E75;"><td><strong>SPOLU</strong></td><td><strong>2 181</strong></td><td><strong>186g</strong></td><td><strong>95g</strong></td><td><strong>62g</strong></td></tr>
+        </tbody>
+      </table>
+      <div class="note"><strong>Kardio deň</strong> — bez ryže, nižší príjem sacharidov. Plávanie spaľuje tuk efektívnejšie v tomto stave.</div>
+    </div>
+  </div>
+
+  <!-- STREDA -->
+  <div id="mak-2" class="panel">
+    <div class="card">
+      <p class="card-title">Streda — Chrbát + Silový tréning</p>
+      <table class="ex-table">
+        <thead><tr><th>Jedlo / Čas</th><th>Kcal</th><th>Bielk.</th><th>Tuky</th><th>Sachar.</th></tr></thead>
+        <tbody>
+          <tr><td>🥤 Smoothie (06:40)</td><td>320</td><td>8g</td><td>14g</td><td>42g</td></tr>
+          <tr><td>🐟 Möller's Omega 5ml</td><td>45</td><td>0g</td><td>5g</td><td>0g</td></tr>
+          <tr><td>🍳 Raňajky + Proteín (~08:00)</td><td>756</td><td>54g</td><td>40g</td><td>4g</td></tr>
+          <tr><td>🍲 Obed — polievka + sladký zemiak (12:00)</td><td>660</td><td>80g</td><td>14g</td><td>38g</td></tr>
+          <tr><td>🥗 Večera — hovädzie (17:00)</td><td>520</td><td>42g</td><td>24g</td><td>10g</td></tr>
+          <tr style="border-top:1px solid #1D9E75;"><td><strong>SPOLU</strong></td><td><strong>2 301</strong></td><td><strong>184g</strong></td><td><strong>97g</strong></td><td><strong>94g</strong></td></tr>
+        </tbody>
+      </table>
+      <div class="note"><strong>Sladký zemiak namiesto ryže</strong> — nižší GI, viac draslíka a beta-karoténu. Výborne po silovom tréningu.</div>
+    </div>
+  </div>
+
+  <!-- ŠTVRTOK -->
+  <div id="mak-3" class="panel">
+    <div class="card">
+      <p class="card-title">Štvrtok — Odpočinok + Pečeň deň</p>
+      <table class="ex-table">
+        <thead><tr><th>Jedlo / Čas</th><th>Kcal</th><th>Bielk.</th><th>Tuky</th><th>Sachar.</th></tr></thead>
+        <tbody>
+          <tr><td>🥤 Smoothie (06:40)</td><td>320</td><td>8g</td><td>14g</td><td>42g</td></tr>
+          <tr><td>🐟 Möller's Omega 5ml</td><td>45</td><td>0g</td><td>5g</td><td>0g</td></tr>
+          <tr><td>🍳 Raňajky + Proteín — pečeň (08:00)</td><td>666</td><td>52g</td><td>32g</td><td>4g</td></tr>
+          <tr><td>🐟 Obed — losos + brokolica (12:00)</td><td>700</td><td>74g</td><td>36g</td><td>8g</td></tr>
+          <tr><td>🥗 Večera — kuracie prsia (17:00)</td><td>490</td><td>46g</td><td>20g</td><td>10g</td></tr>
+          <tr style="border-top:1px solid #1D9E75;"><td><strong>SPOLU</strong></td><td><strong>2 221</strong></td><td><strong>180g</strong></td><td><strong>107g</strong></td><td><strong>64g</strong></td></tr>
+        </tbody>
+      </table>
+      <div class="note warn"><strong>Pečeň deň</strong> — nižší kalorický príjem (odpočinkový deň). Vitamín A celkovo ~3 910 µg — nad limitom ale len 1× týždenne.</div>
+    </div>
+  </div>
+
+  <!-- PIATOK -->
+  <div id="mak-4" class="panel">
+    <div class="card">
+      <p class="card-title">Piatok — Ramená + Silový tréning</p>
+      <table class="ex-table">
+        <thead><tr><th>Jedlo / Čas</th><th>Kcal</th><th>Bielk.</th><th>Tuky</th><th>Sachar.</th></tr></thead>
+        <tbody>
+          <tr><td>🥤 Smoothie (06:40)</td><td>320</td><td>8g</td><td>14g</td><td>42g</td></tr>
+          <tr><td>🐟 Möller's Omega 5ml</td><td>45</td><td>0g</td><td>5g</td><td>0g</td></tr>
+          <tr><td>🍳 Raňajky + Proteín (08:00)</td><td>776</td><td>54g</td><td>42g</td><td>4g</td></tr>
+          <tr><td>🍗 Obed — kuracie stehná + ryža (12:00)</td><td>735</td><td>72g</td><td>26g</td><td>40g</td></tr>
+          <tr><td>🥗 Večera — morčacie (17:00)</td><td>490</td><td>49g</td><td>18g</td><td>8g</td></tr>
+          <tr style="border-top:1px solid #1D9E75;"><td><strong>SPOLU</strong></td><td><strong>2 366</strong></td><td><strong>183g</strong></td><td><strong>105g</strong></td><td><strong>94g</strong></td></tr>
+        </tbody>
+      </table>
+      <div class="note"><strong>Losos údený na raňajky</strong> — omega-3 pre pleť a vlasy. Ryža na obed = doplnenie glykogénu po silovom.</div>
+    </div>
+  </div>
+
+  <!-- SOBOTA -->
+  <div id="mak-5" class="panel">
+    <div class="card">
+      <p class="card-title">Sobota — Plávanie + Nohy (dvojitá aktivita)</p>
+      <table class="ex-table">
+        <thead><tr><th>Jedlo / Čas</th><th>Kcal</th><th>Bielk.</th><th>Tuky</th><th>Sachar.</th></tr></thead>
+        <tbody>
+          <tr><td>🥤 Smoothie (06:40)</td><td>320</td><td>8g</td><td>14g</td><td>42g</td></tr>
+          <tr><td>🐟 Möller's Omega 5ml</td><td>45</td><td>0g</td><td>5g</td><td>0g</td></tr>
+          <tr><td>🍳 Raňajky + Proteín (08:00)</td><td>768</td><td>54g</td><td>40g</td><td>16g</td></tr>
+          <tr><td>🍗 Obed — kuracie stehná + sladký zemiak (12:00)</td><td>755</td><td>68g</td><td>28g</td><td>42g</td></tr>
+          <tr><td>🥗 Večera — tuniak (17:00)</td><td>480</td><td>42g</td><td>18g</td><td>8g</td></tr>
+          <tr style="border-top:1px solid #1D9E75;"><td><strong>SPOLU</strong></td><td><strong>2 368</strong></td><td><strong>172g</strong></td><td><strong>105g</strong></td><td><strong>108g</strong></td></tr>
+        </tbody>
+      </table>
+      <div class="note"><strong>Dvojitá aktivita = vyšší príjem sacharidov.</strong> Banán v raňajkách + sladký zemiak na obed dodajú energiu na plávanie aj nohy.</div>
+    </div>
+  </div>
+
+  <!-- NEDELA -->
+  <div id="mak-6" class="panel">
+    <div class="card">
+      <p class="card-title">Nedeľa — Voľno + Cheat meal</p>
+      <table class="ex-table">
+        <thead><tr><th>Jedlo / Čas</th><th>Kcal</th><th>Bielk.</th><th>Tuky</th><th>Sachar.</th></tr></thead>
+        <tbody>
+          <tr><td>🥤 Smoothie (06:40)</td><td>320</td><td>8g</td><td>14g</td><td>42g</td></tr>
+          <tr><td>🐟 Möller's Omega 5ml</td><td>45</td><td>0g</td><td>5g</td><td>0g</td></tr>
+          <tr><td>🍳 Raňajky + Proteín (08:00)</td><td>720</td><td>48g</td><td>38g</td><td>4g</td></tr>
+          <tr><td>🍗 Obed — mäso + zelenina (12:00)</td><td>670</td><td>58g</td><td>24g</td><td>8g</td></tr>
+          <tr><td>✦ Cheat meal — krupicová kaša (17:30)</td><td>660</td><td>18g</td><td>16g</td><td>92g</td></tr>
+          <tr style="border-top:1px solid #BA7517;"><td><strong>SPOLU</strong></td><td><strong>2 415</strong></td><td><strong>132g</strong></td><td><strong>97g</strong></td><td><strong>146g</strong></td></tr>
+        </tbody>
+      </table>
+      <div class="note warn"><strong>Cheat meal deň</strong> — proteín je nižší (132g) a sacharidy vyššie kvôli krupicovej kaši. Jeden deň v týždni je to v poriadku.</div>
+    </div>
+  </div>
+</div>
 </body>
 </html>
