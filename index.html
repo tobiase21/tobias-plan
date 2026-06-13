@@ -124,6 +124,27 @@ hr.dv{border:none;border-top:0.5px solid #1E1E1C;margin:1rem 0;}
 
 .omega-note{background:#0A1A2A;border:0.5px solid #1A3A5A;border-radius:8px;padding:10px 13px;font-size:12px;color:#6090C0;line-height:1.6;margin-bottom:10px;}
 .omega-note strong{color:#80B0E0;}
+
+.prog-table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:1rem;}
+.prog-table th{text-align:left;padding:8px 10px;font-size:10px;font-weight:700;color:#555;text-transform:uppercase;letter-spacing:.06em;border-bottom:0.5px solid #2A2A28;white-space:nowrap;}
+.prog-table td{padding:8px 10px;border-bottom:0.5px solid #1A1A18;color:#B8B6B0;vertical-align:top;}
+.prog-table td:first-child{color:#E8E6E0;font-weight:500;}
+.prog-table tr:last-child td{border-bottom:none;}
+.prog-date{font-size:10px;color:#555;display:block;margin-top:2px;}
+.prog-val{color:#1D9E75;font-weight:700;}
+.prog-note{font-size:11px;color:#555;margin-top:2px;}
+.week-header{background:#1A1A18;padding:10px 14px;border-radius:8px;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;}
+.week-title{font-size:13px;font-weight:600;color:#E8E6E0;}
+.week-date{font-size:11px;color:#555;}
+.body-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:1rem;}
+.body-stat{background:#111110;border:0.5px solid #2A2A28;border-radius:10px;padding:12px;text-align:center;}
+.body-stat-val{font-size:20px;font-weight:700;color:#1D9E75;}
+.body-stat-lbl{font-size:10px;color:#555;margin-top:3px;}
+.body-stat-change{font-size:11px;margin-top:4px;}
+.change-pos{color:#1D9E75;}
+.change-neg{color:#E07070;}
+.pr-badge{background:#1D5C35;color:#7DFFB3;font-size:10px;padding:2px 6px;border-radius:4px;margin-left:6px;}
+
 </style>
 </head>
 <body>
@@ -136,6 +157,7 @@ hr.dv{border:none;border-top:0.5px solid #1E1E1C;margin:1rem 0;}
   <button class="nav-btn" onclick="showSection('rutina',this)">⏰ Rutina</button>
   <button class="nav-btn" onclick="showSection('suplementy',this)">💊 Suplementy</button>
   <button class="nav-btn" onclick="showSection('makra',this)">📊 Makrá</button>
+  <button class="nav-btn" onclick="showSection('progress',this)">📈 Progres</button>
 </div>
 
 <!-- ==================== RUTINA ==================== -->
@@ -1088,6 +1110,311 @@ function showPanel(prefix, idx, btn) {
       </table>
       <div class="note warn"><strong>Cheat meal deň</strong> — proteín je nižší (132g) a sacharidy vyššie kvôli krupicovej kaši. Jeden deň v týždni je to v poriadku.</div>
     </div>
+  </div>
+</div>
+
+<!-- ==================== PROGRES ==================== -->
+<div id="progress" class="section">
+  <p class="page-title">Tréningový progres</p>
+  <p class="page-sub">Sledovanie váh, opakovaní a telesných meraní</p>
+
+  <div class="tabs">
+    <button class="tb on" onclick="showPanel('prog',0,this)">Telo</button>
+    <button class="tb" onclick="showPanel('prog',1,this)">Po — Hrudník</button>
+    <button class="tb" onclick="showPanel('prog',2,this)">St — Chrbát</button>
+    <button class="tb" onclick="showPanel('prog',3,this)">Pi — Ramená</button>
+    <button class="tb" onclick="showPanel('prog',4,this)">So — Nohy</button>
+    <button class="tb" onclick="showPanel('prog',5,this)">Brucho</button>
+  </div>
+
+  <!-- TELO -->
+  <div id="prog-0" class="panel vis">
+    <div class="sec-title">Telesné merania</div>
+    <div class="body-grid">
+      <div class="body-stat">
+        <div class="body-stat-val">73,6</div>
+        <div class="body-stat-lbl">Váha (kg)</div>
+        <div class="body-stat-change" style="color:#555;">štart 13.6.2026</div>
+      </div>
+      <div class="body-stat">
+        <div class="body-stat-val">186</div>
+        <div class="body-stat-lbl">Výška (cm)</div>
+      </div>
+      <div class="body-stat">
+        <div class="body-stat-val">~25–35%</div>
+        <div class="body-stat-lbl">Tuk (%)</div>
+      </div>
+    </div>
+    <div class="card">
+      <p class="card-title">História meraní</p>
+      <table class="prog-table">
+        <thead><tr><th>Dátum</th><th>Váha</th><th>Tuk %</th><th>Poznámka</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>13.06.2026<span class="prog-date">Štart</span></td>
+            <td><span class="prog-val">73,6 kg</span></td>
+            <td>~25–35%</td>
+            <td>Začiatok programu</td>
+          </tr>
+          <tr>
+            <td colspan="4" style="color:#333;text-align:center;padding:20px;font-style:italic;">Ďalšie merania pridaj každý pondelok ráno nalačno</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note"><strong>Mer sa každý pondelok ráno</strong> — nalačno, pred smoothie, po toalete. Vždy rovnaké podmienky. Centimetre (pás, hrudník, ramená) sú dôležitejšie ako váha.</div>
+  </div>
+
+  <!-- HRUDNÍK -->
+  <div id="prog-1" class="panel">
+    <div class="sec-title">Pondelok — Hrudník + Triceps</div>
+
+    <div class="week-header">
+      <span class="week-title">Týždeň 1</span>
+      <span class="week-date">13.06.2026</span>
+    </div>
+    <div class="card">
+      <table class="prog-table">
+        <thead><tr><th>Cvik</th><th>Séria 1</th><th>Séria 2</th><th>Séria 3</th><th>Séria 4</th></tr></thead>
+        <tbody>
+          <tr><td>Bench press</td><td>— kg / — opa</td><td>—</td><td>—</td><td>—</td></tr>
+          <tr><td>Incline DB press</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+          <tr><td>Cable fly</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+          <tr><td>Tricep pushdown</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+          <tr><td>Overhead tricep ext.</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="week-header">
+      <span class="week-title">Týždeň 2</span>
+      <span class="week-date">—</span>
+    </div>
+    <div class="card">
+      <table class="prog-table">
+        <thead><tr><th>Cvik</th><th>Séria 1</th><th>Séria 2</th><th>Séria 3</th><th>Séria 4</th></tr></thead>
+        <tbody>
+          <tr><td>Bench press</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+          <tr><td>Incline DB press</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+          <tr><td>Cable fly</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+          <tr><td>Tricep pushdown</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+          <tr><td>Overhead tricep ext.</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- CHRBÁT -->
+  <div id="prog-2" class="panel">
+    <div class="sec-title">Streda — Chrbát + Biceps</div>
+
+    <div class="week-header">
+      <span class="week-title">Týždeň 1</span>
+      <span class="week-date">—</span>
+    </div>
+    <div class="card">
+      <table class="prog-table">
+        <thead><tr><th>Cvik</th><th>Séria 1</th><th>Séria 2</th><th>Séria 3</th><th>Séria 4</th></tr></thead>
+        <tbody>
+          <tr><td>Lat pulldown</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+          <tr><td>Seated cable row</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+          <tr><td>DB single arm row</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+          <tr><td>Face pull</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+          <tr><td>Barbell curl</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+          <tr><td>Hammer curl</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="week-header">
+      <span class="week-title">Týždeň 2</span>
+      <span class="week-date">—</span>
+    </div>
+    <div class="card">
+      <table class="prog-table">
+        <thead><tr><th>Cvik</th><th>Séria 1</th><th>Séria 2</th><th>Séria 3</th><th>Séria 4</th></tr></thead>
+        <tbody>
+          <tr><td>Lat pulldown</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+          <tr><td>Seated cable row</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+          <tr><td>DB single arm row</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+          <tr><td>Face pull</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+          <tr><td>Barbell curl</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+          <tr><td>Hammer curl</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- RAMENÁ -->
+  <div id="prog-3" class="panel">
+    <div class="sec-title">Piatok — Ramená + Core</div>
+
+    <div class="week-header">
+      <span class="week-title">Týždeň 1 — HOTOVO ✅</span>
+      <span class="week-date">13.06.2026</span>
+    </div>
+    <div class="card">
+      <table class="prog-table">
+        <thead><tr><th>Cvik</th><th>Váha</th><th>Série / Opa.</th><th>Poznámka</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Shoulder press (jednoručky)</td>
+            <td><span class="prog-val">8 kg</span></td>
+            <td>podľa plánu</td>
+            <td>✅ Správna váha</td>
+          </tr>
+          <tr>
+            <td>Lateral raise (bočný zdvih)</td>
+            <td><span class="prog-val">3 kg</span></td>
+            <td>podľa plánu</td>
+            <td>✅ Správna váha</td>
+          </tr>
+          <tr>
+            <td>Front raise (predný zdvih)</td>
+            <td><span class="prog-val">3 kg</span></td>
+            <td>podľa plánu</td>
+            <td>✅ Správna váha</td>
+          </tr>
+          <tr>
+            <td>Rear delt fly (ruky dozadu)</td>
+            <td><span class="prog-val">10 kg</span></td>
+            <td>podľa plánu, -1–2 opa</td>
+            <td>⚠️ Skús 8–9 kg</td>
+          </tr>
+          <tr>
+            <td>Shrugs</td>
+            <td><span class="prog-val">7 kg</span></td>
+            <td>podľa plánu</td>
+            <td>✅ Správna váha</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card" style="margin-top:8px;">
+      <p class="card-title">Apple Health — 13.06.2026</p>
+      <table class="prog-table">
+        <thead><tr><th>Metrika</th><th>Hodnota</th></tr></thead>
+        <tbody>
+          <tr><td>Trvanie</td><td><span class="prog-val">1 hod 4 min</span></td></tr>
+          <tr><td>Spálené kalórie</td><td><span class="prog-val">504 kcal</span></td></tr>
+          <tr><td>Max. srdcová frekvencia</td><td><span class="prog-val">164 BPM</span></td></tr>
+          <tr><td>Min. srdcová frekvencia</td><td><span class="prog-val">99 BPM</span></td></tr>
+          <tr><td>Typ</td><td>Traditional Strength Training</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="week-header" style="margin-top:12px;">
+      <span class="week-title">Týždeň 2</span>
+      <span class="week-date">—</span>
+    </div>
+    <div class="card">
+      <table class="prog-table">
+        <thead><tr><th>Cvik</th><th>Váha</th><th>Série / Opa.</th><th>Poznámka</th></tr></thead>
+        <tbody>
+          <tr><td>Shoulder press</td><td>— kg</td><td>—</td><td>—</td></tr>
+          <tr><td>Lateral raise</td><td>— kg</td><td>—</td><td>—</td></tr>
+          <tr><td>Front raise</td><td>— kg</td><td>—</td><td>—</td></tr>
+          <tr><td>Rear delt fly</td><td>— kg</td><td>—</td><td>—</td></tr>
+          <tr><td>Shrugs</td><td>— kg</td><td>—</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- NOHY -->
+  <div id="prog-4" class="panel">
+    <div class="sec-title">Sobota — Nohy + Zadok</div>
+
+    <div class="week-header">
+      <span class="week-title">Týždeň 1</span>
+      <span class="week-date">—</span>
+    </div>
+    <div class="card">
+      <table class="prog-table">
+        <thead><tr><th>Cvik</th><th>Séria 1</th><th>Séria 2</th><th>Séria 3</th><th>Séria 4</th></tr></thead>
+        <tbody>
+          <tr><td>Squat (drep)</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+          <tr><td>Romanian deadlift</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+          <tr><td>Leg press</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+          <tr><td>Leg curl</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+          <tr><td>Hip thrust</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+          <tr><td>Calf raises</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="week-header">
+      <span class="week-title">Týždeň 2</span>
+      <span class="week-date">—</span>
+    </div>
+    <div class="card">
+      <table class="prog-table">
+        <thead><tr><th>Cvik</th><th>Séria 1</th><th>Séria 2</th><th>Séria 3</th><th>Séria 4</th></tr></thead>
+        <tbody>
+          <tr><td>Squat (drep)</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+          <tr><td>Romanian deadlift</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+          <tr><td>Leg press</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+          <tr><td>Leg curl</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+          <tr><td>Hip thrust</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+          <tr><td>Calf raises</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- BRUCHO -->
+  <div id="prog-5" class="panel">
+    <div class="sec-title">Brucho — každý silový deň</div>
+
+    <div class="week-header">
+      <span class="week-title">Týždeň 1 — Ramená (13.06.2026)</span>
+      <span class="week-date">Prvý záznam</span>
+    </div>
+    <div class="card">
+      <table class="prog-table">
+        <thead><tr><th>Cvik</th><th>Séria 1</th><th>Séria 2</th><th>Séria 3</th><th>Cieľ</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Weighted cable crunch</td>
+            <td>—</td><td>—</td><td>—</td>
+            <td style="color:#555;">15 opa</td>
+          </tr>
+          <tr>
+            <td>Reverse crunch</td>
+            <td><span class="prog-val">10</span></td>
+            <td><span class="prog-val">6</span></td>
+            <td><span class="prog-val">3</span></td>
+            <td style="color:#555;">15 opa</td>
+          </tr>
+          <tr>
+            <td>Plank</td>
+            <td><span class="prog-val">30s</span></td>
+            <td><span class="prog-val">24s</span></td>
+            <td><span class="prog-val">24s</span></td>
+            <td style="color:#555;">45–60s</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="week-header" style="margin-top:12px;">
+      <span class="week-title">Týždeň 2</span>
+      <span class="week-date">—</span>
+    </div>
+    <div class="card">
+      <table class="prog-table">
+        <thead><tr><th>Cvik</th><th>Séria 1</th><th>Séria 2</th><th>Séria 3</th><th>Cieľ</th></tr></thead>
+        <tbody>
+          <tr><td>Weighted cable crunch</td><td>—</td><td>—</td><td>—</td><td style="color:#555;">15 opa</td></tr>
+          <tr><td>Reverse crunch</td><td>—</td><td>—</td><td>—</td><td style="color:#555;">15 opa</td></tr>
+          <tr><td>Plank</td><td>—</td><td>—</td><td>—</td><td style="color:#555;">45–60s</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note"><strong>Progres brucha:</strong> Reverse crunch — z 10/6/3 na 15/12/10 za 4–6 týždňov. Plank — z 24–30s na 45–60s za 3–4 týždne. Malé zlepšenie každý týždeň je správny postup.</div>
   </div>
 </div>
 </body>
