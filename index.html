@@ -145,6 +145,35 @@ hr.dv{border:none;border-top:0.5px solid #1E1E1C;margin:1rem 0;}
 .change-neg{color:#E07070;}
 .pr-badge{background:#1D5C35;color:#7DFFB3;font-size:10px;padding:2px 6px;border-radius:4px;margin-left:6px;}
 
+
+/* === TRACKING SYSTEM === */
+.track-card{background:#1A1A18;border:0.5px solid #2A2A28;border-radius:12px;padding:14px 16px;margin-bottom:12px;}
+.track-ex-row{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:0.5px solid #1A1A18;}
+.track-ex-row:last-child{border-bottom:none;}
+.track-ex-name{flex:1;font-size:12px;color:#E8E6E0;font-weight:500;min-width:0;}
+.track-ex-target{font-size:10px;color:#555;display:block;margin-top:1px;}
+.track-input{width:52px;background:#0F0F0E;border:1px solid #2A2A28;border-radius:7px;color:#1D9E75;font-size:14px;font-weight:700;text-align:center;padding:7px 4px;-webkit-appearance:none;}
+.track-input:focus{outline:none;border-color:#1D9E75;background:#0A1F17;}
+.track-input::placeholder{color:#333;font-weight:400;}
+.track-x{font-size:11px;color:#444;flex-shrink:0;}
+.track-unit{font-size:10px;color:#555;flex-shrink:0;width:14px;}
+.track-actions{display:flex;gap:8px;margin:14px 0;flex-wrap:wrap;}
+.track-btn{flex:1;min-width:130px;padding:13px;border-radius:10px;border:none;font-size:13px;font-weight:700;cursor:pointer;transition:all .15s;}
+.track-btn-save{background:#1D9E75;color:#fff;}
+.track-btn-save:active{background:#168a63;}
+.track-btn-export{background:rgba(80,50,120,0.3);color:#B19CD9;border:1px solid #5A4A7A;}
+.track-btn-export:active{background:rgba(80,50,120,0.5);}
+.track-btn-clear{background:#2A1212;color:#E07070;border:1px solid #5A2020;flex:0 0 auto;min-width:auto;padding:13px 16px;}
+.track-saved-badge{font-size:10px;color:#1D9E75;margin-left:8px;opacity:0;transition:opacity .3s;}
+.track-saved-badge.show{opacity:1;}
+.track-date-label{font-size:11px;color:#555;margin-bottom:10px;}
+.track-week-sel{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;}
+.track-week-btn{padding:6px 12px;border:0.5px solid #2A2A28;border-radius:7px;background:transparent;font-size:11px;font-weight:600;color:#666;cursor:pointer;}
+.track-week-btn.on{background:#1D9E75;border-color:#1D9E75;color:#fff;}
+.export-box{background:#0F0F0E;border:1px solid #2A2A28;border-radius:10px;padding:12px;margin-top:10px;font-family:monospace;font-size:11px;color:#B8B6B0;white-space:pre-wrap;word-break:break-word;display:none;line-height:1.5;}
+.export-box.show{display:block;}
+.export-hint{font-size:11px;color:#555;margin-top:8px;line-height:1.5;}
+
 </style>
 </head>
 <body>
@@ -276,12 +305,12 @@ hr.dv{border:none;border-top:0.5px solid #1E1E1C;margin:1rem 0;}
 <!-- ==================== JEDALNICEK ==================== -->
 <div id="jedalnicek" class="section vis">
   <p class="page-title">7-dňový jedálniček</p>
-  <p class="page-sub">2 080 kcal · 185g proteín · 750 kcal deficit · varenie 2× týždenne (Po+Št) + nedeľný vývar</p>
+  <p class="page-sub">~2 300 kcal · 185g proteín · mierny deficit · varenie 2× týždenne (Po+Št) + nedeľný vývar</p>
 
   <div class="grid-4" style="margin-bottom:1rem;">
-    <div class="stat"><div class="stat-val">2 080</div><div class="stat-lbl">kcal/deň</div></div>
+    <div class="stat"><div class="stat-val">~2 300</div><div class="stat-lbl">kcal/deň</div></div>
     <div class="stat"><div class="stat-val">185 g</div><div class="stat-lbl">proteín</div></div>
-    <div class="stat"><div class="stat-val">750</div><div class="stat-lbl">kcal deficit</div></div>
+    <div class="stat"><div class="stat-val">~500</div><div class="stat-lbl">kcal deficit</div></div>
     <div class="stat"><div class="stat-val">~0,5 kg</div><div class="stat-lbl">týždeň</div></div>
   </div>
 
@@ -600,13 +629,13 @@ hr.dv{border:none;border-top:0.5px solid #1E1E1C;margin:1rem 0;}
 <!-- ==================== SMOOTHIE ==================== -->
 <div id="smoothie" class="section">
   <p class="page-title">Ranné detox smoothie</p>
-  <p class="page-sub">06:40 · ~350 kcal · 2 kolá mixovania</p>
+  <p class="page-sub">06:40 · smoothie ~320 kcal (+ Omega 45 + Proteín 128 = 493 spolu) · 2 kolá mixovania</p>
 
   <div class="sec-title">Presné poradie ráno</div>
   <div class="card">
     <div class="routine-row"><span class="routine-time" style="color:#1D9E75;">04:30</span><span class="routine-act"><strong style="color:#E8E6E0;">Čaga + C60 kaša</strong> — nalačno, samotná. Pod jazyk alebo 50 ml vody.</span></div>
-    <div class="routine-row"><span class="routine-time" style="color:#534AB7;">06:40</span><span class="routine-act"><strong style="color:#E8E6E0;">Smoothie + Möller's Omega 5 ml</strong> — 2 kolá mixovania (pozri nižšie).</span></div>
-    <div class="routine-row"><span class="routine-time" style="color:#E07070;">~08:00</span><span class="routine-act"><strong style="color:#E8E6E0;">Cardilan + Proteín</strong> — s jedlom. NIE so smoothie.</span></div>
+    <div class="routine-row"><span class="routine-time" style="color:#534AB7;">06:40</span><span class="routine-act"><strong style="color:#E8E6E0;">Smoothie + Möller's Omega 5 ml + Proteín (post-workout)</strong> — 2 kolá mixovania (pozri nižšie).</span></div>
+    <div class="routine-row"><span class="routine-time" style="color:#E07070;">~08:00</span><span class="routine-act"><strong style="color:#E8E6E0;">Cardilan 1 tbl</strong> — s jedlom, NIE nalačno.</span></div>
     <div class="routine-row"><span class="routine-time" style="color:#8080D8;">20:00</span><span class="routine-act"><strong style="color:#E8E6E0;">Lion's Mane</strong> — v teplej vode pred spaním. Nikdy do smoothie.</span></div>
   </div>
 
@@ -997,7 +1026,7 @@ function showPanel(prefix, idx, btn) {
 <!-- ==================== MAKRÁ ==================== -->
 <div id="makra" class="section">
   <p class="page-title">Denné makroživiny</p>
-  <p class="page-sub">Od smoothie po posledné jedlo · 2 080 kcal · 750 kcal deficit</p>
+  <p class="page-sub">Od smoothie po posledné jedlo · ~2 300 kcal · mierny deficit</p>
 
   <div class="tabs">
     <button class="tb on" onclick="showPanel('mak',0,this)">Po</button>
@@ -1195,7 +1224,7 @@ function showPanel(prefix, idx, btn) {
 <!-- ==================== PROGRES ==================== -->
 <div id="progress" class="section">
   <p class="page-title">Tréningový progres</p>
-  <p class="page-sub">Sledovanie váh, opakovaní a telesných meraní</p>
+  <p class="page-sub">Zapíš váhy a opakovania priamo tu — uloží sa v telefóne</p>
 
   <div class="tabs">
     <button class="tb on" onclick="showPanel('prog',0,this)">Telo</button>
@@ -1211,290 +1240,308 @@ function showPanel(prefix, idx, btn) {
     <div class="sec-title">Telesné merania</div>
     <div class="body-grid">
       <div class="body-stat">
-        <div class="body-stat-val">73,6</div>
+        <div class="body-stat-val" id="latest-weight">73,6</div>
         <div class="body-stat-lbl">Váha (kg)</div>
-        <div class="body-stat-change" style="color:#555;">štart 13.6.2026</div>
+        <div class="body-stat-change" style="color:#555;">štart 13.6.</div>
       </div>
       <div class="body-stat">
         <div class="body-stat-val">186</div>
         <div class="body-stat-lbl">Výška (cm)</div>
       </div>
       <div class="body-stat">
-        <div class="body-stat-val">~25–35%</div>
-        <div class="body-stat-lbl">Tuk (%)</div>
+        <div class="body-stat-val" id="latest-waist">—</div>
+        <div class="body-stat-lbl">Pás (cm)</div>
       </div>
     </div>
+
+    <div class="track-card">
+      <p class="card-title">➕ Nové meranie (pondelok ráno)</p>
+      <div class="track-date-label">Dátum sa pridá automaticky</div>
+      <div class="track-ex-row">
+        <span class="track-ex-name">Váha</span>
+        <input class="track-input" id="m-weight" type="text" inputmode="decimal" placeholder="kg">
+        <span class="track-unit">kg</span>
+      </div>
+      <div class="track-ex-row">
+        <span class="track-ex-name">Obvod pása</span>
+        <input class="track-input" id="m-waist" type="text" inputmode="decimal" placeholder="cm">
+        <span class="track-unit">cm</span>
+      </div>
+      <div class="track-actions">
+        <button class="track-btn track-btn-save" onclick="saveMeasurement()">💾 Uložiť meranie</button>
+      </div>
+    </div>
+
     <div class="card">
-      <p class="card-title">História meraní</p>
+      <p class="card-title">História meraní <span class="track-saved-badge" id="badge-telo">✓ uložené</span></p>
       <table class="prog-table">
-        <thead><tr><th>Dátum</th><th>Váha</th><th>Tuk %</th><th>Poznámka</th></tr></thead>
-        <tbody>
+        <thead><tr><th>Dátum</th><th>Váha</th><th>Pás</th></tr></thead>
+        <tbody id="measurement-history">
           <tr>
             <td>13.06.2026<span class="prog-date">Štart</span></td>
             <td><span class="prog-val">73,6 kg</span></td>
-            <td>~25–35%</td>
-            <td>Začiatok programu</td>
-          </tr>
-          <tr>
-            <td colspan="4" style="color:#333;text-align:center;padding:20px;font-style:italic;">Ďalšie merania pridaj každý pondelok ráno nalačno</td>
+            <td>—</td>
           </tr>
         </tbody>
       </table>
     </div>
-    <div class="note"><strong>Mer sa každý pondelok ráno</strong> — nalačno, pred smoothie, po toalete. Vždy rovnaké podmienky. Centimetre (pás, hrudník, ramená) sú dôležitejšie ako váha.</div>
+    <div class="note"><strong>Mer sa každý pondelok ráno</strong> — nalačno, pred smoothie. Vždy rovnaké podmienky. Centimetre pása sú dôležitejšie ako váha.</div>
   </div>
 
   <!-- HRUDNÍK -->
   <div id="prog-1" class="panel">
     <div class="sec-title">Pondelok — Hrudník + Triceps</div>
-
-    <div class="week-header">
-      <span class="week-title">Týždeň 1</span>
-      <span class="week-date">13.06.2026</span>
-    </div>
-    <div class="card">
-      <table class="prog-table">
-        <thead><tr><th>Cvik</th><th>Séria 1</th><th>Séria 2</th><th>Séria 3</th><th>Séria 4</th></tr></thead>
-        <tbody>
-          <tr><td>Bench press</td><td>— kg / — opa</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr><td>Incline DB press</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr><td>Cable fly</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr><td>Tricep pushdown</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr><td>Overhead tricep ext.</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="week-header">
-      <span class="week-title">Týždeň 2</span>
-      <span class="week-date">—</span>
-    </div>
-    <div class="card">
-      <table class="prog-table">
-        <thead><tr><th>Cvik</th><th>Séria 1</th><th>Séria 2</th><th>Séria 3</th><th>Séria 4</th></tr></thead>
-        <tbody>
-          <tr><td>Bench press</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr><td>Incline DB press</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr><td>Cable fly</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr><td>Tricep pushdown</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr><td>Overhead tricep ext.</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-        </tbody>
-      </table>
+    <div class="track-date-label">Vyber týždeň, zapíš najťažšiu sériu (váha × opakovania)</div>
+    <div class="track-week-sel" id="wk-chest"></div>
+    <div class="track-card" id="card-chest"></div>
+    <div class="track-actions">
+      <button class="track-btn track-btn-save" onclick="saveExercises('chest')">💾 Uložiť <span class="track-saved-badge" id="badge-chest">✓</span></button>
     </div>
   </div>
 
   <!-- CHRBÁT -->
   <div id="prog-2" class="panel">
     <div class="sec-title">Streda — Chrbát + Biceps</div>
-
-    <div class="week-header">
-      <span class="week-title">Týždeň 1</span>
-      <span class="week-date">—</span>
-    </div>
-    <div class="card">
-      <table class="prog-table">
-        <thead><tr><th>Cvik</th><th>Séria 1</th><th>Séria 2</th><th>Séria 3</th><th>Séria 4</th></tr></thead>
-        <tbody>
-          <tr><td>Lat pulldown</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr><td>Seated cable row</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr><td>DB single arm row</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr><td>Face pull</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr><td>Barbell curl</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr><td>Hammer curl</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="week-header">
-      <span class="week-title">Týždeň 2</span>
-      <span class="week-date">—</span>
-    </div>
-    <div class="card">
-      <table class="prog-table">
-        <thead><tr><th>Cvik</th><th>Séria 1</th><th>Séria 2</th><th>Séria 3</th><th>Séria 4</th></tr></thead>
-        <tbody>
-          <tr><td>Lat pulldown</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr><td>Seated cable row</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr><td>DB single arm row</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr><td>Face pull</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr><td>Barbell curl</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr><td>Hammer curl</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-        </tbody>
-      </table>
+    <div class="track-date-label">Vyber týždeň, zapíš najťažšiu sériu (váha × opakovania)</div>
+    <div class="track-week-sel" id="wk-back"></div>
+    <div class="track-card" id="card-back"></div>
+    <div class="track-actions">
+      <button class="track-btn track-btn-save" onclick="saveExercises('back')">💾 Uložiť <span class="track-saved-badge" id="badge-back">✓</span></button>
     </div>
   </div>
 
   <!-- RAMENÁ -->
   <div id="prog-3" class="panel">
     <div class="sec-title">Piatok — Ramená + Core</div>
-
-    <div class="week-header">
-      <span class="week-title">Týždeň 1 — HOTOVO ✅</span>
-      <span class="week-date">13.06.2026</span>
-    </div>
-    <div class="card">
-      <table class="prog-table">
-        <thead><tr><th>Cvik</th><th>Váha</th><th>Série / Opa.</th><th>Poznámka</th></tr></thead>
-        <tbody>
-          <tr>
-            <td>Shoulder press (jednoručky)</td>
-            <td><span class="prog-val">8 kg</span></td>
-            <td>podľa plánu</td>
-            <td>✅ Správna váha</td>
-          </tr>
-          <tr>
-            <td>Lateral raise (bočný zdvih)</td>
-            <td><span class="prog-val">3 kg</span></td>
-            <td>podľa plánu</td>
-            <td>✅ Správna váha</td>
-          </tr>
-          <tr>
-            <td>Front raise (predný zdvih)</td>
-            <td><span class="prog-val">3 kg</span></td>
-            <td>podľa plánu</td>
-            <td>✅ Správna váha</td>
-          </tr>
-          <tr>
-            <td>Rear delt fly (ruky dozadu)</td>
-            <td><span class="prog-val">10 kg</span></td>
-            <td>podľa plánu, -1–2 opa</td>
-            <td>⚠️ Skús 8–9 kg</td>
-          </tr>
-          <tr>
-            <td>Shrugs</td>
-            <td><span class="prog-val">7 kg</span></td>
-            <td>podľa plánu</td>
-            <td>✅ Správna váha</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="card" style="margin-top:8px;">
-      <p class="card-title">Apple Health — 13.06.2026</p>
-      <table class="prog-table">
-        <thead><tr><th>Metrika</th><th>Hodnota</th></tr></thead>
-        <tbody>
-          <tr><td>Trvanie</td><td><span class="prog-val">1 hod 4 min</span></td></tr>
-          <tr><td>Spálené kalórie</td><td><span class="prog-val">504 kcal</span></td></tr>
-          <tr><td>Max. srdcová frekvencia</td><td><span class="prog-val">164 BPM</span></td></tr>
-          <tr><td>Min. srdcová frekvencia</td><td><span class="prog-val">99 BPM</span></td></tr>
-          <tr><td>Typ</td><td>Traditional Strength Training</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="week-header" style="margin-top:12px;">
-      <span class="week-title">Týždeň 2</span>
-      <span class="week-date">—</span>
-    </div>
-    <div class="card">
-      <table class="prog-table">
-        <thead><tr><th>Cvik</th><th>Váha</th><th>Série / Opa.</th><th>Poznámka</th></tr></thead>
-        <tbody>
-          <tr><td>Shoulder press</td><td>— kg</td><td>—</td><td>—</td></tr>
-          <tr><td>Lateral raise</td><td>— kg</td><td>—</td><td>—</td></tr>
-          <tr><td>Front raise</td><td>— kg</td><td>—</td><td>—</td></tr>
-          <tr><td>Rear delt fly</td><td>— kg</td><td>—</td><td>—</td></tr>
-          <tr><td>Shrugs</td><td>— kg</td><td>—</td><td>—</td></tr>
-        </tbody>
-      </table>
+    <div class="track-date-label">Vyber týždeň, zapíš najťažšiu sériu (váha × opakovania)</div>
+    <div class="track-week-sel" id="wk-shoulders"></div>
+    <div class="track-card" id="card-shoulders"></div>
+    <div class="track-actions">
+      <button class="track-btn track-btn-save" onclick="saveExercises('shoulders')">💾 Uložiť <span class="track-saved-badge" id="badge-shoulders">✓</span></button>
     </div>
   </div>
 
   <!-- NOHY -->
   <div id="prog-4" class="panel">
     <div class="sec-title">Sobota — Nohy + Zadok</div>
-
-    <div class="week-header">
-      <span class="week-title">Týždeň 1</span>
-      <span class="week-date">—</span>
-    </div>
-    <div class="card">
-      <table class="prog-table">
-        <thead><tr><th>Cvik</th><th>Séria 1</th><th>Séria 2</th><th>Séria 3</th><th>Séria 4</th></tr></thead>
-        <tbody>
-          <tr><td>Squat (drep)</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr><td>Romanian deadlift</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr><td>Leg press</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr><td>Leg curl</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr><td>Hip thrust</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr><td>Calf raises</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="week-header">
-      <span class="week-title">Týždeň 2</span>
-      <span class="week-date">—</span>
-    </div>
-    <div class="card">
-      <table class="prog-table">
-        <thead><tr><th>Cvik</th><th>Séria 1</th><th>Séria 2</th><th>Séria 3</th><th>Séria 4</th></tr></thead>
-        <tbody>
-          <tr><td>Squat (drep)</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr><td>Romanian deadlift</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr><td>Leg press</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr><td>Leg curl</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr><td>Hip thrust</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr><td>Calf raises</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-        </tbody>
-      </table>
+    <div class="track-date-label">Vyber týždeň, zapíš najťažšiu sériu (váha × opakovania)</div>
+    <div class="track-week-sel" id="wk-legs"></div>
+    <div class="track-card" id="card-legs"></div>
+    <div class="track-actions">
+      <button class="track-btn track-btn-save" onclick="saveExercises('legs')">💾 Uložiť <span class="track-saved-badge" id="badge-legs">✓</span></button>
     </div>
   </div>
 
   <!-- BRUCHO -->
   <div id="prog-5" class="panel">
     <div class="sec-title">Brucho — každý silový deň</div>
+    <div class="track-date-label">Vyber týždeň, zapíš opakovania / sekundy</div>
+    <div class="track-week-sel" id="wk-abs"></div>
+    <div class="track-card" id="card-abs"></div>
+    <div class="track-actions">
+      <button class="track-btn track-btn-save" onclick="saveExercises('abs')">💾 Uložiť <span class="track-saved-badge" id="badge-abs">✓</span></button>
+    </div>
+    <div class="note"><strong>Cieľ:</strong> Reverse crunch z 10/6/3 na 15/12/10 za 4–6 týždňov. Plank z 24–30s na 45–60s.</div>
+  </div>
 
-    <div class="week-header">
-      <span class="week-title">Týždeň 1 — Ramená (13.06.2026)</span>
-      <span class="week-date">Prvý záznam</span>
+  <!-- EXPORT -->
+  <div class="sec-title" style="margin-top:1.5rem;">📋 Export pre Clauda</div>
+  <div class="card">
+    <p style="font-size:12px;color:#777;line-height:1.6;margin-bottom:4px;">Klikni, skopíruj text a pošli Claudovi do chatu — analyzuje progres a upraví plán.</p>
+    <div class="track-actions">
+      <button class="track-btn track-btn-export" onclick="exportData()">📋 Vygenerovať export</button>
+      <button class="track-btn track-btn-clear" onclick="clearAllData()">🗑</button>
     </div>
-    <div class="card">
-      <table class="prog-table">
-        <thead><tr><th>Cvik</th><th>Séria 1</th><th>Séria 2</th><th>Séria 3</th><th>Cieľ</th></tr></thead>
-        <tbody>
-          <tr>
-            <td>Weighted cable crunch</td>
-            <td>—</td><td>—</td><td>—</td>
-            <td style="color:#555;">15 opa</td>
-          </tr>
-          <tr>
-            <td>Reverse crunch</td>
-            <td><span class="prog-val">10</span></td>
-            <td><span class="prog-val">6</span></td>
-            <td><span class="prog-val">3</span></td>
-            <td style="color:#555;">15 opa</td>
-          </tr>
-          <tr>
-            <td>Plank</td>
-            <td><span class="prog-val">30s</span></td>
-            <td><span class="prog-val">24s</span></td>
-            <td><span class="prog-val">24s</span></td>
-            <td style="color:#555;">45–60s</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="week-header" style="margin-top:12px;">
-      <span class="week-title">Týždeň 2</span>
-      <span class="week-date">—</span>
-    </div>
-    <div class="card">
-      <table class="prog-table">
-        <thead><tr><th>Cvik</th><th>Séria 1</th><th>Séria 2</th><th>Séria 3</th><th>Cieľ</th></tr></thead>
-        <tbody>
-          <tr><td>Weighted cable crunch</td><td>—</td><td>—</td><td>—</td><td style="color:#555;">15 opa</td></tr>
-          <tr><td>Reverse crunch</td><td>—</td><td>—</td><td>—</td><td style="color:#555;">15 opa</td></tr>
-          <tr><td>Plank</td><td>—</td><td>—</td><td>—</td><td style="color:#555;">45–60s</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="note"><strong>Progres brucha:</strong> Reverse crunch — z 10/6/3 na 15/12/10 za 4–6 týždňov. Plank — z 24–30s na 45–60s za 3–4 týždne. Malé zlepšenie každý týždeň je správny postup.</div>
+    <div class="export-box" id="export-output"></div>
   </div>
 </div>
+
+<script>
+// ===== TRACKING SYSTEM =====
+const EXERCISES = {
+  chest: { label: 'Hrudník', date: 'Po', items: ['Bench press','Incline DB press','Cable fly','Tricep pushdown','Overhead tricep ext.'], type: 'weight' },
+  back: { label: 'Chrbát', date: 'St', items: ['Lat pulldown','Seated cable row','DB single arm row','Face pull','Barbell curl','Hammer curl'], type: 'weight' },
+  shoulders: { label: 'Ramená', date: 'Pi', items: ['Shoulder press','Lateral raise','Front raise','Rear delt fly','Shrugs'], type: 'weight' },
+  legs: { label: 'Nohy', date: 'So', items: ['Squat','Romanian deadlift','Leg press','Leg curl','Hip thrust','Calf raises'], type: 'weight' },
+  abs: { label: 'Brucho', date: 'Po/St/Pi/So', items: ['Weighted cable crunch','Reverse crunch','Plank (sek)'], type: 'reps' }
+};
+const TOTAL_WEEKS = 12;
+let currentWeek = {};
+
+// Pre-filled week 1 shoulder data (from first workout 13.6)
+const SEED = {
+  'shoulders_w1': {
+    'Shoulder press': {w:'8', r:'plán'}, 'Lateral raise': {w:'3', r:'plán'},
+    'Front raise': {w:'3', r:'plán'}, 'Rear delt fly': {w:'10', r:'plán'}, 'Shrugs': {w:'7', r:'plán'}
+  },
+  'abs_w1': {
+    'Weighted cable crunch': {w:'', r:''}, 'Reverse crunch': {w:'', r:'10/6/3'}, 'Plank (sek)': {w:'', r:'30/24/24'}
+  }
+};
+
+function store(key, val){ try{ localStorage.setItem(key, JSON.stringify(val)); return true; }catch(e){ return false; } }
+function load(key){ try{ const v=localStorage.getItem(key); return v?JSON.parse(v):null; }catch(e){ return null; } }
+
+function initSeed(){
+  for(const k in SEED){ if(load('trk_'+k)===null) store('trk_'+k, SEED[k]); }
+}
+
+function buildWeekSelector(group){
+  const sel = document.getElementById('wk-'+group);
+  if(!sel) return;
+  if(!currentWeek[group]) currentWeek[group]=1;
+  let html='';
+  for(let w=1; w<=TOTAL_WEEKS; w++){
+    const on = w===currentWeek[group]?'on':'';
+    const hasData = load('trk_'+group+'_w'+w)!==null ? '•' : '';
+    html += `<button class="track-week-btn ${on}" onclick="selectWeek('${group}',${w},this)">T${w}${hasData}</button>`;
+  }
+  sel.innerHTML=html;
+}
+
+function selectWeek(group, week, btn){
+  currentWeek[group]=week;
+  btn.parentElement.querySelectorAll('.track-week-btn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  buildExerciseCard(group);
+}
+
+function buildExerciseCard(group){
+  const card = document.getElementById('card-'+group);
+  if(!card) return;
+  const ex = EXERCISES[group];
+  const week = currentWeek[group]||1;
+  const saved = load('trk_'+group+'_w'+week) || {};
+  let html = `<p class="card-title">Týždeň ${week} — ${ex.date}</p>`;
+  ex.items.forEach((item,i)=>{
+    const v = saved[item] || {w:'',r:''};
+    if(ex.type==='weight'){
+      html += `<div class="track-ex-row">
+        <span class="track-ex-name">${item}</span>
+        <input class="track-input" type="text" inputmode="decimal" placeholder="kg" value="${v.w||''}" id="inp-${group}-${i}-w">
+        <span class="track-x">×</span>
+        <input class="track-input" type="text" inputmode="numeric" placeholder="op" value="${v.r||''}" id="inp-${group}-${i}-r">
+      </div>`;
+    } else {
+      html += `<div class="track-ex-row">
+        <span class="track-ex-name">${item}</span>
+        <input class="track-input" type="text" inputmode="text" placeholder="15/12/10" value="${v.r||''}" id="inp-${group}-${i}-r" style="width:90px;">
+      </div>`;
+    }
+  });
+  card.innerHTML = html;
+}
+
+function saveExercises(group){
+  const ex = EXERCISES[group];
+  const week = currentWeek[group]||1;
+  const data = {};
+  ex.items.forEach((item,i)=>{
+    const wEl = document.getElementById('inp-'+group+'-'+i+'-w');
+    const rEl = document.getElementById('inp-'+group+'-'+i+'-r');
+    data[item] = { w: wEl?wEl.value.trim():'', r: rEl?rEl.value.trim():'' };
+  });
+  store('trk_'+group+'_w'+week, data);
+  const badge = document.getElementById('badge-'+group);
+  if(badge){ badge.classList.add('show'); setTimeout(()=>badge.classList.remove('show'),1500); }
+  buildWeekSelector(group);
+}
+
+function saveMeasurement(){
+  const w = document.getElementById('m-weight').value.trim();
+  const waist = document.getElementById('m-waist').value.trim();
+  if(!w && !waist) return;
+  const hist = load('trk_measurements') || [];
+  const d = new Date();
+  const dateStr = ('0'+d.getDate()).slice(-2)+'.'+('0'+(d.getMonth()+1)).slice(-2)+'.'+d.getFullYear();
+  hist.push({ date: dateStr, weight: w, waist: waist });
+  store('trk_measurements', hist);
+  document.getElementById('m-weight').value='';
+  document.getElementById('m-waist').value='';
+  const badge=document.getElementById('badge-telo');
+  if(badge){ badge.classList.add('show'); setTimeout(()=>badge.classList.remove('show'),1500); }
+  renderMeasurements();
+}
+
+function renderMeasurements(){
+  const hist = load('trk_measurements') || [];
+  const tbody = document.getElementById('measurement-history');
+  if(!tbody) return;
+  let html = `<tr><td>13.06.2026<span class="prog-date">Štart</span></td><td><span class="prog-val">73,6 kg</span></td><td>—</td></tr>`;
+  hist.forEach(m=>{
+    html += `<tr><td>${m.date}</td><td><span class="prog-val">${m.weight||'—'} kg</span></td><td>${m.waist||'—'} cm</td></tr>`;
+  });
+  tbody.innerHTML = html;
+  // update top stats
+  if(hist.length>0){
+    const last = hist[hist.length-1];
+    if(last.weight) document.getElementById('latest-weight').textContent = last.weight;
+    if(last.waist) document.getElementById('latest-waist').textContent = last.waist;
+  }
+}
+
+function exportData(){
+  let out = '=== TOBIAS — PROGRES EXPORT ===\n\n';
+  // measurements
+  const hist = load('trk_measurements') || [];
+  if(hist.length>0){
+    out += '📏 MERANIA:\n';
+    out += '13.06.2026 (štart): 73,6 kg\n';
+    hist.forEach(m=>{ out += `${m.date}: ${m.weight||'—'} kg, pás ${m.waist||'—'} cm\n`; });
+    out += '\n';
+  }
+  // exercises
+  for(const group in EXERCISES){
+    const ex = EXERCISES[group];
+    let groupHas = false;
+    let groupTxt = `💪 ${ex.label.toUpperCase()} (${ex.date}):\n`;
+    for(let w=1; w<=TOTAL_WEEKS; w++){
+      const data = load('trk_'+group+'_w'+w);
+      if(data){
+        let weekHas = false;
+        let line = `  T${w}: `;
+        const parts = [];
+        ex.items.forEach(item=>{
+          const v = data[item];
+          if(v && (v.w || v.r)){
+            weekHas = true;
+            if(ex.type==='weight' && v.w) parts.push(`${item} ${v.w}kg×${v.r||'?'}`);
+            else if(v.r) parts.push(`${item} ${v.r}`);
+          }
+        });
+        if(weekHas){ groupTxt += line + parts.join(', ') + '\n'; groupHas=true; }
+      }
+    }
+    if(groupHas) out += groupTxt + '\n';
+  }
+  if(out === '=== TOBIAS — PROGRES EXPORT ===\n\n') out += '(zatiaľ žiadne dáta)';
+  const box = document.getElementById('export-output');
+  box.textContent = out;
+  box.classList.add('show');
+  // try clipboard
+  if(navigator.clipboard){ navigator.clipboard.writeText(out).then(()=>{
+    box.textContent = out + '\n\n✓ Skopírované do schránky!';
+  }).catch(()=>{}); }
+}
+
+function clearAllData(){
+  if(!confirm('Vymazať všetky zapísané dáta? Toto sa nedá vrátiť.')) return;
+  const keys = [];
+  for(let i=0;i<localStorage.length;i++){ const k=localStorage.key(i); if(k && k.startsWith('trk_')) keys.push(k); }
+  keys.forEach(k=>localStorage.removeItem(k));
+  initSeed();
+  renderMeasurements();
+  for(const g in EXERCISES){ currentWeek[g]=1; buildWeekSelector(g); buildExerciseCard(g); }
+  const box=document.getElementById('export-output'); box.classList.remove('show');
+}
+
+// INIT on load
+document.addEventListener('DOMContentLoaded', function(){
+  initSeed();
+  renderMeasurements();
+  for(const g in EXERCISES){ buildWeekSelector(g); buildExerciseCard(g); }
+});
+</script>
+
 </body>
 </html>
