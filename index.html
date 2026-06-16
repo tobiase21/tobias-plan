@@ -175,6 +175,30 @@ hr.dv{border:none;border-top:0.5px solid #1E1E1C;margin:1rem 0;}
 .export-box.show{display:block;}
 .export-hint{font-size:11px;color:#555;margin-top:8px;line-height:1.5;}
 
+
+/* === RECEPTY & POTRAVINY === */
+.jed-subtabs{display:flex;gap:6px;margin-bottom:1rem;border-bottom:0.5px solid #2A2A28;padding-bottom:10px;}
+.jed-subtab{flex:1;padding:10px;border-radius:9px;border:0.5px solid #2A2A28;background:transparent;font-size:12px;font-weight:700;color:#888;cursor:pointer;transition:all .15s;}
+.jed-subtab.on{background:#1D9E75;border-color:#1D9E75;color:#fff;}
+.recipe-card{background:#111110;border:0.5px solid #2A2A28;border-radius:10px;padding:14px 16px;margin-bottom:10px;}
+.recipe-title{font-size:14px;font-weight:700;color:#1D9E75;margin-bottom:4px;}
+.recipe-meta{font-size:11px;color:#555;margin-bottom:10px;}
+.recipe-section{font-size:11px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.06em;margin:10px 0 6px;}
+.recipe-ingredients{list-style:none;padding:0;margin:0 0 10px;}
+.recipe-ingredients li{font-size:12px;color:#B8B6B0;padding:3px 0;padding-left:16px;position:relative;}
+.recipe-ingredients li:before{content:"•";position:absolute;left:2px;color:#1D9E75;}
+.recipe-steps{list-style:none;padding:0;margin:0;counter-reset:step;}
+.recipe-steps li{font-size:12px;color:#C8C6C0;padding:5px 0 5px 26px;position:relative;line-height:1.6;counter-increment:step;}
+.recipe-steps li:before{content:counter(step);position:absolute;left:0;top:5px;width:18px;height:18px;background:#1D9E75;color:#fff;border-radius:50%;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;}
+.shop-cat{font-size:11px;font-weight:700;color:#1D9E75;text-transform:uppercase;letter-spacing:.06em;margin:14px 0 6px;}
+.shop-item{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:0.5px solid #1A1A18;cursor:pointer;font-size:13px;color:#C8C6C0;user-select:none;}
+.shop-item:last-child{border-bottom:none;}
+.shop-check{width:20px;height:20px;border:1.5px solid #2A2A28;border-radius:5px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;color:transparent;transition:all .15s;}
+.shop-item.checked .shop-check{background:#1D9E75;border-color:#1D9E75;color:#fff;}
+.shop-item.checked{color:#444;text-decoration:line-through;}
+.shop-home{font-size:10px;color:#555;margin-left:auto;flex-shrink:0;}
+.shop-reset{background:rgba(80,50,120,0.2);color:#B19CD9;border:1px solid #5A4A7A;padding:10px 16px;border-radius:9px;font-size:12px;font-weight:700;cursor:pointer;margin-top:12px;}
+
 </style>
 </head>
 <body>
@@ -306,21 +330,28 @@ hr.dv{border:none;border-top:0.5px solid #1E1E1C;margin:1rem 0;}
 <!-- ==================== JEDALNICEK ==================== -->
 <div id="jedalnicek" class="section vis">
   <p class="page-title">7-dňový jedálniček</p>
-  <p class="page-sub">~2 300 kcal · 185g proteín · mierny deficit · varenie 2× týždenne (Po+Št) + nedeľný vývar</p>
+  <p class="page-sub">~2 450 kcal · 180g+ proteín · mierny deficit · varenie 2× týždenne (Po+Št) + nedeľný vývar</p>
 
   <div class="grid-4" style="margin-bottom:1rem;">
-    <div class="stat"><div class="stat-val">~2 300</div><div class="stat-lbl">kcal/deň</div></div>
+    <div class="stat"><div class="stat-val">~2 450</div><div class="stat-lbl">kcal/deň</div></div>
     <div class="stat"><div class="stat-val">185 g</div><div class="stat-lbl">proteín</div></div>
     <div class="stat"><div class="stat-val">~500</div><div class="stat-lbl">kcal deficit</div></div>
     <div class="stat"><div class="stat-val">~0,5 kg</div><div class="stat-lbl">týždeň</div></div>
   </div>
+
+  <div class="jed-subtabs">
+    <button class="jed-subtab on" onclick="showJedTab('meals',this)">🍽️ Jedlá</button>
+    <button class="jed-subtab" onclick="showJedTab('recipes',this)">📖 Recepty</button>
+    <button class="jed-subtab" onclick="showJedTab('shop',this)">🛒 Potraviny</button>
+  </div>
+
+  <div id="jed-meals" class="jed-subpanel">
 
   <div class="omega-note"><strong>Möller's Omega 3 — 5 ml denne:</strong> Ber so smoothie ráno (06:40) — omega-3 sa vstrebávajú s tukmi z kokosového mlieka. Vitamín A: 250 µg (31% RHP) — bezpečné aj dlhodobo. Pečeňový deň (Št) celkom ~3 910 µg vitamínu A — nad limitom ale len 1× týždenne.</div>
 
   <div class="legend">
     <div class="leg"><div class="leg-dot" style="background:#1D9E75;"></div><span>Polievka z nedele (Po–St)</span></div>
     <div class="leg"><div class="leg-dot" style="background:#BA7517;"></div><span>★ DHT blok / vlasy</span></div>
-    <div class="leg"><div class="leg-dot" style="background:#534AB7;"></div><span>❄ Čučoriedky + goji</span></div>
   </div>
 
   <div class="tabs">
@@ -345,7 +376,7 @@ hr.dv{border:none;border-top:0.5px solid #1E1E1C;margin:1rem 0;}
       <div class="supp-row"><span class="supp-time">Počas tréningu</span><span class="supp-name">UNISPORT ZERO 10ml v 600-700ml vody — elektrolyty, taurín, L-karnitín, 15mg kofeínu</span><span class="stag tg-p">energia</span></div>
     </div>
     <div class="meal">
-      <div class="meal-head"><span class="meal-name">Raňajky</span><span class="meal-time">~08:00 v práci</span><span class="meal-kcal">~620 kcal</span></div>
+      <div class="meal-head"><span class="meal-name">Raňajky</span><span class="meal-time">~08:00 v práci</span><span class="meal-kcal">~908kcal</span></div>
       <div class="meal-body">
         <div class="meal-row"><span class="meal-item">Vajcia celé<span class="meal-hair">★ biotín, cysteín</span></span><span class="meal-detail">4 ks · 280 kcal · 24g</span></div>
         <div class="meal-row"><span class="meal-item">Hovädzie mleté (20% tuk)</span><span class="meal-detail">120 g · 240 kcal · 22g</span></div>
@@ -355,7 +386,7 @@ hr.dv{border:none;border-top:0.5px solid #1E1E1C;margin:1rem 0;}
       </div>
     </div>
     <div class="meal soup">
-      <div class="meal-head"><span class="meal-name">🍲 Obed — kuracia polievka z nedele</span><span class="meal-time">12:00–13:00</span><span class="meal-kcal">~670 kcal</span></div>
+      <div class="meal-head"><span class="meal-name">🍲 Obed — kuracia polievka z nedele</span><span class="meal-time">12:00–13:00</span><span class="meal-kcal">~626kcal</span></div>
       <div class="meal-body">
         <div class="meal-row"><span class="meal-item">Kurací vývar<span class="meal-hair">★ kolagén, glycín</span></span><span class="meal-detail">400 ml · ~80 kcal</span></div>
         <div class="meal-row"><span class="meal-item">Kuracie mäso z vývaru</span><span class="meal-detail">180 g · 198 kcal · 38g</span></div>
@@ -366,12 +397,11 @@ hr.dv{border:none;border-top:0.5px solid #1E1E1C;margin:1rem 0;}
       </div>
     </div>
     <div class="meal">
-      <div class="meal-head"><span class="meal-name">Večera</span><span class="meal-time">17:00–17:30 v práci</span><span class="meal-kcal">~530 kcal</span></div>
+      <div class="meal-head"><span class="meal-name">Večera</span><span class="meal-time">17:00–17:30 v práci</span><span class="meal-kcal">~480kcal</span></div>
       <div class="meal-body">
         <div class="meal-row"><span class="meal-item">Kuracie prsia</span><span class="meal-detail">230 g · 253 kcal · 48g</span></div>
         <div class="meal-row"><span class="meal-item">Špenát + paradajky<span class="meal-hair">★ zinok, lykopén</span></span><span class="meal-detail">150 g · 35 kcal</span></div>
         <div class="meal-row"><span class="meal-item">Grécky jogurt (0%)</span><span class="meal-detail">120 g · 72 kcal · 12g</span></div>
-        <div class="meal-row"><span class="meal-item" style="color:#534AB7;">❄ Mraz. čučoriedky + goji<span class="meal-hair">★ antioxidanty</span></span><span class="meal-detail">40g+20g · 55 kcal</span></div>
         <div class="meal-row"><span class="meal-item">Olivový olej</span><span class="meal-detail">1 PL · 120 kcal</span></div>
       </div>
     </div>
@@ -390,7 +420,7 @@ hr.dv{border:none;border-top:0.5px solid #1E1E1C;margin:1rem 0;}
       <div class="supp-row"><span class="supp-time">Počas tréningu</span><span class="supp-name">UNISPORT ZERO 10ml v 600-700ml vody — elektrolyty, taurín, L-karnitín, 15mg kofeínu</span><span class="stag tg-p">energia</span></div>
     </div>
     <div class="meal">
-      <div class="meal-head"><span class="meal-name">Raňajky</span><span class="meal-time">~08:00</span><span class="meal-kcal">~628 kcal</span></div>
+      <div class="meal-head"><span class="meal-name">Raňajky</span><span class="meal-time">~08:00</span><span class="meal-kcal">~825kcal</span></div>
       <div class="meal-body">
         <div class="meal-row"><span class="meal-item">Vajcia celé<span class="meal-hair">★ biotín, cysteín</span></span><span class="meal-detail">4 ks · 280 kcal</span></div>
         <div class="meal-row"><span class="meal-item">Hovädzie mleté (z Po)</span><span class="meal-detail">120 g · 240 kcal</span></div>
@@ -399,7 +429,7 @@ hr.dv{border:none;border-top:0.5px solid #1E1E1C;margin:1rem 0;}
       </div>
     </div>
     <div class="meal soup">
-      <div class="meal-head"><span class="meal-name">🍲 Obed — kuracia polievka z nedele</span><span class="meal-time">12:00–13:00</span><span class="meal-kcal">~530 kcal</span></div>
+      <div class="meal-head"><span class="meal-name">🍲 Obed — kuracia polievka z nedele</span><span class="meal-time">12:00–13:00</span><span class="meal-kcal">~541kcal</span></div>
       <div class="meal-body">
         <div class="meal-row"><span class="meal-item">Kurací vývar<span class="meal-hair">★ kolagén</span></span><span class="meal-detail">400 ml · ~80 kcal</span></div>
         <div class="meal-row"><span class="meal-item">Kuracie mäso z vývaru</span><span class="meal-detail">180 g · 198 kcal · 38g</span></div>
@@ -409,12 +439,11 @@ hr.dv{border:none;border-top:0.5px solid #1E1E1C;margin:1rem 0;}
       </div>
     </div>
     <div class="meal">
-      <div class="meal-head"><span class="meal-name">Večera (bez varenia)</span><span class="meal-time">17:00–17:30</span><span class="meal-kcal">~530 kcal</span></div>
+      <div class="meal-head"><span class="meal-name">Večera (bez varenia)</span><span class="meal-time">17:00–17:30</span><span class="meal-kcal">~476kcal</span></div>
       <div class="meal-body">
         <div class="meal-row"><span class="meal-item">Tuniak v olivovom oleji (konzerva)</span><span class="meal-detail">185 g · 296 kcal · 42g</span></div>
         <div class="meal-row"><span class="meal-item">Vajcia uvarené natvrdo<span class="meal-hair">★ biotín</span></span><span class="meal-detail">2 ks · 140 kcal</span></div>
         <div class="meal-row"><span class="meal-item">Špenát + paradajky<span class="meal-hair">★ zinok, lykopén</span></span><span class="meal-detail">150 g · 40 kcal</span></div>
-        <div class="meal-row"><span class="meal-item" style="color:#534AB7;">❄ Mraz. čučoriedky + goji</span><span class="meal-detail">40g+20g · 55 kcal</span></div>
       </div>
     </div>
     <div class="note"><strong>Plávanie deň = bez ryže na obed.</strong> Nižší príjem ~2 000 kcal je zámer — kardio nepotrebuje doplnenie glykogénu tak ako silový tréning.</div>
@@ -432,7 +461,7 @@ hr.dv{border:none;border-top:0.5px solid #1E1E1C;margin:1rem 0;}
       <div class="supp-row"><span class="supp-time">Počas tréningu</span><span class="supp-name">UNISPORT ZERO 10ml v 600-700ml vody — elektrolyty, taurín, L-karnitín, 15mg kofeínu</span><span class="stag tg-p">energia</span></div>
     </div>
     <div class="meal">
-      <div class="meal-head"><span class="meal-name">Raňajky</span><span class="meal-time">~08:00</span><span class="meal-kcal">~628 kcal</span></div>
+      <div class="meal-head"><span class="meal-name">Raňajky</span><span class="meal-time">~08:00</span><span class="meal-kcal">~825kcal</span></div>
       <div class="meal-body">
         <div class="meal-row"><span class="meal-item">Vajcia celé<span class="meal-hair">★ biotín, cysteín</span></span><span class="meal-detail">4 ks · 280 kcal</span></div>
         <div class="meal-row"><span class="meal-item">Hovädzie mleté (z Po)</span><span class="meal-detail">120 g · 240 kcal</span></div>
@@ -441,7 +470,7 @@ hr.dv{border:none;border-top:0.5px solid #1E1E1C;margin:1rem 0;}
       </div>
     </div>
     <div class="meal soup">
-      <div class="meal-head"><span class="meal-name">🍲 Obed — kuracia polievka z nedele</span><span class="meal-time">12:00–13:00</span><span class="meal-kcal">~660 kcal</span></div>
+      <div class="meal-head"><span class="meal-name">🍲 Obed — kuracia polievka z nedele</span><span class="meal-time">12:00–13:00</span><span class="meal-kcal">~569kcal</span></div>
       <div class="meal-body">
         <div class="meal-row"><span class="meal-item">Kurací vývar<span class="meal-hair">★ kolagén</span></span><span class="meal-detail">400 ml · ~80 kcal</span></div>
         <div class="meal-row"><span class="meal-item">Kuracie mäso z vývaru</span><span class="meal-detail">180 g · 198 kcal · 38g</span></div>
@@ -451,12 +480,11 @@ hr.dv{border:none;border-top:0.5px solid #1E1E1C;margin:1rem 0;}
       </div>
     </div>
     <div class="meal">
-      <div class="meal-head"><span class="meal-name">Večera</span><span class="meal-time">17:00–17:30</span><span class="meal-kcal">~520 kcal</span></div>
+      <div class="meal-head"><span class="meal-name">Večera</span><span class="meal-time">17:00–17:30</span><span class="meal-kcal">~498kcal</span></div>
       <div class="meal-body">
         <div class="meal-row"><span class="meal-item">Hovädzie mleté (10%)</span><span class="meal-detail">200 g · 292 kcal · 42g</span></div>
         <div class="meal-row"><span class="meal-item">Špenát + cuketa<span class="meal-hair">★ zinok, folát</span></span><span class="meal-detail">200 g · 50 kcal</span></div>
         <div class="meal-row"><span class="meal-item">Tvaroh</span><span class="meal-detail">120 g · 96 kcal · 14g</span></div>
-        <div class="meal-row"><span class="meal-item" style="color:#534AB7;">❄ Mraz. čučoriedky + goji</span><span class="meal-detail">40g+20g · 55 kcal</span></div>
         <div class="meal-row"><span class="meal-item">Olivový olej</span><span class="meal-detail">½ PL · 60 kcal</span></div>
       </div>
     </div>
@@ -473,7 +501,7 @@ hr.dv{border:none;border-top:0.5px solid #1E1E1C;margin:1rem 0;}
       <div class="supp-row"><span class="supp-time">20:00</span><span class="supp-name">Lion's Mane 1–2 g</span><span class="stag tg-b">mozog</span></div>
     </div>
     <div class="meal">
-      <div class="meal-head"><span class="meal-name">Raňajky — pečeň deň</span><span class="meal-time">~08:00</span><span class="meal-kcal">~538 kcal</span></div>
+      <div class="meal-head"><span class="meal-name">Raňajky — pečeň deň</span><span class="meal-time">~08:00</span><span class="meal-kcal">~710kcal</span></div>
       <div class="meal-body">
         <div class="meal-row"><span class="meal-item">Vajcia celé<span class="meal-hair">★ biotín, cysteín</span></span><span class="meal-detail">4 ks · 280 kcal</span></div>
         <div class="meal-row"><span class="meal-item">Kuracie pečeň restovaná<span class="meal-hair">★ B12, železo, vit. A — top pre vlasy</span></span><span class="meal-detail">120 g · 166 kcal · 22g</span></div>
@@ -483,7 +511,7 @@ hr.dv{border:none;border-top:0.5px solid #1E1E1C;margin:1rem 0;}
       </div>
     </div>
     <div class="meal">
-      <div class="meal-head"><span class="meal-name">Obed</span><span class="meal-time">12:00–13:00</span><span class="meal-kcal">~700 kcal</span></div>
+      <div class="meal-head"><span class="meal-name">Obed</span><span class="meal-time">12:00–13:00</span><span class="meal-kcal">~717kcal</span></div>
       <div class="meal-body">
         <div class="meal-row"><span class="meal-item">Losos pečený<span class="meal-hair">★ omega-3, pleť + vlasy</span></span><span class="meal-detail">200 g · 416 kcal · 40g</span></div>
         <div class="meal-row"><span class="meal-item">Brokolica + karfiol<span class="meal-hair">★ sulforafan, vit. C</span></span><span class="meal-detail">200 g · 65 kcal</span></div>
@@ -492,12 +520,11 @@ hr.dv{border:none;border-top:0.5px solid #1E1E1C;margin:1rem 0;}
       </div>
     </div>
     <div class="meal">
-      <div class="meal-head"><span class="meal-name">Večera</span><span class="meal-time">17:00–17:30</span><span class="meal-kcal">~490 kcal</span></div>
+      <div class="meal-head"><span class="meal-name">Večera</span><span class="meal-time">17:00–17:30</span><span class="meal-kcal">~427kcal</span></div>
       <div class="meal-body">
         <div class="meal-row"><span class="meal-item">Kuracie prsia</span><span class="meal-detail">220 g · 242 kcal · 46g</span></div>
         <div class="meal-row"><span class="meal-item">Špenát + paradajky<span class="meal-hair">★ zinok, lykopén</span></span><span class="meal-detail">180 g · 45 kcal</span></div>
         <div class="meal-row"><span class="meal-item">Tvaroh</span><span class="meal-detail">100 g · 80 kcal · 12g</span></div>
-        <div class="meal-row"><span class="meal-item" style="color:#534AB7;">❄ Mraz. čučoriedky + goji</span><span class="meal-detail">40g+20g · 55 kcal</span></div>
         <div class="meal-row"><span class="meal-item">Olivový olej</span><span class="meal-detail">½ PL · 60 kcal</span></div>
       </div>
     </div>
@@ -516,7 +543,7 @@ hr.dv{border:none;border-top:0.5px solid #1E1E1C;margin:1rem 0;}
       <div class="supp-row"><span class="supp-time">Počas tréningu</span><span class="supp-name">UNISPORT ZERO 10ml v 600-700ml vody — elektrolyty, taurín, L-karnitín, 15mg kofeínu</span><span class="stag tg-p">energia</span></div>
     </div>
     <div class="meal">
-      <div class="meal-head"><span class="meal-name">Raňajky</span><span class="meal-time">~08:00</span><span class="meal-kcal">~648 kcal</span></div>
+      <div class="meal-head"><span class="meal-name">Raňajky</span><span class="meal-time">~08:00</span><span class="meal-kcal">~775kcal</span></div>
       <div class="meal-body">
         <div class="meal-row"><span class="meal-item">Vajcia celé<span class="meal-hair">★ biotín, cysteín</span></span><span class="meal-detail">4 ks · 280 kcal</span></div>
         <div class="meal-row"><span class="meal-item">Losos údený prírodný<span class="meal-hair">★ omega-3, pleť + vlasy</span></span><span class="meal-detail">100 g · 180 kcal · 20g</span></div>
@@ -525,7 +552,7 @@ hr.dv{border:none;border-top:0.5px solid #1E1E1C;margin:1rem 0;}
       </div>
     </div>
     <div class="meal">
-      <div class="meal-head"><span class="meal-name">Obed (z krabičky)</span><span class="meal-time">12:00–13:00</span><span class="meal-kcal">~735 kcal</span></div>
+      <div class="meal-head"><span class="meal-name">Obed (z krabičky)</span><span class="meal-time">12:00–13:00</span><span class="meal-kcal">~775kcal</span></div>
       <div class="meal-body">
         <div class="meal-row"><span class="meal-item">Kuracie stehná pečené (zo Št)</span><span class="meal-detail">300 g · 531 kcal · 48g</span></div>
         <div class="meal-row"><span class="meal-item">Ryža varená</span><span class="meal-detail">100 g · 130 kcal</span></div>
@@ -534,13 +561,12 @@ hr.dv{border:none;border-top:0.5px solid #1E1E1C;margin:1rem 0;}
       </div>
     </div>
     <div class="meal">
-      <div class="meal-head"><span class="meal-name">Večera (bez varenia)</span><span class="meal-time">17:00–17:30</span><span class="meal-kcal">~490 kcal</span></div>
+      <div class="meal-head"><span class="meal-name">Večera (bez varenia)</span><span class="meal-time">17:00–17:30</span><span class="meal-kcal">~469kcal</span></div>
       <div class="meal-body">
         <div class="meal-row"><span class="meal-item">Morčacie prsia</span><span class="meal-detail">220 g · 242 kcal · 49g</span></div>
         <div class="meal-row"><span class="meal-item">Grécky jogurt plnotučný</span><span class="meal-detail">120 g · 108 kcal · 8g</span></div>
         <div class="meal-row"><span class="meal-item">Paradajky + uhorka<span class="meal-hair">★ lykopén</span></span><span class="meal-detail">180 g · 36 kcal</span></div>
         <div class="meal-row"><span class="meal-item">Tekvicové semienka<span class="meal-hair">★ zinok, DHT blok</span></span><span class="meal-detail">15 g · 83 kcal</span></div>
-        <div class="meal-row"><span class="meal-item" style="color:#534AB7;">❄ Mraz. čučoriedky + goji</span><span class="meal-detail">40g+20g · 55 kcal</span></div>
       </div>
     </div>
   </div>
@@ -557,7 +583,7 @@ hr.dv{border:none;border-top:0.5px solid #1E1E1C;margin:1rem 0;}
       <div class="supp-row"><span class="supp-time">Počas tréningu</span><span class="supp-name">UNISPORT ZERO 10ml v 600-700ml vody — elektrolyty, taurín, L-karnitín, 15mg kofeínu</span><span class="stag tg-p">energia</span></div>
     </div>
     <div class="meal">
-      <div class="meal-head"><span class="meal-name">Raňajky</span><span class="meal-time">~08:00</span><span class="meal-kcal">~640 kcal</span></div>
+      <div class="meal-head"><span class="meal-name">Raňajky</span><span class="meal-time">~08:00</span><span class="meal-kcal">~870kcal</span></div>
       <div class="meal-body">
         <div class="meal-row"><span class="meal-item">Vajcia celé<span class="meal-hair">★ biotín, cysteín</span></span><span class="meal-detail">4 ks · 280 kcal</span></div>
         <div class="meal-row"><span class="meal-item">Hovädzie mleté (20%)</span><span class="meal-detail">150 g · 300 kcal</span></div>
@@ -566,7 +592,7 @@ hr.dv{border:none;border-top:0.5px solid #1E1E1C;margin:1rem 0;}
       </div>
     </div>
     <div class="meal">
-      <div class="meal-head"><span class="meal-name">Obed (z krabičky)</span><span class="meal-time">12:00–13:00</span><span class="meal-kcal">~755 kcal</span></div>
+      <div class="meal-head"><span class="meal-name">Obed (z krabičky)</span><span class="meal-time">12:00–13:00</span><span class="meal-kcal">~811kcal</span></div>
       <div class="meal-body">
         <div class="meal-row"><span class="meal-item">Kuracie stehná (zo Št)</span><span class="meal-detail">320 g · 566 kcal · 51g</span></div>
         <div class="meal-row"><span class="meal-item">Sladký zemiak<span class="meal-hair">★ beta-karotén, draslík</span></span><span class="meal-detail">150 g · 129 kcal</span></div>
@@ -575,12 +601,11 @@ hr.dv{border:none;border-top:0.5px solid #1E1E1C;margin:1rem 0;}
       </div>
     </div>
     <div class="meal">
-      <div class="meal-head"><span class="meal-name">Večera (bez varenia)</span><span class="meal-time">17:00–17:30</span><span class="meal-kcal">~480 kcal</span></div>
+      <div class="meal-head"><span class="meal-name">Večera (bez varenia)</span><span class="meal-time">17:00–17:30</span><span class="meal-kcal">~476kcal</span></div>
       <div class="meal-body">
         <div class="meal-row"><span class="meal-item">Tuniak v olivovom oleji (konzerva)</span><span class="meal-detail">185 g · 296 kcal · 42g</span></div>
         <div class="meal-row"><span class="meal-item">Vajcia uvarené<span class="meal-hair">★ biotín</span></span><span class="meal-detail">2 ks · 140 kcal</span></div>
         <div class="meal-row"><span class="meal-item">Špenát + paradajky<span class="meal-hair">★ zinok</span></span><span class="meal-detail">150 g · 40 kcal</span></div>
-        <div class="meal-row"><span class="meal-item" style="color:#534AB7;">❄ Mraz. čučoriedky + goji</span><span class="meal-detail">40g+20g · 55 kcal</span></div>
       </div>
     </div>
     <div class="note"><strong>Sobota = plávanie + nohy.</strong> Najnáročnejší deň — banán ráno povinný pre energiu.</div>
@@ -597,16 +622,15 @@ hr.dv{border:none;border-top:0.5px solid #1E1E1C;margin:1rem 0;}
       <div class="supp-row"><span class="supp-time">pred spaním</span><span class="supp-name">Lion's Mane — dnes výnimočne pred spaním</span><span class="stag tg-b">mozog</span></div>
     </div>
     <div class="meal">
-      <div class="meal-head"><span class="meal-name">Raňajky</span><span class="meal-time">08:00–09:00</span><span class="meal-kcal">~592 kcal</span></div>
+      <div class="meal-head"><span class="meal-name">Raňajky</span><span class="meal-time">08:00–09:00</span><span class="meal-kcal">~642kcal</span></div>
       <div class="meal-body">
         <div class="meal-row"><span class="meal-item">Vajcia celé<span class="meal-hair">★ biotín, cysteín</span></span><span class="meal-detail">3 ks · 210 kcal</span></div>
         <div class="meal-row"><span class="meal-item">Losos pečený<span class="meal-hair">★ omega-3</span></span><span class="meal-detail">150 g · 312 kcal</span></div>
         <div class="meal-row"><span class="meal-item">Avokádo<span class="meal-hair">★ beta-sitosterol</span></span><span class="meal-detail">½ ks · 120 kcal</span></div>
-        <div class="meal-row"><span class="meal-item" style="color:#534AB7;">❄ Mraz. čučoriedky + goji</span><span class="meal-detail">40g+20g · 55 kcal</span></div>
       </div>
     </div>
     <div class="meal">
-      <div class="meal-head"><span class="meal-name">Obed</span><span class="meal-time">12:00–13:00</span><span class="meal-kcal">~670 kcal</span></div>
+      <div class="meal-head"><span class="meal-name">Obed</span><span class="meal-time">12:00–13:00</span><span class="meal-kcal">~674kcal</span></div>
       <div class="meal-body">
         <div class="meal-row"><span class="meal-item">Kuracie alebo hovädzie mäso</span><span class="meal-detail">270 g · 486 kcal</span></div>
         <div class="meal-row"><span class="meal-item">Špenát + paradajky<span class="meal-hair">★ zinok, lykopén</span></span><span class="meal-detail">180 g · 45 kcal</span></div>
@@ -615,7 +639,7 @@ hr.dv{border:none;border-top:0.5px solid #1E1E1C;margin:1rem 0;}
       </div>
     </div>
     <div class="meal cheat-meal">
-      <div class="meal-head"><span class="meal-name">✦ Cheat meal — krupicová kaša</span><span class="meal-time">max. 17:30</span><span class="meal-kcal" style="color:#BA7517;">~660 kcal</span></div>
+      <div class="meal-head"><span class="meal-name">✦ Cheat meal — krupicová kaša</span><span class="meal-time">max. 17:30</span><span class="meal-kcal" style="color:#BA7517;">~632kcal</span></div>
       <div class="meal-body">
         <div class="meal-row"><span class="meal-item">Krupicová kaša (varená v mlieku)</span><span class="meal-detail">80 g · ~280 kcal</span></div>
         <div class="meal-row"><span class="meal-item">Maslo</span><span class="meal-detail">20 g · 148 kcal</span></div>
@@ -625,6 +649,152 @@ hr.dv{border:none;border-top:0.5px solid #1E1E1C;margin:1rem 0;}
     </div>
     <div class="note warn"><strong>Cheat meal max. 17:30</strong> — reflux. Po jedle 20 min chôdza. Nedeľa = kostol + Natália + vývar. Žiadne krabičky dnes.</div>
   </div>
+  </div><!-- /jed-meals -->
+
+  <div id="jed-recipes" class="jed-subpanel" style="display:none;">
+    <p class="page-sub" style="margin-bottom:1rem;">Návody na varenie — 2 prep dni (Po + Št) + nedeľný vývar</p>
+
+    <div class="recipe-card">
+      <div class="recipe-title">🍲 Nedeľný kurací vývar</div>
+      <div class="recipe-meta">Nedeľa ráno · ~3–4 hod (varí sa sám) · vydrží Po–St</div>
+      <div class="recipe-section">Suroviny</div>
+      <ul class="recipe-ingredients">
+        <li>Kuracie stehná s kosťou — 1–1,5 kg</li>
+        <li>Mrkva — 3 ks</li>
+        <li>Petržlen — 2 ks</li>
+        <li>Zeler — kúsok (~150 g)</li>
+        <li>Cibuľa — 1 veľká (aj so šupkou pre farbu)</li>
+        <li>Cesnak — 4 strúčiky</li>
+        <li>Jablčný ocot — 1 PL (vytiahne minerály z kostí)</li>
+        <li>Soľ, čierne korenie, bobkový list</li>
+      </ul>
+      <div class="recipe-section">Postup</div>
+      <ol class="recipe-steps">
+        <li>Pred kostolom: daj kuracie stehná do veľkého hrnca, zalej studenou vodou (~3 l).</li>
+        <li>Pridaj ocot, nechaj 10 min postáť (pomôže vylúhovať minerály).</li>
+        <li>Pridaj očistenú zeleninu, cesnak, korenie a bobkový list.</li>
+        <li>Priveď k varu, potom stíš na mierny oheň a nechaj pomaly variť 3–4 hodiny.</li>
+        <li>Po príchode: vyber mäso (oddeľ od kostí, nechaj bokom), preceď vývar.</li>
+        <li>Rozdeľ vývar + mäso do nádob na Po, Ut, St obedy. Daj do chladničky.</li>
+      </ol>
+    </div>
+
+    <div class="recipe-card">
+      <div class="recipe-title">🥩 Pondelkový prep — hovädzie + ryža</div>
+      <div class="recipe-meta">Pondelok · ~30 min · raňajky Po–St + ryža Po/St</div>
+      <div class="recipe-section">Suroviny</div>
+      <ul class="recipe-ingredients">
+        <li>Hovädzie mleté 20% — ~400 g (na 3 raňajky)</li>
+        <li>Ryža — 1 hrnček suchej (uvarí sa ~3 porcie)</li>
+        <li>Vajcia — 12 ks (4 na deň, varíš čerstvé ráno)</li>
+        <li>Soľ, čierne korenie, prípadne rasca</li>
+      </ul>
+      <div class="recipe-section">Postup</div>
+      <ol class="recipe-steps">
+        <li>Uvar ryžu podľa návodu (1 diel ryže : 2 diely vody, ~15 min). Nechaj vychladnúť max 1 hod, potom do chladničky.</li>
+        <li>Hovädzie mleté opekaj na panvici bez oleja (pustí vlastný tuk), dochuť soľou a korením, ~10 min.</li>
+        <li>Rozdeľ mleté na 3 porcie (~120 g) do nádob.</li>
+        <li>Ryžu rozdeľ na porcie (~120 g) — len pre Po a St.</li>
+        <li>Vajcia NEVAR dopredu — pripravíš čerstvé každé ráno (4 ks).</li>
+      </ol>
+    </div>
+
+    <div class="recipe-card">
+      <div class="recipe-title">🍗 Štvrtkový prep — pečeň + stehná</div>
+      <div class="recipe-meta">Štvrtok · ~40 min · pečeň ráno + krabičky Pi/So</div>
+      <div class="recipe-section">Suroviny</div>
+      <ul class="recipe-ingredients">
+        <li>Kuracia pečeň — ~120 g (čerstvá, na štvrtkové raňajky)</li>
+        <li>Kuracie stehná vykostené — ~650 g (na Pi + So obed)</li>
+        <li>Cibuľa — 1 ks, cesnak — 2 strúčiky</li>
+        <li>Ghí alebo maslo — na restovanie pečene</li>
+        <li>Brokolica / sladký zemiak — príloha</li>
+        <li>Soľ, korenie</li>
+      </ul>
+      <div class="recipe-section">Postup</div>
+      <ol class="recipe-steps">
+        <li>Pečeň: restuj na ghí s cibuľou a cesnakom ~6–8 min (vnútri jemne ružová). Zjedz čerstvú na raňajky.</li>
+        <li>Stehná: ochuť soľou, korením, pečieš v rúre 200°C ~30 min (alebo na panvici).</li>
+        <li>Rozdeľ stehná na 2 porcie (Pi obed ~300 g, So obed ~320 g).</li>
+        <li>Priprav prílohu (ryža/sladký zemiak) podľa dňa a pridaj do krabičiek.</li>
+        <li>Daj do chladničky — vydrží Pi a So.</li>
+      </ol>
+    </div>
+
+    <div class="recipe-card">
+      <div class="recipe-title">🥤 Ranné smoothie (denne)</div>
+      <div class="recipe-meta">Každé ráno 06:40 · ~5 min · 2 kolá mixovania</div>
+      <div class="recipe-section">Postup v skratke</div>
+      <ol class="recipe-steps">
+        <li><strong>1. kolo:</strong> mlieko (200ml) + ½ banán + kolagén 5g + zázvor + 30g špenát + ½ ČL kurkuma + štipka čierneho korenia + citrón → mixuj 20–30 sek.</li>
+        <li><strong>2. kolo:</strong> pridaj 80g mrazených čučoriedok + 20g goji → pulzuj 5–10 sek (necháš marblované).</li>
+        <li>Möller's Omega 5 ml vypi zvlášť alebo zamiešaj do hotového.</li>
+      </ol>
+      <div class="note" style="margin-top:8px;">Detail celého zloženia nájdeš v tabe 🥤 Smoothie.</div>
+    </div>
+  </div><!-- /jed-recipes -->
+
+  <div id="jed-shop" class="jed-subpanel" style="display:none;">
+    <p class="page-sub" style="margin-bottom:1rem;">Zaškrtni čo treba kúpiť — uloží sa v telefóne</p>
+
+    <div class="card">
+      <div class="shop-cat">🥩 Mäso & ryby</div>
+      <div class="shop-item" onclick="toggleShop(this)"><span class="shop-check">✓</span>Hovädzie mleté 20% (~550 g/týž)</div>
+      <div class="shop-item" onclick="toggleShop(this)"><span class="shop-check">✓</span>Kuracie stehná s kosťou (vývar, ~1,5 kg)</div>
+      <div class="shop-item" onclick="toggleShop(this)"><span class="shop-check">✓</span>Kuracie stehná vykostené (~650 g)</div>
+      <div class="shop-item" onclick="toggleShop(this)"><span class="shop-check">✓</span>Kuracie prsia (~450 g)</div>
+      <div class="shop-item" onclick="toggleShop(this)"><span class="shop-check">✓</span>Kuracia pečeň (~120 g)</div>
+      <div class="shop-item" onclick="toggleShop(this)"><span class="shop-check">✓</span>Morčacie prsia (~220 g)</div>
+      <div class="shop-item" onclick="toggleShop(this)"><span class="shop-check">✓</span>Losos čerstvý + údený (~450 g)</div>
+      <div class="shop-item checked" onclick="toggleShop(this)"><span class="shop-check">✓</span>Tuniak v olivovom oleji (konzervy)<span class="shop-home">mám doma</span></div>
+
+      <div class="shop-cat">🥚 Vajcia & mliečne</div>
+      <div class="shop-item" onclick="toggleShop(this)"><span class="shop-check">✓</span>Vajcia (28 ks/týž)</div>
+      <div class="shop-item" onclick="toggleShop(this)"><span class="shop-check">✓</span>Grécky jogurt 0% + plnotučný</div>
+      <div class="shop-item" onclick="toggleShop(this)"><span class="shop-check">✓</span>Tvaroh</div>
+      <div class="shop-item checked" onclick="toggleShop(this)"><span class="shop-check">✓</span>Mlieko (kokosové/sójové)<span class="shop-home">mám doma</span></div>
+      <div class="shop-item" onclick="toggleShop(this)"><span class="shop-check">✓</span>Maslo / ghí</div>
+
+      <div class="shop-cat">🥦 Zelenina & ovocie</div>
+      <div class="shop-item" onclick="toggleShop(this)"><span class="shop-check">✓</span>Špenát čerstvý (smoothie + jedlá)</div>
+      <div class="shop-item" onclick="toggleShop(this)"><span class="shop-check">✓</span>Brokolica + karfiol</div>
+      <div class="shop-item" onclick="toggleShop(this)"><span class="shop-check">✓</span>Paradajky + uhorka</div>
+      <div class="shop-item" onclick="toggleShop(this)"><span class="shop-check">✓</span>Cuketa</div>
+      <div class="shop-item" onclick="toggleShop(this)"><span class="shop-check">✓</span>Mrkva + petržlen + zeler (vývar)</div>
+      <div class="shop-item" onclick="toggleShop(this)"><span class="shop-check">✓</span>Cibuľa + cesnak</div>
+      <div class="shop-item" onclick="toggleShop(this)"><span class="shop-check">✓</span>Avokádo (3–4 ks)</div>
+      <div class="shop-item" onclick="toggleShop(this)"><span class="shop-check">✓</span>Banán</div>
+      <div class="shop-item" onclick="toggleShop(this)"><span class="shop-check">✓</span>Sladký zemiak</div>
+      <div class="shop-item" onclick="toggleShop(this)"><span class="shop-check">✓</span>Zázvor (čerstvý, do mrazničky)</div>
+      <div class="shop-item" onclick="toggleShop(this)"><span class="shop-check">✓</span>Citrón</div>
+
+      <div class="shop-cat">❄️ Mrazené & sušené</div>
+      <div class="shop-item" onclick="toggleShop(this)"><span class="shop-check">✓</span>Mrazené čučoriedky (smoothie)</div>
+      <div class="shop-item" onclick="toggleShop(this)"><span class="shop-check">✓</span>Goji bobule sušené</div>
+      <div class="shop-item" onclick="toggleShop(this)"><span class="shop-check">✓</span>Vlašské orechy</div>
+      <div class="shop-item" onclick="toggleShop(this)"><span class="shop-check">✓</span>Mandle</div>
+      <div class="shop-item" onclick="toggleShop(this)"><span class="shop-check">✓</span>Tekvicové semienka</div>
+
+      <div class="shop-cat">🌾 Sacharidy & ostatné</div>
+      <div class="shop-item" onclick="toggleShop(this)"><span class="shop-check">✓</span>Ryža</div>
+      <div class="shop-item" onclick="toggleShop(this)"><span class="shop-check">✓</span>Krupica (nedeľný cheat)</div>
+      <div class="shop-item checked" onclick="toggleShop(this)"><span class="shop-check">✓</span>Olivový olej<span class="shop-home">mám doma</span></div>
+      <div class="shop-item checked" onclick="toggleShop(this)"><span class="shop-check">✓</span>Jablčný ocot<span class="shop-home">mám doma</span></div>
+      <div class="shop-item checked" onclick="toggleShop(this)"><span class="shop-check">✓</span>Soľ, čierne korenie, kurkuma, bobkový list<span class="shop-home">mám doma</span></div>
+      <div class="shop-item" onclick="toggleShop(this)"><span class="shop-check">✓</span>Granko (cheat meal)</div>
+
+      <div class="shop-cat">💊 Suplementy (kontrola zásob)</div>
+      <div class="shop-item" onclick="toggleShop(this)"><span class="shop-check">✓</span>Möller's Omega 3</div>
+      <div class="shop-item" onclick="toggleShop(this)"><span class="shop-check">✓</span>Vilgain kolagén</div>
+      <div class="shop-item" onclick="toggleShop(this)"><span class="shop-check">✓</span>Amix Black CFM proteín</div>
+      <div class="shop-item" onclick="toggleShop(this)"><span class="shop-check">✓</span>Lion's Mane prášok</div>
+      <div class="shop-item" onclick="toggleShop(this)"><span class="shop-check">✓</span>Hubový prášok</div>
+      <div class="shop-item" onclick="toggleShop(this)"><span class="shop-check">✓</span>UNISPORT ZERO</div>
+
+      <button class="shop-reset" onclick="resetShop()">↺ Odznačiť všetko</button>
+    </div>
+  </div><!-- /jed-shop -->
+
 </div>
 
 <!-- ==================== SMOOTHIE ==================== -->
@@ -1007,6 +1177,41 @@ hr.dv{border:none;border-top:0.5px solid #1E1E1C;margin:1rem 0;}
 </div>
 
 <script>
+
+function showJedTab(tab, btn){
+  document.querySelectorAll('.jed-subpanel').forEach(p => p.style.display='none');
+  document.querySelectorAll('.jed-subtab').forEach(b => b.classList.remove('on'));
+  document.getElementById('jed-'+tab).style.display='block';
+  btn.classList.add('on');
+}
+
+function toggleShop(el){
+  el.classList.toggle('checked');
+  saveShop();
+}
+
+function saveShop(){
+  const items = document.querySelectorAll('#jed-shop .shop-item');
+  const state = [];
+  items.forEach((it,i)=>{ if(it.classList.contains('checked')) state.push(i); });
+  try{ localStorage.setItem('trk_shop', JSON.stringify(state)); }catch(e){}
+}
+
+function loadShop(){
+  try{
+    const s = localStorage.getItem('trk_shop');
+    if(!s) return;
+    const state = JSON.parse(s);
+    const items = document.querySelectorAll('#jed-shop .shop-item');
+    items.forEach((it,i)=>{ if(state.includes(i)) it.classList.add('checked'); else it.classList.remove('checked'); });
+  }catch(e){}
+}
+
+function resetShop(){
+  document.querySelectorAll('#jed-shop .shop-item').forEach(it=>it.classList.remove('checked'));
+  saveShop();
+}
+
 function showSection(id, btn) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('vis'));
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('on'));
@@ -1027,7 +1232,7 @@ function showPanel(prefix, idx, btn) {
 <!-- ==================== MAKRÁ ==================== -->
 <div id="makra" class="section">
   <p class="page-title">Denné makroživiny</p>
-  <p class="page-sub">Od smoothie po posledné jedlo · ~2 300 kcal · mierny deficit</p>
+  <p class="page-sub">Od smoothie po posledné jedlo · ~2 450 kcal · mierny deficit</p>
 
   <div class="tabs">
     <button class="tb on" onclick="showPanel('mak',0,this)">Po</button>
@@ -1047,10 +1252,10 @@ function showPanel(prefix, idx, btn) {
         <thead><tr><th>Jedlo / Čas</th><th>Kcal</th><th>Bielk.</th><th>Tuky</th><th>Sachar.</th></tr></thead>
         <tbody>
           <tr><td>🥤 Smoothie + Omega + Proteín (06:40)</td><td>493</td><td>38g</td><td>19g</td><td>43g</td></tr>
-          <tr><td>🍳 Raňajky (~08:00)</td><td>620</td><td>24g</td><td>38g</td><td>3g</td></tr>
-          <tr><td>🍲 Obed — polievka + ryža (12:00)</td><td>670</td><td>82g</td><td>14g</td><td>47g</td></tr>
-          <tr><td>🥗 Večera (17:00)</td><td>530</td><td>48g</td><td>28g</td><td>12g</td></tr>
-          <tr style="border-top:1px solid #1D9E75;"><td><strong>SPOLU</strong></td><td><strong>2 313</strong></td><td><strong>192g</strong></td><td><strong>99g</strong></td><td><strong>105g</strong></td></tr>
+          <tr><td>🍳 Raňajky (~08:00)</td><td>908</td><td>24g</td><td>38g</td><td>3g</td></tr>
+          <tr><td>🍲 Obed — polievka + ryža (12:00)</td><td>626</td><td>82g</td><td>14g</td><td>47g</td></tr>
+          <tr><td>🥗 Večera (17:00)</td><td>480</td><td>48g</td><td>28g</td><td>12g</td></tr>
+          <tr style="border-top:1px solid #1D9E75;"><td><strong>SPOLU</strong></td><td><strong>2 507</strong></td><td><strong>192g</strong></td><td><strong>99g</strong></td><td><strong>105g</strong></td></tr>
         </tbody>
       </table>
       <p class="card-title" style="margin-top:14px;">🧪 Vitamíny &amp; minerály (denný odhad, % RHP)</p>
@@ -1073,10 +1278,10 @@ function showPanel(prefix, idx, btn) {
         <thead><tr><th>Jedlo / Čas</th><th>Kcal</th><th>Bielk.</th><th>Tuky</th><th>Sachar.</th></tr></thead>
         <tbody>
           <tr><td>🥤 Smoothie + Omega + Proteín (06:40)</td><td>493</td><td>38g</td><td>19g</td><td>43g</td></tr>
-          <tr><td>🍳 Raňajky (~08:00)</td><td>628</td><td>24g</td><td>40g</td><td>3g</td></tr>
-          <tr><td>🍲 Obed — polievka bez ryže (12:00)</td><td>530</td><td>82g</td><td>14g</td><td>8g</td></tr>
-          <tr><td>🥗 Večera — tuniak (17:00)</td><td>530</td><td>42g</td><td>22g</td><td>8g</td></tr>
-          <tr style="border-top:1px solid #1D9E75;"><td><strong>SPOLU</strong></td><td><strong>2 181</strong></td><td><strong>186g</strong></td><td><strong>95g</strong></td><td><strong>62g</strong></td></tr>
+          <tr><td>🍳 Raňajky (~08:00)</td><td>825</td><td>24g</td><td>40g</td><td>3g</td></tr>
+          <tr><td>🍲 Obed — polievka bez ryže (12:00)</td><td>541</td><td>82g</td><td>14g</td><td>8g</td></tr>
+          <tr><td>🥗 Večera — tuniak (17:00)</td><td>476</td><td>42g</td><td>22g</td><td>8g</td></tr>
+          <tr style="border-top:1px solid #1D9E75;"><td><strong>SPOLU</strong></td><td><strong>2 335</strong></td><td><strong>186g</strong></td><td><strong>95g</strong></td><td><strong>62g</strong></td></tr>
         </tbody>
       </table>
       <p class="card-title" style="margin-top:14px;">🧪 Vitamíny &amp; minerály (denný odhad, % RHP)</p>
@@ -1099,10 +1304,10 @@ function showPanel(prefix, idx, btn) {
         <thead><tr><th>Jedlo / Čas</th><th>Kcal</th><th>Bielk.</th><th>Tuky</th><th>Sachar.</th></tr></thead>
         <tbody>
           <tr><td>🥤 Smoothie + Omega + Proteín (06:40)</td><td>493</td><td>38g</td><td>19g</td><td>43g</td></tr>
-          <tr><td>🍳 Raňajky (~08:00)</td><td>628</td><td>24g</td><td>40g</td><td>3g</td></tr>
-          <tr><td>🍲 Obed — polievka + sladký zemiak (12:00)</td><td>660</td><td>80g</td><td>14g</td><td>38g</td></tr>
-          <tr><td>🥗 Večera — hovädzie (17:00)</td><td>520</td><td>42g</td><td>24g</td><td>10g</td></tr>
-          <tr style="border-top:1px solid #1D9E75;"><td><strong>SPOLU</strong></td><td><strong>2 301</strong></td><td><strong>184g</strong></td><td><strong>97g</strong></td><td><strong>94g</strong></td></tr>
+          <tr><td>🍳 Raňajky (~08:00)</td><td>825</td><td>24g</td><td>40g</td><td>3g</td></tr>
+          <tr><td>🍲 Obed — polievka + sladký zemiak (12:00)</td><td>569</td><td>80g</td><td>14g</td><td>38g</td></tr>
+          <tr><td>🥗 Večera — hovädzie (17:00)</td><td>498</td><td>42g</td><td>24g</td><td>10g</td></tr>
+          <tr style="border-top:1px solid #1D9E75;"><td><strong>SPOLU</strong></td><td><strong>2 385</strong></td><td><strong>184g</strong></td><td><strong>97g</strong></td><td><strong>94g</strong></td></tr>
         </tbody>
       </table>
       <p class="card-title" style="margin-top:14px;">🧪 Vitamíny &amp; minerály (denný odhad, % RHP)</p>
@@ -1125,10 +1330,10 @@ function showPanel(prefix, idx, btn) {
         <thead><tr><th>Jedlo / Čas</th><th>Kcal</th><th>Bielk.</th><th>Tuky</th><th>Sachar.</th></tr></thead>
         <tbody>
           <tr><td>🥤 Smoothie + Omega + Proteín (06:40)</td><td>493</td><td>38g</td><td>19g</td><td>43g</td></tr>
-          <tr><td>🍳 Raňajky — pečeň (08:00)</td><td>538</td><td>22g</td><td>32g</td><td>3g</td></tr>
-          <tr><td>🐟 Obed — losos + brokolica (12:00)</td><td>700</td><td>74g</td><td>36g</td><td>8g</td></tr>
-          <tr><td>🥗 Večera — kuracie prsia (17:00)</td><td>490</td><td>46g</td><td>20g</td><td>10g</td></tr>
-          <tr style="border-top:1px solid #1D9E75;"><td><strong>SPOLU</strong></td><td><strong>2 221</strong></td><td><strong>180g</strong></td><td><strong>107g</strong></td><td><strong>64g</strong></td></tr>
+          <tr><td>🍳 Raňajky — pečeň (08:00)</td><td>710</td><td>22g</td><td>32g</td><td>3g</td></tr>
+          <tr><td>🐟 Obed — losos + brokolica (12:00)</td><td>717</td><td>74g</td><td>36g</td><td>8g</td></tr>
+          <tr><td>🥗 Večera — kuracie prsia (17:00)</td><td>427</td><td>46g</td><td>20g</td><td>10g</td></tr>
+          <tr style="border-top:1px solid #1D9E75;"><td><strong>SPOLU</strong></td><td><strong>2 347</strong></td><td><strong>180g</strong></td><td><strong>107g</strong></td><td><strong>64g</strong></td></tr>
         </tbody>
       </table>
       <p class="card-title" style="margin-top:14px;">🧪 Vitamíny &amp; minerály (denný odhad, % RHP)</p>
@@ -1151,10 +1356,10 @@ function showPanel(prefix, idx, btn) {
         <thead><tr><th>Jedlo / Čas</th><th>Kcal</th><th>Bielk.</th><th>Tuky</th><th>Sachar.</th></tr></thead>
         <tbody>
           <tr><td>🥤 Smoothie + Omega + Proteín (06:40)</td><td>493</td><td>38g</td><td>19g</td><td>43g</td></tr>
-          <tr><td>🍳 Raňajky (08:00)</td><td>648</td><td>24g</td><td>42g</td><td>3g</td></tr>
-          <tr><td>🍗 Obed — kuracie stehná + ryža (12:00)</td><td>735</td><td>72g</td><td>26g</td><td>40g</td></tr>
-          <tr><td>🥗 Večera — morčacie (17:00)</td><td>490</td><td>49g</td><td>18g</td><td>8g</td></tr>
-          <tr style="border-top:1px solid #1D9E75;"><td><strong>SPOLU</strong></td><td><strong>2 366</strong></td><td><strong>183g</strong></td><td><strong>105g</strong></td><td><strong>94g</strong></td></tr>
+          <tr><td>🍳 Raňajky (08:00)</td><td>775</td><td>24g</td><td>42g</td><td>3g</td></tr>
+          <tr><td>🍗 Obed — kuracie stehná + ryža (12:00)</td><td>775</td><td>72g</td><td>26g</td><td>40g</td></tr>
+          <tr><td>🥗 Večera — morčacie (17:00)</td><td>469</td><td>49g</td><td>18g</td><td>8g</td></tr>
+          <tr style="border-top:1px solid #1D9E75;"><td><strong>SPOLU</strong></td><td><strong>2 512</strong></td><td><strong>183g</strong></td><td><strong>105g</strong></td><td><strong>94g</strong></td></tr>
         </tbody>
       </table>
       <p class="card-title" style="margin-top:14px;">🧪 Vitamíny &amp; minerály (denný odhad, % RHP)</p>
@@ -1177,10 +1382,10 @@ function showPanel(prefix, idx, btn) {
         <thead><tr><th>Jedlo / Čas</th><th>Kcal</th><th>Bielk.</th><th>Tuky</th><th>Sachar.</th></tr></thead>
         <tbody>
           <tr><td>🥤 Smoothie + Omega + Proteín (06:40)</td><td>493</td><td>38g</td><td>19g</td><td>43g</td></tr>
-          <tr><td>🍳 Raňajky (08:00)</td><td>640</td><td>24g</td><td>40g</td><td>15g</td></tr>
-          <tr><td>🍗 Obed — kuracie stehná + sladký zemiak (12:00)</td><td>755</td><td>68g</td><td>28g</td><td>42g</td></tr>
-          <tr><td>🥗 Večera — tuniak (17:00)</td><td>480</td><td>42g</td><td>18g</td><td>8g</td></tr>
-          <tr style="border-top:1px solid #1D9E75;"><td><strong>SPOLU</strong></td><td><strong>2 368</strong></td><td><strong>172g</strong></td><td><strong>105g</strong></td><td><strong>108g</strong></td></tr>
+          <tr><td>🍳 Raňajky (08:00)</td><td>870</td><td>24g</td><td>40g</td><td>15g</td></tr>
+          <tr><td>🍗 Obed — kuracie stehná + sladký zemiak (12:00)</td><td>811</td><td>68g</td><td>28g</td><td>42g</td></tr>
+          <tr><td>🥗 Večera — tuniak (17:00)</td><td>476</td><td>42g</td><td>18g</td><td>8g</td></tr>
+          <tr style="border-top:1px solid #1D9E75;"><td><strong>SPOLU</strong></td><td><strong>2 650</strong></td><td><strong>172g</strong></td><td><strong>105g</strong></td><td><strong>108g</strong></td></tr>
         </tbody>
       </table>
       <p class="card-title" style="margin-top:14px;">🧪 Vitamíny &amp; minerály (denný odhad, % RHP)</p>
@@ -1203,10 +1408,10 @@ function showPanel(prefix, idx, btn) {
         <thead><tr><th>Jedlo / Čas</th><th>Kcal</th><th>Bielk.</th><th>Tuky</th><th>Sachar.</th></tr></thead>
         <tbody>
           <tr><td>🥤 Smoothie + Omega + Proteín (06:40)</td><td>493</td><td>38g</td><td>19g</td><td>43g</td></tr>
-          <tr><td>🍳 Raňajky (08:00)</td><td>592</td><td>18g</td><td>38g</td><td>3g</td></tr>
-          <tr><td>🍗 Obed — mäso + zelenina (12:00)</td><td>670</td><td>58g</td><td>24g</td><td>8g</td></tr>
-          <tr><td>✦ Cheat meal — krupicová kaša (17:30)</td><td>660</td><td>18g</td><td>16g</td><td>92g</td></tr>
-          <tr style="border-top:1px solid #BA7517;"><td><strong>SPOLU</strong></td><td><strong>2 415</strong></td><td><strong>132g</strong></td><td><strong>97g</strong></td><td><strong>146g</strong></td></tr>
+          <tr><td>🍳 Raňajky (08:00)</td><td>642</td><td>18g</td><td>38g</td><td>3g</td></tr>
+          <tr><td>🍗 Obed — mäso + zelenina (12:00)</td><td>674</td><td>58g</td><td>24g</td><td>8g</td></tr>
+          <tr><td>✦ Cheat meal — krupicová kaša (17:30)</td><td>632</td><td>18g</td><td>16g</td><td>92g</td></tr>
+          <tr style="border-top:1px solid #BA7517;"><td><strong>SPOLU</strong></td><td><strong>2 441</strong></td><td><strong>132g</strong></td><td><strong>97g</strong></td><td><strong>146g</strong></td></tr>
         </tbody>
       </table>
       <p class="card-title" style="margin-top:14px;">🧪 Vitamíny &amp; minerály (denný odhad, % RHP)</p>
@@ -1541,6 +1746,7 @@ document.addEventListener('DOMContentLoaded', function(){
   initSeed();
   renderMeasurements();
   for(const g in EXERCISES){ buildWeekSelector(g); buildExerciseCard(g); }
+  loadShop();
 });
 </script>
 
