@@ -200,6 +200,28 @@ hr.dv{border:none;border-top:0.5px solid #1E1E1C;margin:1rem 0;}
 .shop-home{font-size:10px;color:#555;margin-left:auto;flex-shrink:0;}
 .shop-reset{background:rgba(80,50,120,0.2);color:#B19CD9;border:1px solid #5A4A7A;padding:10px 16px;border-radius:9px;font-size:12px;font-weight:700;cursor:pointer;margin-top:12px;}
 
+
+/* === VLASY & PLEŤ === */
+.hp-subtabs{display:flex;gap:6px;margin-bottom:1rem;border-bottom:0.5px solid #2A2A28;padding-bottom:10px;}
+.hp-subtab{flex:1;padding:10px;border-radius:9px;border:0.5px solid #2A2A28;background:transparent;font-size:12px;font-weight:700;color:#888;cursor:pointer;}
+.hp-subtab.on{background:#1D9E75;border-color:#1D9E75;color:#fff;}
+.hp-card{background:#111110;border:0.5px solid #2A2A28;border-radius:10px;padding:14px 16px;margin-bottom:10px;}
+.hp-card-title{font-size:14px;font-weight:700;color:#1D9E75;margin-bottom:8px;display:flex;align-items:center;gap:8px;}
+.hp-freq{font-size:10px;font-weight:700;color:#534AB7;background:rgba(80,50,120,0.2);padding:2px 8px;border-radius:5px;margin-left:auto;}
+.hp-ingredients{list-style:none;padding:0;margin:0 0 10px;}
+.hp-ingredients li{font-size:12px;color:#B8B6B0;padding:4px 0;padding-left:18px;position:relative;line-height:1.5;}
+.hp-ingredients li:before{content:"•";position:absolute;left:4px;color:#1D9E75;font-weight:700;}
+.hp-steps{list-style:none;padding:0;margin:0;counter-reset:hp;}
+.hp-steps li{font-size:12px;color:#C8C6C0;padding:5px 0 5px 26px;position:relative;line-height:1.6;counter-increment:hp;}
+.hp-steps li:before{content:counter(hp);position:absolute;left:0;top:4px;width:18px;height:18px;background:#534AB7;color:#fff;border-radius:50%;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;}
+.hp-warn{background:#2A1A0D;border:0.5px solid #5A3A1A;border-radius:8px;padding:10px 12px;font-size:11px;color:#D8A877;margin-top:8px;line-height:1.5;}
+.hp-tip{background:rgba(29,158,117,0.08);border-radius:8px;padding:10px 12px;font-size:11px;color:#7DCBA8;margin-top:8px;line-height:1.5;}
+.hp-table{width:100%;border-collapse:collapse;font-size:12px;margin-top:8px;}
+.hp-table th{text-align:left;padding:7px 8px;font-size:10px;font-weight:700;color:#555;text-transform:uppercase;border-bottom:0.5px solid #2A2A28;}
+.hp-table td{padding:7px 8px;border-bottom:0.5px solid #1A1A18;color:#B8B6B0;vertical-align:top;}
+.hp-table td:first-child{color:#E8E6E0;font-weight:500;white-space:nowrap;}
+.hp-avoid{color:#E07070;}
+
 </style>
 </head>
 <body>
@@ -212,6 +234,7 @@ hr.dv{border:none;border-top:0.5px solid #1E1E1C;margin:1rem 0;}
   <button class="nav-btn" onclick="showSection('rutina',this)"><span class="nav-emoji">⏰</span> Rutina</button>
   <button class="nav-btn" onclick="showSection('suplementy',this)"><span class="nav-emoji">💊</span> Suplementy</button>
   <button class="nav-btn" onclick="showSection('makra',this)"><span class="nav-emoji">📊</span> Makrá</button>
+  <button class="nav-btn" onclick="showSection('vlasy',this)"><span class="nav-emoji">💆</span> Vlasy &amp; Pleť</button>
   <button class="nav-btn" onclick="showSection('progress',this)"><span class="nav-emoji">📈</span> Progres</button>
 </div>
 
@@ -1165,6 +1188,14 @@ hr.dv{border:none;border-top:0.5px solid #1E1E1C;margin:1rem 0;}
 
 <script>
 
+
+function showHpTab(tab, btn){
+  document.querySelectorAll('.hp-subpanel').forEach(p => p.style.display='none');
+  document.querySelectorAll('.hp-subtab').forEach(b => b.classList.remove('on'));
+  document.getElementById('hp-'+tab).style.display='block';
+  btn.classList.add('on');
+}
+
 function showJedTab(tab, btn){
   document.querySelectorAll('.jed-subpanel').forEach(p => p.style.display='none');
   document.querySelectorAll('.jed-subtab').forEach(b => b.classList.remove('on'));
@@ -1413,6 +1444,180 @@ function showPanel(prefix, idx, btn) {
     </div>
   </div>
 </div>
+
+<!-- ==================== VLASY & PLEŤ ==================== -->
+<div id="vlasy" class="section">
+  <p class="page-title">Vlasy &amp; Pleť</p>
+  <p class="page-sub">Prirodzený protokol — zápal, cirkulácia, topická výživa</p>
+
+  <div class="hp-subtabs">
+    <button class="hp-subtab on" onclick="showHpTab('hair',this)">💆 Vlasy</button>
+    <button class="hp-subtab" onclick="showHpTab('skin',this)">✨ Pleť</button>
+  </div>
+
+  <!-- VLASY -->
+  <div id="hp-hair" class="hp-subpanel">
+
+    <div class="hp-card">
+      <div class="hp-card-title">🥚 Vaječná maska — umývanie<span class="hp-freq">1× týždenne</span></div>
+      <p style="font-size:11px;color:#777;margin-bottom:10px;">Hlavný spôsob umývania vlasov — nahrádza šampón, čistí a vyživuje zároveň.</p>
+      <p style="font-size:11px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;">Zloženie</p>
+      <ul class="hp-ingredients">
+        <li>1 celé vajce (alebo 2 pri dlhších vlasoch)</li>
+        <li>5–8 kvapiek rozmarínového oleja</li>
+        <li>1–3 kvapky peppermint (mätového) oleja</li>
+      </ul>
+      <p style="font-size:11px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.05em;margin:10px 0 6px;">Postup</p>
+      <ol class="hp-steps">
+        <li>Vajce rozšľahaj, pridaj rozmarínový a peppermint olej, premiešaj.</li>
+        <li>Nanes na pokožku hlavy a vlasy, jemne vmasíruj 2–3 min.</li>
+        <li>Nechaj pôsobiť 10–15 min (alebo dlhšie pre intenzívnu výživu).</li>
+        <li>Opláchni <strong>vlažnou vodou</strong> — nikdy nie horúcou.</li>
+      </ol>
+      <div class="hp-warn">⚠️ <strong>Vlažná voda je kritická</strong> — horúca voda zráža vaječný bielok (koagulácia) a zostane ti vo vlasoch. Peppermint max 1–3 kvapky (0,3% riedenie = bezpečné).</div>
+    </div>
+
+    <div class="hp-card">
+      <div class="hp-card-title">🌿 DIY výživná maska<span class="hp-freq">1× týždenne</span></div>
+      <p style="font-size:11px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;">Zloženie</p>
+      <ul class="hp-ingredients">
+        <li>2 PL aloe vera gel (ESI Aloe Vera)</li>
+        <li>1 vajce</li>
+        <li>1 ČL med</li>
+      </ul>
+      <p style="font-size:11px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.05em;margin:10px 0 6px;">Postup</p>
+      <ol class="hp-steps">
+        <li>Zmiešaj všetky zložky do hladkej pasty.</li>
+        <li>Nanes na pokožku hlavy a dĺžky.</li>
+        <li>Pre maximálnu penetráciu nechaj 4–7 hodín (ideálne cez noc pod čiapkou).</li>
+        <li>Opláchni vlažnou vodou.</li>
+      </ol>
+      <div class="hp-tip">💡 Dlhší kontakt = lepšia penetrácia. Komerčné masky (15 min) sa zmyjú príliš skoro — preto domáca cez noc funguje lepšie.</div>
+    </div>
+
+    <div class="hp-card">
+      <div class="hp-card-title">💆 Masáž pokožky hlavy<span class="hp-freq">denne 5–10 min</span></div>
+      <p style="font-size:12px;color:#B8B6B0;line-height:1.6;">Prstami alebo masážnym nástrojom. Uvoľňuje napätie skalovej muskulatúry (ktorá škrtí prívod krvi k folikulom) a zlepšuje cirkuláciu. Toto je jeden z najdôležitejších denných krokov — napätie skalpu kopíruje Norwood vzor vypadávania.</p>
+    </div>
+
+    <div class="hp-card">
+      <div class="hp-card-title">🔄 Inverzná terapia<span class="hp-freq">3–5× týždenne</span></div>
+      <p style="font-size:12px;color:#B8B6B0;line-height:1.6;">Hlava nadol 5–10 min (predklon alebo ľah s hlavou nižšie) → okysličená krv prúdi do pokožky hlavy. Jednoduché, zadarmo, účinné pre cirkuláciu.</p>
+    </div>
+
+    <div class="hp-card">
+      <div class="hp-card-title">🪡 Mikroneedling (dermaroller)<span class="hp-freq">1× týž → navyšovať</span></div>
+      <p style="font-size:12px;color:#B8B6B0;line-height:1.6;">Mikro-trauma spúšťa repair response → zvýšený prietok krvi + rastové faktory. Začni 1× týždenne, postupne navyšuj na každý 2. deň. Po mikroneedlingu môžeš naniesť rozmarínový olej pre lepší efekt.</p>
+    </div>
+
+    <div class="hp-card">
+      <div class="hp-card-title">🧱 Bentonitový detox<span class="hp-freq">1× za 2–4 týž</span></div>
+      <p style="font-size:11px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;">Zloženie</p>
+      <ul class="hp-ingredients">
+        <li>2–3 PL bentonitovej hliny</li>
+        <li>Jablčný ocot (do konzistencie jogurtu)</li>
+        <li>⚠️ Miešať v skle/plaste/dreve — NIE v kove!</li>
+      </ul>
+      <p style="font-size:11px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.05em;margin:10px 0 6px;">Postup</p>
+      <ol class="hp-steps">
+        <li>Zmiešaj hlinu s octom do konzistencie jogurtu (nie kovová miska/lyžica).</li>
+        <li>Nanes na pokožku hlavy, kontakt 20–30 min (min. 10–15).</li>
+        <li>Dôkladne opláchni vlažnou vodou.</li>
+        <li>Po osušení pár kvapiek rozmarínu ak je pokožka stiahnutá.</li>
+      </ol>
+      <div class="hp-tip">💡 Toto je detox, nie bežné umývanie — len 1× za 2–4 týždne na vyčistenie usadenín.</div>
+    </div>
+
+    <div class="hp-card">
+      <div class="hp-card-title">🚫 Čomu sa vyhnúť</div>
+      <table class="hp-table">
+        <tbody>
+          <tr><td class="hp-avoid">Suchý šampón</td><td>Nekompatibilný s olejovým protokolom — nedá sa zmyť bez šampónu</td></tr>
+          <tr><td class="hp-avoid">Agresívne šampóny (SLS)</td><td>Narúšajú lipidový štít → nadprodukcia mazu → zápal</td></tr>
+          <tr><td class="hp-avoid">Finasterid / Minoxidil</td><td>Systémové/kardio vedľajšie účinky — pri arytmii problematické</td></tr>
+          <tr><td class="hp-avoid">Tepelný styling</td><td>Zápal pokožky hlavy, vysušovanie</td></tr>
+          <tr><td class="hp-avoid">Horúca voda</td><td>Koaguluje vajce, vysušuje pokožku hlavy</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="hp-card">
+      <div class="hp-card-title">📋 Týždenný prehľad</div>
+      <table class="hp-table">
+        <thead><tr><th>Krok</th><th>Frekvencia</th></tr></thead>
+        <tbody>
+          <tr><td>Masáž pokožky hlavy</td><td>Denne 5–10 min</td></tr>
+          <tr><td>Inverzná terapia</td><td>3–5× týždenne</td></tr>
+          <tr><td>Vaječná maska (umývanie)</td><td>1× týždenne</td></tr>
+          <tr><td>DIY maska (aloe+vajce+med)</td><td>1× týždenne</td></tr>
+          <tr><td>Mikroneedling</td><td>1× týž → navyšovať</td></tr>
+          <tr><td>Bentonit detox</td><td>1× za 2–4 týždne</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="hp-warn" style="margin-top:14px;"><strong>Tvoja situácia:</strong> Transplantované vlasy sú DHT-rezistentné a stabilné. Natívne vlasy na korune a čelnej línii sú DHT-senzitívne — tento protokol (zápal + cirkulácia) chráni práve ich prostredie. Creatín pred zavedením konzultuj s trichológom/transplantačným chirurgom.</div>
+
+  </div>
+
+  <!-- PLEŤ -->
+  <div id="hp-skin" class="hp-subpanel" style="display:none;">
+
+    <div class="hp-card">
+      <div class="hp-card-title">🧴 Gua Sha masáž<span class="hp-freq">denne / podľa potreby</span></div>
+      <p style="font-size:12px;color:#B8B6B0;line-height:1.6;">Vždy smerom <strong>z centra tváre von a nadol</strong> k lymfatickým uzlinám pri kľúčnej kosti. Redukuje opuchy a zlepšuje lymfatickú drenáž. Klinický test 2025: redukcia kontúr tváre o 2,4 mm.</p>
+    </div>
+
+    <div class="hp-card">
+      <div class="hp-card-title">😤 Fyziologický povzdych<span class="hp-freq">pri strese</span></div>
+      <p style="font-size:12px;color:#B8B6B0;line-height:1.6;">Dvojitý nádych nosom + dlhý výdych ústami. Najrýchlejšia redukcia stresu (Stanford výskum) → menej kortizolu → menej rozpadu kolagénu a stresových kožných reakcií.</p>
+    </div>
+
+    <div class="hp-card">
+      <div class="hp-card-title">🛏️ Spánok s vyvýšenou hlavou<span class="hp-freq">denne</span></div>
+      <p style="font-size:12px;color:#B8B6B0;line-height:1.6;">Hlava vyvýšená o 15–30° → gravitačná drenáž → menej ranných opuchov tváre. Bonus: pomáha aj s refluxom (posledné jedlo do 17:30).</p>
+    </div>
+
+    <div class="hp-card">
+      <div class="hp-card-title">🥗 Výživa pre pleť (už v jedálničku)</div>
+      <table class="hp-table">
+        <thead><tr><th>Živina</th><th>Zdroj v pláne</th></tr></thead>
+        <tbody>
+          <tr><td>Omega-3</td><td>Vlašské orechy, losos, Möller's</td></tr>
+          <tr><td>Vit. A (betakarotén)</td><td>Mrkva, sladký zemiak, pečeň</td></tr>
+          <tr><td>Fermentované</td><td>Kefír (denne) — os črevo-koža</td></tr>
+          <tr><td>Antioxidanty</td><td>Čučoriedky, goji (smoothie)</td></tr>
+          <tr><td>Sulforafan</td><td>Brokolicové klíčky</td></tr>
+        </tbody>
+      </table>
+      <div class="hp-warn">⚠️ Vit. A len z prírodných zdrojov (betakarotén) — nikdy doplnky (rozpustný v tukoch → toxicita). Pečeňový deň (Št) drž samostatne, nekombinuj s ďalšími zdrojmi vit. A.</div>
+    </div>
+
+    <div class="hp-card">
+      <div class="hp-card-title">🚫 Čo pleť sabotuje</div>
+      <table class="hp-table">
+        <tbody>
+          <tr><td class="hp-avoid">Ultra-spracované</td><td>Glykácia → napätá, citlivá pokožka, akné</td></tr>
+          <tr><td class="hp-avoid">Cukor / rafinované</td><td>Inzulín → maz + zápal → starnutie</td></tr>
+          <tr><td class="hp-avoid">Alkohol</td><td>Edém tváre trvajúci až 72 h (ADH)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="hp-card">
+      <div class="hp-card-title">📋 Top 5 zmien pre pleť</div>
+      <ol class="hp-steps">
+        <li>Eliminácia ultra-spracovaných potravín (zastavenie glykácie)</li>
+        <li>Fermentované denne — kefír (os črevo-koža)</li>
+        <li>Vit. A z prírodných zdrojov, nie doplnky</li>
+        <li>Fyziologický povzdych pri strese</li>
+        <li>Hydratácia s elektrolytmi</li>
+      </ol>
+    </div>
+
+  </div>
+</div>
+
 
 <!-- ==================== PROGRES ==================== -->
 <div id="progress" class="section">
